@@ -1,5 +1,8 @@
 <template>
-  <Nav/>
+  <div class="columns is-gapless">
+    <div class="column is-one-fifth"><Nav/></div>
+    <div class="column"><router-view/></div>
+  </div>
 </template>
 
 <script>

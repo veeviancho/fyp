@@ -1,8 +1,7 @@
 <template>
-<title>Hello</title>
 <div id="navbar">
-  <div class="columns">
-    <div class="column is-one-fifth">
+  <!-- <div class="columns">
+    <div class="column is-one-fifth"> -->
     <aside class="menu">
         <router-link to="/">
           <span class="image py-2" style="background-color: #1d3785"><img src="../assets/logo.png"></span>
@@ -78,9 +77,9 @@
     </aside>
     </div>
 
-    <div class="column"><router-view/></div>
-  </div>
-</div>
+    <!-- <div class="column"><router-view/></div> -->
+  <!-- </div>
+</div> -->
 </template>
 
 <script>
