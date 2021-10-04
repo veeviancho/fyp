@@ -1,6 +1,8 @@
 <template>
-    <PageTitle/>
-    <User/>
+    <div id="profile">
+        <PageTitle/>
+        <User/>
+    </div>
 </template>
 
 <script>

@@ -1,8 +1,10 @@
 <template>
-    <PageTitle/>
-    <p class="page has-text-weight-bold"><span class="title is-size-1">28</span> &nbsp; Rooms Available</p>
-    <br>
-    <Table/>
+    <div id="rooms">
+        <PageTitle/>
+        <p class="page has-text-weight-bold"><span class="title is-size-1">28</span> &nbsp; Rooms Available</p>
+        <br>
+        <Table/>
+    </div>
 </template>
 
 <script>
