@@ -16,6 +16,9 @@ const User = require('../../model/User');
 const validateRegisterInput = require('../../validation/register');
 const validateLoginInput = require('../../validation/login');
 
+//Load keys
+const keys = require('../../config/keys')
+
 // @route POST api/users/register
 // @desc Register the user
 // @access Public
@@ -101,8 +104,8 @@ router.post("/login", (req, res) => {
                     },
                     (err, token) => {
                         res.json({
-                            sucess: true,
-                            token: 'Bearer' + token
+                            success: true,
+                            token: 'Bearer ' + token
                         });
                     }
                 )
