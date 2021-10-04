@@ -81,14 +81,15 @@ export default {
     name: 'Signup',
     data () {
       return {
+        name: '',
+        username: '',
         email: '',
-        password: ''
+        password: '',
+        confirm_password: '',
       }
     },
     methods: {
       async register() {
-        //The default behaviour is to refresh the page once the function has passed - console will be refreshed
-        // event.preventDefault();
         //call endpoint
         const response = await AuthenticationService.register({
           email: this.email,

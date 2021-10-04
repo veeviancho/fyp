@@ -37,8 +37,9 @@ mongoose.connect(db, {
 //Pulling in Users route
 const passport = require('passport');
 const users = require('./routes/api/users');
+
 app.use(passport.initialize()); //passport middleware
-require("./config/passport")(passport); //passport config
+require('./config/passport')(passport); //passport config
 app.use('/api/users', users);
 
 //Server running on environment (eg Heroku) variable port, or port 5000 if nothing
