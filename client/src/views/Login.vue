@@ -65,7 +65,8 @@ export default {
         // Then whatever the respond that is sent back, we will use it here
         .then(res => {
           if (res.data.success) {
-            // If success, the user will be directed to the home page
+            // If success, user will be directed to the home page
+            console.log(res.data)
             this.$router.push('/profile')
           }
         })

@@ -19,6 +19,10 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
+    programme: {
+        type: String,
+        required: true
+    },
     date: {
         type: Date,
         default: Date.now

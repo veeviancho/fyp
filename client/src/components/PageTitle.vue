@@ -9,7 +9,7 @@
   <div class="level-right">
     <!-- only if logged in -->
     <!-- <p class="level-item"><a>Back</a></p> -->
-    <p class="level-item" v-if="isLoggedIn"><a class="button"><fa icon="power-off"/>&nbsp;Logout</a></p>
+    <button class="level-item button" v-if="isLoggedIn" @click.prevent="logoutUser"><fa icon="power-off"/>&nbsp;Logout</button>
   </div>
 </nav>
 </template>
@@ -23,7 +23,11 @@ export default {
     ...mapGetters(['isLoggedIn'])
   },
   methods: {
-    ...mapActions(['isLoggedOut'])
+    ...mapActions(['logout']),
+    logoutUser() {
+      this.logout();
+      this.$router.push('/login')
+    }
   }
 }
 </script>

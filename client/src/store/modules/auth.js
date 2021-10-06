@@ -1,27 +1,15 @@
 import axios from 'axios';
 
 const state = {
+    status: '',
     token: localStorage.getItem('token') || '', //set to empty string if not found
     user: {},
-    status: ''
 };
 
 const getters = {
     isLoggedIn: state => !!state.token,
     authState: state => state.status,
     user: state => state.user
-};
-
-const mutations = {
-    // Login mutations
-    auth_request(state) {
-        state.status = 'loading'
-    },
-    auth_success(state, token, user) {
-        state.status = 'success'
-        state.token = token
-        state.user = user
-    }
 };
 
 const actions = {
@@ -46,7 +34,31 @@ const actions = {
         //     commit('auth_error', err);
         // }
     },
-    // Register Action
+    // Logout Action
+    logout({ commit }) {
+        commit('logout');
+        localStorage.removeItem('token');
+        delete axios.defaults.headers.common['Authorization'];
+        return;
+    }
+};
+
+const mutations = {
+    // Login mutations
+    auth_request(state) {
+        state.status = 'loading'
+    },
+    auth_success(state, token, user) {
+        state.status = 'success'
+        state.token = token
+        state.user = user
+    },
+    // Logout mutation
+    logout(state) {
+        state.status = ''
+        state.token = ''
+        state.user = ''
+    }
 };
 
 export default {

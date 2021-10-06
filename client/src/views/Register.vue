@@ -17,7 +17,7 @@
             </div>
           </div>
 
-          <!-- <div class="field">
+          <div class="field">
             <div class="select is-size-5 is-fullwidth">
               <select name="programme">
                 <option>Communications Engineering</option>
@@ -29,7 +29,7 @@
                 <option>Integrated Circuit Design</option>
               </select>
             </div>
-          </div> -->
+          </div>
 
           <div class="field">
             <div class="control has-icons-left">
@@ -82,6 +82,7 @@ export default {
         email: '',
         password: '',
         password2: '',
+        programme: ''
       }
     },
     methods: {
