@@ -1,7 +1,5 @@
 <template>
 <div id="navbar">
-  <!-- <div class="columns">
-    <div class="column is-one-fifth"> -->
     <aside class="menu">
         <router-link to="/">
           <span class="image py-2" style="background-color: #1d3785"><img src="../assets/logo.png"></span>
@@ -29,18 +27,18 @@
           <span class="icon"><fa icon="map-marked-alt"/></span>
           How to Get Here?
         </router-link></li>
-        <!-- <li>
+        <li v-if="isLoggedIn">
           <router-link :to="{ name: 'Workshops' }">
             <span class="icon"><fa icon="laptop-code"/></span>
             Workshops
           </router-link>
           <ul>
-            <li><router-link :to="{ name: 'History' }">History</router-link></li>
+            <li><router-link :to="{ name: 'History' }">Attended Workshops</router-link></li>
             <li><router-link :to="{ name: 'Upcoming Workshops' }">Upcoming Workshops</router-link></li>
           </ul>
-        </li> -->
+        </li>
 
-        <!-- <li>
+        <li v-if="isLoggedIn">
           <router-link :to="{ name: 'Book A Room!' }">
           <span class="icon"><fa icon="calendar-check"/></span>
           Book A Room!
@@ -48,7 +46,7 @@
           <ul>
             <li><router-link :to="{ name: 'Manage Bookings' }">Manage Bookings</router-link></li>
           </ul>
-        </li> -->
+        </li>
       </ul>
         
       <p class="menu-label px-2">What's happening?</p>
@@ -65,27 +63,27 @@
 
       <p class="menu-label px-2">User</p>
       <ul class="menu-list">
-        <!-- <li><router-link :to="{ name: 'Profile' }">
+        <li v-if="isLoggedIn"><router-link :to="{ name: 'Profile' }">
           <span class="icon"><fa icon="user"/></span>
           Profile
-        </router-link></li> -->
-        <li><router-link :to="{ name: 'Login' }">
+        </router-link></li>
+        <li v-if="!isLoggedIn"><router-link :to="{ name: 'Login' }">
           <span class="icon"><fa icon="user"/></span>
           Login
         </router-link></li>
       </ul>
     </aside>
     </div>
-
-    <!-- <div class="column"><router-view/></div> -->
-  <!-- </div>
-</div> -->
 </template>
 
 <script>
+import { mapGetters } from "vuex"
 
 export default {
-  name: 'Navbar'
+  name: 'Navbar',
+  computed: {
+    ...mapGetters(['isLoggedIn'])
+  }
 }
 </script>
 

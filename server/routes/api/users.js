@@ -71,12 +71,12 @@ router.post('/register', (req, res) => {
 // @access Public
 router.post("/login", (req, res) => {
     //Object restructuring
-    const { errors, isValid } = validateLoginInput(req.body);
+    // const { errors, isValid } = validateLoginInput(req.body);
 
-    //Validation check
-    if (!isValid) {
-        return res.status(400).json(errors);
-    };
+    // //Validation check
+    // if (!isValid) {
+    //     return res.status(400).json(errors);
+    // };
 
     const username = req.body.username;
     const password = req.body.password;
@@ -104,7 +104,9 @@ router.post("/login", (req, res) => {
                     },
                     (err, token) => {
                         res.json({
+                            // api - sent to client side
                             success: true,
+                            user: user,
                             token: 'Bearer ' + token
                         });
                     }

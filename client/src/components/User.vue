@@ -10,9 +10,9 @@
           <div class="content">
               <div class="content">
               <p>
-                  <span class="is-size-3"><strong>Vivian Cho</strong> <small>@viviancho</small></span>
+                  <span class="is-size-3"><strong>Name</strong> <small>@username</small></span>
                   <br>
-                  Student/Admin/Workshop Manager
+                  Student
                   <br>
                   Infocommunication Engineering
                   <br>

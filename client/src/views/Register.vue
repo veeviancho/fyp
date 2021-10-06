@@ -5,19 +5,15 @@
       <div class="columns is-centered">
       <div class="column is-9-desktop">
 
-        <form id="login-form" style="padding: 4em 7em">
+        <form id="login-form" style="padding: 4em 7em" @submit.prevent="register">
+        <!-- the submit event will no longer reload the page -->
           <h1 class="title is-size-3 has-text-centered"><i>Create Account</i></h1>
-
-          <!-- <div class="control has-text-centered">
-            <label class="radio"><input type="radio" name="rsvp"> Student</label>
-            <label class="radio" disabled><input type="radio" name="rsvp" disabled> Admin</label>
-          </div> -->
 
           <br>
 
           <div class="field">
             <div class="control">
-              <input class="input is-size-5" type="text" id="name" name="name" v-model="name" placeholder="Name">
+              <input class="input is-size-5" type="text" id="name" name="name" v-model="name" placeholder="Name" required>
             </div>
           </div>
 
@@ -64,7 +60,7 @@
           </div>
 
           <div class="control">
-            <button class="button is-warning is-outlined is-fullwidth" @click="register">Sign Up</button>&nbsp;
+            <button type="submit" class="button is-warning is-outlined is-fullwidth" @click="register">Sign Up</button>&nbsp;
           </div>
         </form>
       </div>
@@ -78,7 +74,7 @@
 import AuthenticationService from '@/services/AuthenticationService.js';
 
 export default {
-    name: 'Signup',
+    name: 'Register',
     data () {
       return {
         name: '',

@@ -14,7 +14,7 @@ import Rooms from '../views/real-time/Rooms.vue'
 import Profile from '../views/user/Profile.vue'
 import Details from '../views/workshop/WorkshopDetails.vue'
 import Login from '../views/Login.vue'
-import Signup from '../views/Register.vue'
+import Register from '../views/Register.vue'
 import NotFound from '../views/NotFound.vue'
 
 const routes = [
@@ -95,8 +95,8 @@ const routes = [
   },
   {
     path: '/register',
-    name: 'Signup',
-    component: Signup
+    name: 'Register',
+    component: Register
   },
   {
     path: '/:pathMatch(.*)*',
