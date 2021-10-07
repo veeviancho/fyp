@@ -36,11 +36,11 @@ router.post('/register', (req, res) => {
         if (user) {
             if (user.username === req.body.username) {
                 return res.status(400).json({
-                    username: "Username is already taken."
+                    msg: "Username is already taken."
                 });
             } else {
                 return res.status(400).json({
-                    email: "Email already exists."
+                    msg: "Email already exists."
                 });
             };  
         } else {
@@ -59,7 +59,11 @@ router.post('/register', (req, res) => {
                     newUser.password = hash;
                     newUser
                         .save()
-                        .then(user => res.json(user))
+                        .then(user => res.json({
+                            user: user,
+                            success: true,
+                            msg: "User successfully registered"
+                        }))
                         .catch(err => console.log(err));
                     });
                 });
@@ -85,7 +89,7 @@ router.post("/login", (req, res) => {
     User.findOne({ username }).then(user => {
         //Check if user exists
         if (!user) {
-            return res.status(404).json({ usernotfound: "User not found."})
+            return res.status(404).json({ msg: "User not found."})
         }
 
         //Check password
@@ -113,7 +117,7 @@ router.post("/login", (req, res) => {
                     }
                 )
             } else {
-                return res.status(400).json({ passwordIncorrect: "Incorrect Password" });
+                return res.status(400).json({ msg: "Incorrect Password" });
             }
         });
     });

@@ -5,7 +5,7 @@
       <div class="columns is-centered">
       <div class="column is-9-desktop">
 
-        <form id="login-form" style="padding: 4em 7em" @submit.prevent="register">
+        <form id="login-form" style="padding: 4em 7em" @submit.prevent="registerUser">
         <!-- the submit event will no longer reload the page -->
           <h1 class="title is-size-3 has-text-centered"><i>Create Account</i></h1>
 
@@ -19,7 +19,7 @@
 
           <div class="field">
             <div class="select is-size-5 is-fullwidth">
-              <select name="programme">
+              <select name="programme" v-model="programme">
                 <option>Communications Engineering</option>
                 <option>Computer Control & Automation</option>
                 <option>Electronics</option>
@@ -60,7 +60,7 @@
           </div>
 
           <div class="control">
-            <button type="submit" class="button is-warning is-outlined is-fullwidth" @click="register">Sign Up</button>&nbsp;
+            <button type="submit" class="button is-warning is-outlined is-fullwidth">Sign Up</button>&nbsp;
           </div>
         </form>
       </div>
@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import AuthenticationService from '@/services/AuthenticationService.js';
+import { mapActions } from 'vuex';
 
 export default {
     name: 'Register',
@@ -82,18 +82,26 @@ export default {
         email: '',
         password: '',
         password2: '',
-        programme: ''
+        programme: 'Communications Engineering'
       }
     },
     methods: {
-      async register() {
-        //call endpoint
-        const response = await AuthenticationService.register({
+      ...mapActions(['register']),
+      registerUser() {
+        let user = {
+          name: this.name,
+          username: this.username,
           email: this.email,
-          password: this.password
-        });
-        //once we get that response, we can print out response data
-        console.log(response.data);
+          password: this.password,
+          password2: this.password2,
+          programme: this.programme
+        }
+        console.log(user)
+        this.register(user).then(res => {
+            if (res.data.success) {
+              this.$router.push('/login')
+            }
+          })
       }
     }
 }

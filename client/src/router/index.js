@@ -10,7 +10,7 @@ import Upcoming from '../views/workshop/Upcoming.vue'
 import Booking from '../views/booking/Booking.vue'
 import Manage from '../views/booking/Manage.vue'
 import Activities from '../views/real-time/Activities.vue'
-import Rooms from '../views/real-time/Rooms.vue'
+import Timetable from '../views/real-time/Timetable.vue'
 import Profile from '../views/user/Profile.vue'
 import Details from '../views/workshop/WorkshopDetails.vue'
 import Login from '../views/Login.vue'
@@ -74,9 +74,9 @@ const routes = [
     component: Activities
   },
   {
-    path: '/rooms',
-    name: 'Unoccupied Rooms',
-    component: Rooms
+    path: '/timetable',
+    name: 'Timetable',
+    component: Timetable
   },
   {
     path: '/profile',

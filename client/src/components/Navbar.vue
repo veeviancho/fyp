@@ -48,18 +48,19 @@
           </ul>
         </li>
       </ul>
-        
-      <p class="menu-label px-2">What's happening?</p>
-      <ul class="menu-list">
+      
+      <p class="menu-label px-2" v-if="isLoggedIn">What's happening?</p>
+      <ul class="menu-list" v-if="isLoggedIn">
         <li><router-link :to="{ name: 'Real-time Activities' }">
           <span class="icon"><fa icon="bullhorn"/></span>
           Real-time Activities
         </router-link></li>
-        <li><router-link :to="{ name: 'Unoccupied Rooms' }">
-          <span class="icon"><fa icon="landmark"/></span>
-          Unoccupied Rooms
+        <li><router-link :to="{ name: 'Timetable' }">
+          <span class="icon"><fa icon="calendar-alt"/></span>
+          Timetable
         </router-link></li>
       </ul>
+      
 
       <p class="menu-label px-2">User</p>
       <ul class="menu-list">

@@ -18,6 +18,8 @@
                     Infocommunication Engineering
                     <br>
                     <button class="button is-small is-light" style="margin: 0.5em 0">Edit Profile</button>
+                    &nbsp;
+                    <button class="button is-small is-light" style="margin: 0.5em 0">Profile Report</button>
                     <!-- <a href="mailto:name@email.com">Email Address</a> -->
                 </p>
                 </div>
