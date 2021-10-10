@@ -16,7 +16,7 @@
     <tr>
       <td>1</td>
       <td>1500-1800</td>
-      <td>Workshop #1</td>
+      <td><a>Workshop #1</a></td>
       <td class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</td>
       <td>Tech Skills</td>
       <td>TR1</td>
@@ -25,7 +25,7 @@
     <tr>
       <td>2</td>
       <td>1500-1800</td>
-      <td>Workshop #2</td>
+      <td><a>Workshop #2</a></td>
       <td class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</td>
       <td>Tech Skills</td>
       <td>TR1</td>
@@ -34,7 +34,7 @@
     <tr>
       <td>3</td>
       <td>1500-1800</td>
-      <td>Workshop #3</td>
+      <td><a>Workshop #3</a></td>
       <td class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</td>
       <td>Tech Skills</td>
       <td>TR1</td>

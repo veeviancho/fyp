@@ -2,11 +2,13 @@
 // Set initial variables
 $blue: #1d3785;
 $green: #3c7a89;
+$family-serif: poppins;
 //$grey: #808080;
 
 // Set derived variables
 $link: $green;
-$warning: #1d3785;
+$warning: $blue;
+$family-primary: $family-serif;
 
 // Bulma Import
 @import '~bulma';

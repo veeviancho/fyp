@@ -2,23 +2,23 @@
 <div id="navbar">
     <aside class="menu">
         <router-link to="/">
-          <span class="image py-2" style="background-color: #1d3785"><img src="../assets/logo.png"></span>
+          <span class="image py-2" style="background-color: #1d3785"><img src="@/assets/logo.png"></span>
         </router-link>
 
       <p class="menu-label px-2">Lifelong Learning</p>
       <ul class="menu-list">
-        <li><router-link :to="{ name: 'NTU Initiatives' }">
+        <li><router-link :to="{ name: 'Articles' }">
           <span class="icon"><fa icon="university"/></span>
-          NTU Initiatives
+          Articles
         </router-link></li>
-        <li><router-link :to="{ name: 'News, Events, and Trends'}">
+        <!-- <li><router-link :to="{ name: 'News, Events, and Trends'}">
           <span class="icon"><fa icon="newspaper"/></span>
           News, Events, and Trends
         </router-link></li>
         <li><router-link :to="{ name: 'Tips and Tricks'}">
           <span class="icon"><fa icon="lightbulb"/></span>
           Tips and Tricks
-        </router-link></li>
+        </router-link></li> -->
       </ul>
 
       <p class="menu-label px-2">General</p>

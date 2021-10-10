@@ -80,7 +80,7 @@ export default {
           }
         })
         .catch(err => {
-          // this.error = msg
+          this.error = "Wrong information. Please re-enter!!"
           console.log(err)
         })
     }

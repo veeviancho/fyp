@@ -1,42 +1,37 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
-import Initiatives from '../views/information/Initiatives.vue'
-import News from '../views/information/News.vue'
-import Tips from '../views/information/Tips.vue'
-import Maps from '../views/Map.vue'
-import Workshop from '../views/workshop/Workshop.vue'
-import History from '../views/workshop/History.vue'
-import Upcoming from '../views/workshop/Upcoming.vue'
-import Booking from '../views/booking/Booking.vue'
-import Manage from '../views/booking/Manage.vue'
-import Activities from '../views/real-time/Activities.vue'
-import Timetable from '../views/real-time/Timetable.vue'
-import Profile from '../views/user/Profile.vue'
-import Details from '../views/workshop/WorkshopDetails.vue'
-import Login from '../views/Login.vue'
-import Register from '../views/Register.vue'
-import NotFound from '../views/NotFound.vue'
+
+// Public views
+import Home from '../views/public/Home.vue'
+import Articles from '../views/public/Articles.vue'
+import Maps from '../views/public/Map.vue'
+import Login from '../views/public/auth/Login.vue'
+import Register from '../views/public/auth/Register.vue'
+
+// User views
+import Workshop from '../views/user/workshop/Workshop.vue'
+import Details from '../views/user/workshop/WorkshopDetails.vue'
+import History from '../views/user/workshop/History.vue'
+import Upcoming from '../views/user/workshop/Upcoming.vue'
+
+import Booking from '../views/user/booking/Booking.vue'
+import Manage from '../views/user/booking/Manage.vue'
+
+import Activities from '../views/user/activities/RealTime.vue'
+import Timetable from '../views/user/activities/Timetable.vue'
+
+import Profile from '../views/user/profile/Profile.vue'
 
 const routes = [
+  // Public views
   {
     path: '/',
     name: 'Home',
     component: Home
   },
   {
-    path: '/ntu-initiatives',
-    name: 'NTU Initiatives',
-    component: Initiatives
-  },
-  {
-    path: '/news',
-    name: 'News, Events, and Trends',
-    component: News
-  },
-  {
-    path: '/tips-and-tricks',
-    name: 'Tips and Tricks',
-    component: Tips
+    path: '/articles',
+    name: 'Articles',
+    component: Articles
   },
   {
     path: '/map',
@@ -44,9 +39,26 @@ const routes = [
     component: Maps
   },
   {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: Register
+  },
+
+  // User views
+  {
     path: '/workshop',
     name: 'Workshops',
     component: Workshop
+  },
+  {
+    path: '/workshop/details',
+    name: 'Workshop Details',
+    component: Details
   },
   {
     path: '/workshop/history',
@@ -82,26 +94,6 @@ const routes = [
     path: '/profile',
     name: 'Profile',
     component: Profile
-  },
-  {
-    path: '/workshop/details',
-    name: 'Workshop Details',
-    component: Details
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: Login
-  },
-  {
-    path: '/register',
-    name: 'Register',
-    component: Register
-  },
-  {
-    path: '/:pathMatch(.*)*',
-    name: 'NotFound',
-    component: NotFound
   }
 ]
 

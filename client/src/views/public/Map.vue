@@ -1,4 +1,5 @@
 <template>
+    <div>
     <PageTitle/>
     <div class="page">
     <div class="columns">
@@ -19,10 +20,11 @@
     <div class="section">
         <h1 class="title is-4">Map:</h1>
     </div>
+    </div>
 </template>
 
 <script>
-import PageTitle from '../components/PageTitle.vue'
+import PageTitle from '@/components/general/PageTitle.vue'
 
 export default {
     components: {

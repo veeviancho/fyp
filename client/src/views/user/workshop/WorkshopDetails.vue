@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import PageTitle from '../../components/PageTitle.vue'
+import PageTitle from '@/components/general/PageTitle.vue'
 
 export default {
     components: {
