@@ -1,6 +1,6 @@
 <template>
 <router-link :to="{ name: 'Workshop Details' }">
-<article class="media page">
+<article class="media">
   <figure class="media-left">
     <p class="image is-128x128 is-square">
       <img src="https://bulma.io/images/placeholders/128x128.png">

@@ -34,7 +34,7 @@ mongoose.connect(db, {
     console.log(`Unable to connect to the database ${err}`)
 });
 
-//Pulling in Users route
+//Pulling in Users route (for Profile)
 const passport = require('passport');
 const users = require('./routes/api/users');
 

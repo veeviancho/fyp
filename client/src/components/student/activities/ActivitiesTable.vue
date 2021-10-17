@@ -1,5 +1,5 @@
 <template>
-<table class="table page is-hoverable">
+<table class="table is-hoverable">
     <thead>
     <tr id="head">
       <th>No</th>

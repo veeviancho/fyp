@@ -1,5 +1,5 @@
 <template>
-<div class="page">
+<div class="">
 <div class="columns">
     <div class="column is-one-quarter">
         <div class="card available">

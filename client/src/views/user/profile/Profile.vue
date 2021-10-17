@@ -1,6 +1,5 @@
 <template>
-    <div id="profile">
-        <PageTitle/>
+    <div class="has-navbar-fixed-top">
         <article class="media">
         <figure class="media-left">
             <p class="image is-128x128 is-square">
@@ -11,11 +10,11 @@
             <div class="content">
                 <div class="content">
                 <p>
-                    <span class="is-size-3"><strong>Name</strong> <small>@username</small></span>
+                    <span class="is-size-3"><strong>{{ user.name }}</strong> <small>@{{ user.username }}</small></span>
                     <br>
                     Student
                     <br>
-                    Infocommunication Engineering
+                    {{ user.programme }}
                     <br>
                     <button class="button is-small is-light" style="margin: 0.5em 0">Edit Profile</button>
                     &nbsp;
@@ -39,15 +38,15 @@
                 <p class="title">12</p>
             </div>
             </div>
-            <div class="level-item has-text-centered">
+            <!-- <div class="level-item has-text-centered">
             <div>
                 <p class="heading">Reviews Given</p>
                 <p class="title">5</p>
             </div>
-            </div>
+            </div> -->
         </nav>
         &nbsp;
-        <nav class="level">
+        <!-- <nav class="level">
             <div class="level-item has-text-centered">
             <div>
                 <p class="heading">Total Points</p>
@@ -60,30 +59,35 @@
                 <p class="title">#8</p>
             </div>
             </div>
-        </nav>
+        </nav> -->
     </div>
 </template>
 
 <script>
-import PageTitle from '@/components/general/PageTitle.vue'
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
-    components: {
-        PageTitle
+    computed: {
+        ...mapGetters(['user'])
+    },
+    methods: {
+        ...mapActions(['getProfile'])
+    },
+    created() {
+        this.getProfile();
     }
 }
 </script>
 
 <style lang="scss" scoped>
 .media {
-  max-width: 92%;
-  margin: 0 auto;
-  color: gray;
+    max-width: 92%;
+    margin: auto;
+    color: gray;
 }
 
 .about-me {
-  max-width: 92%;
-  color: gray;
+    color: gray;
 }
 
 .level {

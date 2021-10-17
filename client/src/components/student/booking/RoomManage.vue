@@ -1,5 +1,5 @@
 <template>
-<!-- <div class="field page">
+<!-- <div class="field">
   <p class="control has-icons-left has-icons-right">
     <input class="input" type="text" placeholder="Find">
     <span class="icon is-small is-left"><fa icon="search"/></span>
@@ -7,7 +7,7 @@
 </div> -->
 
 <a>
-<article class="media page">
+<article class="media">
     <figure class="media-left">
         <p class="image is-128x128 is-square">
             <img src="https://bulma.io/images/placeholders/128x128.png">

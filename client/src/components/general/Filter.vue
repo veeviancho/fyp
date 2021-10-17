@@ -1,5 +1,5 @@
 <template>
-<div class="field page">
+<div class="field">
   <p class="control has-icons-left has-icons-right">
     <input class="input" type="text" placeholder="Find">
     <span class="icon is-small is-left"><fa icon="search"/></span>

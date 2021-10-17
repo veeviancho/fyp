@@ -1,7 +1,6 @@
 <template>
     <div id="rooms">
-        <PageTitle/>
-        <div class="page">
+        <div class="">
             <div>
             <input type="date" class="mb-2">
             </div>
@@ -21,12 +20,10 @@
 </template>
 
 <script>
-import PageTitle from '@/components/general/PageTitle.vue'
 import Table from '@/components/student/booking/RoomTable.vue'
 
 export default {
     components: {
-        PageTitle,
         Table
     }
 }

@@ -4,34 +4,41 @@ const state = {
     status: '',
     token: localStorage.getItem('token') || '', //set to empty string if not found
     user: {},
-    // msg: ''
+    error: null, //registration error
+    loginError: null
 };
 
 const getters = {
     isLoggedIn: state => !!state.token,
     authState: state => state.status,
-    user: state => state.user
+    user: state => state.user,
+    error: state => state.error,
+    loginError: state => state.loginError
 };
 
 const actions = {
+
     // Login Action
     async login({ commit }, user) {
         commit('login_request'); //commit are for the mutations
-        let res = await axios.post('http://localhost:5000/api/users/login', user) //awaiting response from the server
-        if (res.data.success) {
-            // Getting token and user data from server
-            const token = res.data.token;
-            const user = res.data.user;
-            // Store token in local storage
-            localStorage.setItem('token', token);
-            // Set the axios defaults
-            axios.defaults.headers.common['Authorization'] = token;
-            commit('login_success', token, user);
+        try {
+            let res = await axios.post('http://localhost:5000/api/users/login', user) //awaiting response from the server
+            if (res.data.success) {
+                // Getting token and user data from server
+                const token = res.data.token;
+                const user = res.data.user;
+                // Store token in local storage
+                localStorage.setItem('token', token);
+                // Set the axios defaults
+                axios.defaults.headers.common['Authorization'] = token;
+                commit('login_success', token, user);
+            }
+            return res;
+        } catch (err) {
+            commit('login_error', err)
         }
-        // const msg = res.data.msg;
-        // commit('auth_failed', msg);
-        return res;
     },
+
     // Logout Action
     logout({ commit }) {
         commit('logout');
@@ -39,13 +46,26 @@ const actions = {
         delete axios.defaults.headers.common['Authorization'];
         return;
     },
+
     // Register Action
     async register({ commit }, user) {
-        commit('register_request');
-        let res = await axios.post('http://localhost:5000/api/users/register', user);
-        if (res.data.success) {
-            commit('register_success');
+        try {
+            commit('register_request');
+            let res = await axios.post('http://localhost:5000/api/users/register', user);
+            if (res.data.success) {
+                commit('register_success');
+            }
+            return res;
+        } catch (err) {
+            commit('register_error', err)
         }
+    },
+
+    // Get User Profile
+    async getProfile({ commit }) {
+        commit('profile_request');
+        let res = await axios.get('http://localhost:5000/api/users/profile');
+        commit('profile_success', res.data.user);
         return res;
     }
 };
@@ -54,28 +74,52 @@ const mutations = {
     // Login mutations
     login_request(state) {
         state.status = 'loading'
+        state.error = null
+        state.loginError = null
     },
     login_success(state, token, user) {
         state.status = 'success'
         state.token = token
         state.user = user
+        state.error = null
+        state.loginError = null
     },
-    // auth_failed(state, msg) {
-    //     state.status = 'failed'
-    //     state.msg = msg
-    // },
+    login_error(state, err) {
+        state.status = 'failed',
+        state.loginError = err.response.data.msg2
+        state.error = null
+    },
     // Logout mutation
     logout(state) {
         state.status = ''
         state.token = ''
         state.user = ''
+        state.error = null
+        state.loginError = null
     },
-    //register mutation
+    // Register mutation
     register_request(state) {
         state.status = 'loading'
+        state.error = null
+        state.loginError = null
     },
     register_success(state) {
         state.status = 'success'
+        state.error = null
+        state.loginError = null
+    },
+    register_error(state, err) {
+        state.status = 'failed'
+        state.error = err.response.data.msg
+        state.loginError = null
+    },
+    // Profile mutation
+    profile_request(state) {
+        state.status = 'loading'
+    },
+    profile_success(state, user) {
+        state.status = 'success',
+        state.user = user
     }
 };
 

@@ -1,15 +1,14 @@
 <template>
-<section class="hero is-fullheight">
+<body>
+  <section class="hero is-fullheight">
   <div class="hero-body">
     <div class="container">
-      <div class="columns is-centered">
-      <div class="column is-9-desktop">
+    <div class="columns is-centered">
+      <div class="column is-9-desktop has-navbar-fixed-top">
 
-        <form id="login-form" style="padding: 4em 7em" @submit.prevent="registerUser">
+        <form id="login-form" style="padding: 2em 5em;" @submit.prevent="registerUser">
         <!-- the submit event will no longer reload the page -->
-          <h1 class="title is-size-3 has-text-centered"><i>Create Account</i></h1>
-
-          <br>
+          <h1 class="title is-size-3 has-text-centered has-text-white"><i>Create Account</i></h1>
 
           <div class="field">
             <div class="control">
@@ -59,19 +58,23 @@
             </div>
           </div>
 
+          <!-- Display message when login fails -->
+          <p class="has-text-danger has-text-centered mb-3 white" v-if="error">{{ error }}</p>
+
           <div class="control">
-            <button type="submit" class="button is-warning is-outlined is-fullwidth">Sign Up</button>&nbsp;
+            <button type="submit" class="button is-white is-outlined is-fullwidth">Sign Up</button>&nbsp;
           </div>
         </form>
       </div>
     </div>
     </div>
   </div>
-</section>
+  </section>
+</body>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
     name: 'Register',
@@ -85,9 +88,20 @@ export default {
         programme: 'Communications Engineering'
       }
     },
+    computed: {
+      ...mapGetters(['error'])
+    },
     methods: {
       ...mapActions(['register']),
+      capitalize() {
+        let str = this.name.toLowerCase().split(" ");
+        for (let i=0; i<str.length; i++) {
+          str[i] = str[i][0].toUpperCase() + str[i].slice(1);
+        }
+        this.name = str.join(" ");
+      },
       registerUser() {
+        this.capitalize();
         let user = {
           name: this.name,
           username: this.username,
@@ -97,12 +111,27 @@ export default {
           programme: this.programme
         }
         console.log(user)
-        this.register(user).then(res => {
+        this.register(user)
+          .then(res => {
             if (res.data.success) {
               this.$router.push('/login')
             }
+          })
+          .catch(err => {
+            console.log(err)
           })
       }
     }
 }
 </script>
+
+<style lang="scss" scoped>
+body {
+  background-color: #313843;
+}
+
+.column {
+  border-radius: 1em;
+  background-color: rgba(0,0,0,0.3);
+}
+</style>

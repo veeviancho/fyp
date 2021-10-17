@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 // Public views
 import Home from '../views/public/Home.vue'
 import Articles from '../views/public/Articles.vue'
-import Maps from '../views/public/Map.vue'
+import About from '../views/public/About.vue'
 import Login from '../views/public/auth/Login.vue'
 import Register from '../views/public/auth/Register.vue'
 
@@ -19,6 +19,7 @@ import Manage from '../views/user/booking/Manage.vue'
 import Activities from '../views/user/activities/RealTime.vue'
 import Timetable from '../views/user/activities/Timetable.vue'
 
+import Welcome from '../components/student/user/Welcome.vue'
 import Profile from '../views/user/profile/Profile.vue'
 
 const routes = [
@@ -26,30 +27,49 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    meta: {
+      public: true
+    }
   },
   {
     path: '/articles',
     name: 'Articles',
-    component: Articles
+    component: Articles,
+    meta: {
+      public: true
+    }
   },
   {
-    path: '/map',
-    name: 'How to Get Here?',
-    component: Maps
+    path: '/about',
+    name: 'About',
+    component: About,
+    meta: {
+      public: true
+    }
   },
+  // Public views - not accessible when logged in
   {
     path: '/login',
     name: 'Login',
-    component: Login
+    component: Login,
+    meta: {
+      public: true,
+      onlyLoggedOut: true
+    }
   },
   {
     path: '/register',
     name: 'Register',
-    component: Register
+    component: Register,
+    meta: {
+      public: true,
+      onlyLoggedOut: true
+    }
   },
 
-  // User views
+  // User views - not accessible when not logged in
+  // Workshops
   {
     path: '/workshop',
     name: 'Workshops',
@@ -70,6 +90,7 @@ const routes = [
     name: 'Upcoming Workshops',
     component: Upcoming
   },
+  // Bookings
   {
     path: '/booking',
     name: 'Book A Room!',
@@ -80,6 +101,7 @@ const routes = [
     name: 'Manage Bookings',
     component: Manage
   },
+  // Activities
   {
     path: '/activities',
     name: 'Real-time Activities',
@@ -90,10 +112,22 @@ const routes = [
     name: 'Timetable',
     component: Timetable
   },
+  // User
+  {
+    path: '/welcome',
+    name: 'Welcome',
+    component: Welcome
+  },
   {
     path: '/profile',
     name: 'Profile',
     component: Profile
+  },
+  { 
+    path: '/:pathMatch(.*)*', 
+    meta: {
+      notFound: true
+    } 
   }
 ]
 
@@ -102,5 +136,23 @@ const router = createRouter({
   routes,
   linkActiveClass: 'is-active'
 })
+
+// Global Route Guard
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('token')
+  const isPublic = to.matched.some(record => record.meta.public)
+  const onlyLoggedOut = to.matched.some(record => record.meta.onlyLoggedOut)
+  const notFound = to.matched.some(record => record.meta.notFound)
+
+  //if not logged in and is not a public page, redirect to Login page
+  if (!token && !isPublic) next ({ name: 'Login' });
+
+  //if logged in and wants to access login/register/etc pages, redirect to profile page
+  //if logged in and wants to access a page that doesn't exist, redirect to profile page
+  else if ((token && onlyLoggedOut) || (token && notFound)) next ({ name : 'Profile'});
+  
+  //else continue to the route user intended to access
+  else next();
+});
 
 export default router

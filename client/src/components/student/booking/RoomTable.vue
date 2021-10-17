@@ -1,5 +1,5 @@
 <template>
-<table class="table page is-fullwidth is-hoverable">
+<table class="table is-fullwidth is-hoverable">
     <thead>
     <tr id="head">
       <th>No</th>

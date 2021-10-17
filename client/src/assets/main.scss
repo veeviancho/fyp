@@ -1,14 +1,20 @@
 // Customizations for Bulma
 // Set initial variables
-$blue: #1d3785;
-$green: #3c7a89;
+// $blue: #1d3785;
+// $green: #3c7a89;
 $family-serif: poppins;
 //$grey: #808080;
+$black: rgba(0,0,0,0.5);
 
 // Set derived variables
-$link: $green;
-$warning: $blue;
+$link: $black;
+// $warning: $blue;
+$navbar-background-color: rgba(255,255,255, 0.5);
 $family-primary: $family-serif;
+// $navbar-item-active-color: #000000;
+// $navbar-item-active-background-color: rgb(250,250,250);
+$link-focus: #1c37a3;
+
 
 // Bulma Import
 @import '~bulma';

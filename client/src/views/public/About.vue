@@ -1,7 +1,6 @@
 <template>
     <div>
-    <PageTitle/>
-    <div class="page">
+    <div class="">
     <div class="columns">
         <div class="column is-half">
             <h1 class="title is-4">Address:</h1>
@@ -24,11 +23,5 @@
 </template>
 
 <script>
-import PageTitle from '@/components/general/PageTitle.vue'
 
-export default {
-    components: {
-        PageTitle
-    }
-}
 </script>
