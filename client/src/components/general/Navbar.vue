@@ -13,29 +13,36 @@
   <div id="navbarBasic" class="navbar-menu">
     
     <nav class="navbar-start" v-if="!isLoggedIn">
-      <router-link :to="{ name: 'Home' }" active-class="public-active" class="navbar-item py-5 px-6">HOME</router-link>
-      <router-link :to="{ name: 'About' }" active-class="public-active" class="navbar-item py-5 px-6">ABOUT</router-link>
-      <router-link :to="{ name: 'Articles' }" active-class="public-active" class="navbar-item py-5 px-6">ARTICLES</router-link>
-      <router-link :to="{ name: 'Login' }" active-class="public-active" class="navbar-item py-5 px-6">LOGIN</router-link>
+      <router-link :to="{ name: 'Home' }" active-class="public-active" class="navbar-item py-5 px-5">HOME</router-link>
+      <router-link :to="{ name: 'About' }" active-class="public-active" class="navbar-item py-5 px-5">ABOUT</router-link>
+      <router-link :to="{ name: 'Articles' }" active-class="public-active" class="navbar-item py-5 px-5">ARTICLES</router-link>
+      <router-link :to="{ name: 'Login' }" active-class="public-active" class="navbar-item py-5 px-5">LOGIN</router-link>
     </nav>
 
     <nav class="navbar-start" v-if="isLoggedIn">
-      <router-link :to="{ name: 'Home' }" active-class="active" class="navbar-item py-5 px-6">HOME</router-link>
-      <router-link :to="{ name: 'About' }" active-class="public-active" class="navbar-item py-5 px-6">ABOUT</router-link>
-      <router-link :to="{ name: 'Articles' }" active-class="active" class="navbar-item py-5 px-6">ARTICLES</router-link>
+      <router-link :to="{ name: 'Home' }" active-class="active" class="navbar-item py-5 px-5">HOME</router-link>
+      <router-link :to="{ name: 'About' }" active-class="public-active" class="navbar-item py-5 px-5">ABOUT</router-link>
+      <router-link :to="{ name: 'Articles' }" active-class="active" class="navbar-item py-5 px-5">ARTICLES</router-link>
 
       <div class="navbar-item has-dropdown is-hoverable">
-        <router-link :to="{ name: 'Workshops' }" active-class="active" class="navbar-item py-5 px-6">WORKSHOPS</router-link>
+        <router-link :to="{ name: 'Workshops' }" active-class="active" class="navbar-item py-5 px-5">WORKSHOPS</router-link>
         <div class="navbar-dropdown">
-          <router-link :to="{ name: 'Workshops' }" active-class="active" class="navbar-item">Manage</router-link>
+          <router-link :to="{ name: 'Workshops' }" active-class="active" class="navbar-item">Past Workshops</router-link>
+          <router-link :to="{ name: 'Workshops' }" active-class="active" class="navbar-item">Upcoming Workshops</router-link>
         </div>
       </div>
 
-      <router-link :to="{ name: 'Book A Room!' }" active-class="active" class="navbar-item py-5 px-6">BOOKINGS</router-link>
-      <router-link :to="{ name: 'Real-time Activities' }" active-class="active" class="navbar-item py-5 px-6">ACTIVITIES</router-link>
-      <router-link :to="{ name: 'Profile' }" active-class="active" class="navbar-item py-5 px-6">PROFILE</router-link>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <router-link :to="{ name: 'Book A Room!' }" active-class="active" class="navbar-item py-5 px-5">BOOK A ROOM</router-link>
+        <div class="navbar-dropdown">
+          <router-link :to="{ name: 'Manage Bookings' }" active-class="active" class="navbar-item">Manage Bookings</router-link>
+        </div>
+      </div>
 
-      <a class="navbar-item py-5 px-6" @click="logoutUser"><fa icon="power-off"/></a>
+      <router-link :to="{ name: 'Real-time Activities' }" active-class="active" class="navbar-item py-5 px-5">ACTIVITIES</router-link>
+      <router-link :to="{ name: 'Profile' }" active-class="active" class="navbar-item py-5 px-5">PROFILE</router-link>
+
+      <a class="navbar-item py-5 px-5" @click="logoutUser"><fa icon="power-off"/></a>
     </nav>
   </div>
 

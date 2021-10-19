@@ -10,7 +10,7 @@
 
   <section id="top">
     <h1>EEE Lifelong Learning Space</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Adipiscing bibendum est ultricies integer quis auctor elit sed vulputate. Augue interdum velit euismod in. Nec feugiat nisl pretium fusce id velit. Leo a diam sollicitudin tempor id eu nisl.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
     <br>
     <router-link :to="{ name: 'About' }"><button class="button">Explore</button></router-link>
   </section>
@@ -93,8 +93,9 @@ section {
 }
 
 h1 {
-  font-size: 4rem;
+  font-size: 4em;
   font-weight: bold;
+  text-align: center;
 }
 
 p {

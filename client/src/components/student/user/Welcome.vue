@@ -1,21 +1,31 @@
 <template>
-    <section class="section is-large">
-        <h1 class="title">
-            <transition name="hello">
-                <span v-if="user">Hello </span>
-            </transition>
-            <transition name="fade">
-                <router-link :to="{ name: 'Profile' }" class="student-name italic " v-if="user">
-                    {{ user.name }}
-                </router-link>
-            </transition>
-        </h1>
-        <p class="subtitle">
-            “Live as if you were to die tomorrow. Learn as if you were to live forever.”
-            <br>
-            <span class="italic">-Mahatma Gandhi.</span>
-        </p>
-        <router-link :to="{ name: 'Workshops' }"><button class="button is-outlined">View Workshops</button></router-link>
+    <section class="section">
+
+        <transition name="hello">
+        <figure class="image" v-if="user">
+            <img src="@/assets/illustrations/Welcome.png">
+        </figure>
+        </transition>
+        
+        <div class="content">
+            <h1 class="title">
+                <transition name="hello">
+                    <span v-if="user">Hello </span>
+                </transition>
+                <transition name="fade">
+                    <router-link :to="{ name: 'Profile' }" class="student-name italic " v-if="user">
+                        {{ user.name }}
+                    </router-link>
+                </transition>
+            </h1>
+            <p class="subtitle">
+                “Live as if you were to die tomorrow. Learn as if you were to live forever.”
+                <br>
+                <span class="italic">-Mahatma Gandhi.</span>
+            </p>
+            <router-link :to="{ name: 'Workshops' }"><button class="button is-outlined">View Workshops</button></router-link>
+        </div>
+
     </section>
 </template>
 
@@ -36,6 +46,21 @@ export default {
 </script>
 
 <style scoped>
+.section {
+    /* background-color: #5272A4; */
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.image {
+    width: 400px;
+    height: 400px;
+}
+
 .title {
     font-size: 4rem;
 }
@@ -44,6 +69,7 @@ export default {
     text-decoration: underline;
     /* color: hsl(0, 0%, 21%); */
     color: #5272A4;
+    text-decoration-color: #7a9cce;
     /* background-color: #92abd1; */
 }
 
@@ -59,7 +85,7 @@ export default {
 }
 
 .hello-enter-active {
-    transition: all 0.4s ease-out;
+    transition: all 0.5s ease-out;
 }
 
 .hello-enter-from {
@@ -68,7 +94,7 @@ export default {
 }
 
 .fade-enter-active {
-    transition: all 0.8s ease-out;
+    transition: all 0.9s ease-out;
     transition-delay: 1s;
 }
 
