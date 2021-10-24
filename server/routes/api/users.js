@@ -34,7 +34,7 @@ router.post('/register', (req, res) => {
     // };
 
     // Name Input Validation
-    // Accepts lower/uppercase letters, whitespace and special char (,.'-) only
+    // Accepts lower/uppercase letters, space and special char (,.'-) only
     // First char must be a letter
     let check = /^[a-z]+[a-z ,.'-]*$/i;
     if (!check.test(req.body.name)) {
@@ -70,17 +70,13 @@ router.post('/register', (req, res) => {
     // Password Input Validation
     // Medium: At least one (uppercase, lowercase, number) and at least 6 characters
     // Strong: At least one (uppercase, lowercase, number, special char) and at least 8 characters
-    check = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})|(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[\W])(?=.{8,})/
+    // check = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})|(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[\W])(?=.{8,})/
+    check = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})/
     if (!(check.test(req.body.password))) {
         return res.status(400).json ({
-            msg: "Your password is weak."
+            msg: "Weak password."
         })
     }
-
-
-
-
-
 
     // Confirm Password Input Validation
     if (req.body.password !== req.body.password2) {
@@ -99,7 +95,7 @@ router.post('/register', (req, res) => {
                 });
             } else {
                 return res.status(400).json({
-                    msg: "Email already exists."
+                    msg: "Email already exists. Please login now."
                 });
             };  
         } else {
@@ -108,7 +104,8 @@ router.post('/register', (req, res) => {
                 username: req.body.username,
                 email: req.body.email,
                 password: req.body.password,
-                programme: req.body.programme
+                programme: req.body.programme,
+                about: ''
             });
         
             //Hash password before saving in database
@@ -137,13 +134,6 @@ router.post('/register', (req, res) => {
  * @access Public
  */
 router.post("/login", (req, res) => {
-    //Object restructuring
-    // const { errors, isValid } = validateLoginInput(req.body);
-
-    // //Validation check
-    // if (!isValid) {
-    //     return res.status(400).json(errors);
-    // };
 
     const username = req.body.username;
     const password = req.body.password;
@@ -169,7 +159,7 @@ router.post("/login", (req, res) => {
                     payload,
                     keys.secretOrKey,
                     {
-                        expiresIn: 1200 // 20 minutes in seconds
+                        expiresIn: 604800 // 1 week in seconds
                     },
                     (err, token) => {
                         res.json({
@@ -189,6 +179,7 @@ router.post("/login", (req, res) => {
     });
 });
 
+
 /**
  * @route POST api/users/profile
  * @desc Return user's data
@@ -197,6 +188,59 @@ router.post("/login", (req, res) => {
 router.get('/profile', passport.authenticate('jwt', { session: false }), (req, res) => {
     return res.json({ user: req.user });
 });
+
+
+/**
+ * @route PUT api/users/update/:id
+ * @desc Update user's data
+ * @access Private
+ */
+
+router.put('/update/:id', (req, res) => {
+    // Name Input Validation
+    // Accepts lower/uppercase letters, space and special char (,.'-) only
+    // First char must be a letter
+    let check = /^[a-z]+[a-z ,.'-]*$/i;
+    if (!check.test(req.body.name)) {
+        return res.status(400).json ({
+            msg3: "Please enter a valid name."
+        })
+    }
+
+    // Username Input Validation
+    // Accepts any word character [A-Za-z0-9], special char (.-_) only
+    // No more than one special char in a row
+    // Cannot begin or end with a special char
+    // 3-25 characters long
+    check = /^\w{1}([\w][.-_]?){3,23}\w{1}$/i;
+    if (!check.test(req.body.username)) {
+        return res.status(400).json ({
+            msg3: "Please enter a valid username."
+        });
+    }
+
+    // User.findOne({ username: req.body.username }).then(user => {
+    //     //Check if user exists
+    //     if (user) {
+    //         return res.status(400).json({ 
+    //             msg2: "Username is already taken."
+    //         })
+    //     }
+
+    User.updateOne({ _id: req.params.id }, { $set: req.body })
+    .then( () => {
+        res.status(201).json({
+            success: true
+            // msg3: 'Profile updated successfully!'
+        });
+    })
+    .catch( (err) => {
+        res.status(400).json({
+            msg3: err
+        });
+    })
+});
+
 
 //Export router to be used elsewhere
 module.exports = router;

@@ -1,4 +1,6 @@
 <template>
+<body>
+    <div>
     <section class="section">
 
         <transition name="hello">
@@ -27,6 +29,8 @@
         </div>
 
     </section>
+    </div>
+</body>
 </template>
 
 <script>

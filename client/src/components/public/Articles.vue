@@ -1,7 +1,7 @@
 <template>
 <a>
 <article class="media">
-  <div class="media-content mr-3">
+  <div class="media-content">
     <div class="content">
       <p>
         <strong class="has-text-info">Article Title</strong>
@@ -18,7 +18,7 @@
   </div>
 </article>
 <article class="media">
-  <div class="media-content mr-3">
+  <div class="media-content">
     <div class="content">
       <p>
         <strong class="has-text-info">Article Title</strong>
@@ -90,22 +90,22 @@
 
 <script>
 export default {
-    name: 'WorkshopEvent'
+    name: 'Article'
 }
 </script>
 
 <style lang="scss" scoped>
 .media {
-  max-width: 92%;
-  margin: 0 auto;
   border: 1px solid #e6e7e9;
   padding: 1em 1.5em;
   border-radius: 0.3em;
   color: gray;
+  // background-color: white;
 }
 
 .media:hover {
   border: 0.15em solid #3c7a89;
+  // background-color: rgba(255,255,255,0.2)
 }
 
 </style>

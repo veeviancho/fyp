@@ -1,36 +1,32 @@
 <template>
-<div id="app">
-  <div v-if="!isLoggedIn"><PublicView/></div>
-  <div v-if="isLoggedIn"><UserView/></div>
-  <div v-if="isLoggedIn && isAdmin"><AdminView/></div>
+<div>
+  <Nav/>
+  <router-view/>
 </div>
 </template>
 
 <script>
-import PublicView from '@/views/public.vue';
-import UserView from '@/views/user.vue';
-import AdminView from '@/views/admin.vue';
-
-import { mapGetters } from 'vuex';
+import Nav from '@/components/general/Navbar.vue';
 
 export default {
   name: 'App',
   components: {
-    PublicView,
-    UserView,
-    AdminView
-  },
-  computed: {
-    ...mapGetters(['isLoggedIn'])
+    Nav
   }
 }
 </script>
 
 <style lang="scss">
 .has-navbar-fixed-top{
-  margin: 6rem auto;
+  // margin: 6rem auto;
+  padding-top: 6rem;
+  margin: auto;
   // background-color: pink;
   max-width: 92%;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 </style>
 

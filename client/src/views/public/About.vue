@@ -1,27 +1,47 @@
 <template>
-    <div>
-    <div class="">
-    <div class="columns">
-        <div class="column is-half">
-            <h1 class="title is-4">Address:</h1>
-            <p>Lorem ipsum dolor sit amet, <br>consectetur adipiscing elit, <br>sed do eiusmod tempor</p>
+<body>
+<section class="hero is-fullheight">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered">
+      <div class="column is-11-desktop">
+        <div style="padding: 4em 7em">
+            <div class="columns is-variable is-8">
+                <div class="column">
+                    First column
+                </div>
+                <div class="column">
+                    Second column
+                </div>
+            </div>
         </div>
-        <div class="column is-half">
-            <h1 class="title is-4">Contact Info:</h1>
-            <p>
-                <span class="icon"><fa icon="envelope"/></span> lifelonglearning@ntu.edu.sg
-                <br>
-                <span class="icon"><fa icon="mobile-alt"/></span> 1234 5678
-            </p>
-        </div>
+      </div>
     </div>
     </div>
-    <div class="section">
-        <h1 class="title is-4">Map:</h1>
-    </div>
-    </div>
+  </div>
+</section>
+</body>
 </template>
 
 <script>
-
 </script>
+
+<style lang="scss" scoped>
+body {
+  background-color: #313843;
+}
+
+.column {
+  border-radius: 1em;
+  background-color: rgba(0,0,0,0.3);
+}
+
+a {
+  color: white;
+}
+
+a:hover {
+  color: white;
+  font-weight: bold;
+}
+</style>

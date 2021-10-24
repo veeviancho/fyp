@@ -16,7 +16,10 @@
     </div>
     <!-- <small class="is-size-7">Tags: <span class="tag is-small is-info is-light">Name</span> <span class="tag is-small">Name</span></small>
     <br> -->
-    <small class="is-size-7">Posted by: <strong>Name</strong></small>
+    <small class="is-size-7"><strong>Date:</strong> 12/11/2021</small>&nbsp;
+    <small class="is-size-7"><strong>Time:</strong> 3:30-4:30pm</small>&nbsp;
+    <small class="is-size-7"><strong>Venue:</strong> Space #1</small>&nbsp;
+    <small class="is-size-7"><strong>Organiser:</strong> Organiser #1</small>&nbsp;
   </div>
   <div class="media-right">
     <strong class="has-text-info">10pts</strong>

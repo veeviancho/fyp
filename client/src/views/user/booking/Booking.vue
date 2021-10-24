@@ -1,5 +1,5 @@
 <template>
-<div class="">
+<div class="has-navbar-fixed-top">
 <div class="columns">
     <div class="column is-one-quarter">
         <div class="card available">

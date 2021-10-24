@@ -1,10 +1,9 @@
 <template>
+
     <div class="has-navbar-fixed-top">
         <article class="media">
         <figure class="media-left">
-            <p class="image is-128x128 is-square">
             <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
-            </p>
         </figure>
         <div class="media-content ml-5">
             <div class="content">
@@ -16,7 +15,8 @@
                     <br>
                     {{ user.programme }}
                     <br>
-                    <button class="button is-small is-light" style="margin: 0.5em 0">Edit Profile</button>
+                    <button class="button is-small is-light" style="margin: 0.5em 0" @click="showModal">Edit Profile</button>
+                    <EditProfile v-show="isModalVisible" @close="closeModal"/>
                     &nbsp;
                     <button class="button is-small is-light" style="margin: 0.5em 0">Profile Report</button>
                     <!-- <a href="mailto:name@email.com">Email Address</a> -->
@@ -27,26 +27,37 @@
         </article>
 
         <section class="section">
-            <div class="is-size-5">About me:</div>
-            <div class="about-me">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+            <div class="is-size-5">About Me:</div>
+            <div class="description">{{ user.about }}</div>
         </section>
 
-        <nav class="level">
+        <section class="section">
+            <div class="is-size-5">Workshops Attended:</div>
+            <div class="description">
+                <ul>
+                    <li>Workshop #1</li>
+                    <li>Workshop #2</li>
+                    <li>Workshop #3</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- <nav class="level">
             <div class="level-item has-text-centered">
             <div>
                 <p class="heading">Workshops Attended</p>
                 <p class="title">12</p>
             </div>
             </div>
-            <!-- <div class="level-item has-text-centered">
+            <div class="level-item has-text-centered">
             <div>
                 <p class="heading">Reviews Given</p>
                 <p class="title">5</p>
             </div>
-            </div> -->
+            </div>
         </nav>
         &nbsp;
-        <!-- <nav class="level">
+        <nav class="level">
             <div class="level-item has-text-centered">
             <div>
                 <p class="heading">Total Points</p>
@@ -65,13 +76,28 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import EditProfile from '@/components/student/user/EditProfile.vue'
 
 export default {
+    data() {
+        return {
+            isModalVisible: false
+        }
+    },
+    components: {
+        EditProfile
+    },
     computed: {
         ...mapGetters(['user'])
     },
     methods: {
-        ...mapActions(['getProfile'])
+        ...mapActions(['getProfile']),
+        showModal() {
+            this.isModalVisible = true;
+        },
+        closeModal() {
+            this.isModalVisible = false;
+        }
     },
     created() {
         this.getProfile();
@@ -84,14 +110,21 @@ export default {
     max-width: 92%;
     margin: auto;
     color: gray;
+    display: flex;
+    align-items: center;
 }
 
-.about-me {
+.description {
     color: gray;
 }
 
 .level {
     max-width: 40%;
     margin: 0 25%;
+}
+
+.media-left {
+    max-height: 20%;
+    max-width: 20%;
 }
 </style>

@@ -22,6 +22,15 @@ import Timetable from '../views/user/activities/Timetable.vue'
 import Welcome from '../components/student/user/Welcome.vue'
 import Profile from '../views/user/profile/Profile.vue'
 
+// Admin views
+import AdminHome from '../views/admin/Home.vue'
+import AdminAbout from '../views/admin/About.vue'
+import AdminArticles from '../views/admin/Articles.vue'
+import AdminWorkshop from '../views/admin/Workshop.vue'
+import AdminBooking from '../views/admin/Booking.vue'
+import AdminRealTime from '../views/admin/RealTime.vue'
+import AdminProfile from '../views/admin/RealTime.vue'
+
 const routes = [
   // Public views
   {
@@ -103,7 +112,7 @@ const routes = [
   },
   // Activities
   {
-    path: '/activities',
+    path: '/realtime',
     name: 'Real-time Activities',
     component: Activities
   },
@@ -128,7 +137,45 @@ const routes = [
     meta: {
       notFound: true
     } 
-  }
+  },
+
+  // Admin views
+  {
+    path: '/admin',
+    name: 'Admin Home',
+    component: AdminHome,
+  },
+  {
+    path: '/admin/about',
+    name: 'Admin About',
+    component: AdminAbout
+  },
+  {
+    path: '/admin/articles',
+    name: 'Admin Articles',
+    component: AdminArticles
+  },
+  {
+    path: '/admin/workshop',
+    name: 'Admin Workshop',
+    component: AdminWorkshop
+  },
+  {
+    path: '/admin/booking',
+    name: 'Admin Booking',
+    component: AdminBooking
+  },
+  {
+    path: '/admin/realtime',
+    name: 'Admin Real Time',
+    component: AdminRealTime
+  },
+  {
+    path: '/admin',
+    name: 'Admin Profile',
+    component: AdminProfile
+  },
+
 ]
 
 const router = createRouter({

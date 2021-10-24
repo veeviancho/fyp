@@ -1,6 +1,6 @@
 <template>
 <body>
-  <nav class="box">
+  <nav class="box home-nav">
     <a href="#top">home</a>/
     <a href="#space-1">space 1</a>/
     <a href="#space-2">space 2</a>/
@@ -19,28 +19,32 @@
     <h1>Space 1</h1>
     <p>Some description. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <br> Book this room now.</p>
     <br>
-    <router-link :to="{ name: 'Login' }"><button class="button">Login</button></router-link>
+    <router-link :to="{ name: 'Login' }"><button class="button" v-if="!isLoggedIn">Login</button></router-link>
+    <router-link :to="{ name: 'Book A Room!' }"><button class="button" v-if="isLoggedIn">Book Now</button></router-link>
   </section>
 
   <section id="space-2">
     <h1>Space 2</h1>
     <p>Some description. Book this room now.</p>
     <br>
-    <router-link :to="{ name: 'Login' }"><button class="button">Login</button></router-link>
+    <router-link :to="{ name: 'Login' }"><button class="button" v-if="!isLoggedIn">Login</button></router-link>
+    <router-link :to="{ name: 'Book A Room!' }"><button class="button" v-if="isLoggedIn">Book Now</button></router-link>
   </section>
 
   <section id="space-3">
     <h1>Space 3</h1>
     <p>Some description. Book this room now.</p>
     <br>
-    <router-link :to="{ name: 'Login' }"><button class="button">Login</button></router-link>
+    <router-link :to="{ name: 'Login' }"><button class="button" v-if="!isLoggedIn">Login</button></router-link>
+    <router-link :to="{ name: 'Book A Room!' }"><button class="button" v-if="isLoggedIn">Book Now</button></router-link>
   </section>
 
   <section id="space-4">
     <h1>Space 4</h1>
     <p>Some description. Book this room now.</p>
     <br>
-    <router-link :to="{ name: 'Login' }"><button class="button">Login</button></router-link>
+    <router-link :to="{ name: 'Login' }"><button class="button" v-if="!isLoggedIn">Login</button></router-link>
+    <router-link :to="{ name: 'Book A Room!' }"><button class="button" v-if="isLoggedIn">Book Now</button></router-link>
   </section>
 
 </body>
@@ -135,4 +139,17 @@ button:hover {
 #space-4 {
   background: linear-gradient(rgba(0, 0, 0, 0.75),rgba(0, 0, 0, 0.7)), url('https://www.csiwallpanels.com/images/com_hikashop/upload/community.jpg') no-repeat center center/cover;
 }
+
+@media (max-width: 1023px) {
+  .home-nav {
+    display: none;
+  }
+}
+
+// @media (max-width: 1024px) {
+//   myelement {
+//     display: none;
+//   }
+// }
+
 </style>
