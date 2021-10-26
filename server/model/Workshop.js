@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.schema;
+const Schema = mongoose.Schema;
 
 const WorkshopSchema = new Schema({
     title: {
@@ -7,15 +7,15 @@ const WorkshopSchema = new Schema({
         required: true,
     },
     description: String,
-    date: Date,
-    startTime: Date,
-    endTime: Date,
-    venue: String,
-    organiser: String,
-    programme: String,
-    category: String,
-    points: Number,
-    date: {
+    // date: Date,
+    // startTime: Date,
+    // endTime: Date,
+    // venue: String,
+    // organiser: String,
+    // programme: String,
+    // category: String,
+    // points: Number,
+    dateCreated: {
         type: Date,
         default: Date.now
     }

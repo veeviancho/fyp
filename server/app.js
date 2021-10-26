@@ -38,6 +38,11 @@ mongoose.connect(db, {
 const passport = require('passport');
 const users = require('./routes/api/users');
 
+//NOTSURE: pulling in workshop
+const workshops = require('./routes/api/workshops');
+app.use('/api/workshops', workshops);
+//NOTSURE
+
 app.use(passport.initialize()); //passport middleware
 require('./config/passport')(passport); //passport config
 app.use('/api/users', users);

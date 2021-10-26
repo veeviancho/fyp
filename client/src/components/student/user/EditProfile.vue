@@ -89,7 +89,15 @@ export default {
     close() {
       this.$emit('close');
     },
+    capitalize() {
+      let str = this.name.toLowerCase().split(" ");
+      for (let i=0; i<str.length; i++) {
+        str[i] = str[i][0].toUpperCase() + str[i].slice(1);
+      }
+      this.name = str.join(" ");
+    },
     updateUser() {
+      this.capitalize();
       let user = {
         id: this.user._id,
         name: this.name,

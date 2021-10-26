@@ -196,6 +196,7 @@ router.get('/profile', passport.authenticate('jwt', { session: false }), (req, r
  * @access Private
  */
 
+//TODO: passport authenticate??
 router.put('/update/:id', (req, res) => {
     // Name Input Validation
     // Accepts lower/uppercase letters, space and special char (,.'-) only
@@ -218,6 +219,8 @@ router.put('/update/:id', (req, res) => {
             msg3: "Please enter a valid username."
         });
     }
+
+    //  TODO: username exist in database -> error!!
 
     // User.findOne({ username: req.body.username }).then(user => {
     //     //Check if user exists

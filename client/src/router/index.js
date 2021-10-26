@@ -192,7 +192,8 @@ router.beforeEach((to, from, next) => {
   const notFound = to.matched.some(record => record.meta.notFound)
 
   //if not logged in and is not a public page, redirect to Login page
-  if (!token && !isPublic) next ({ name: 'Login' });
+  //if not logged in and not found, redirect to login page
+  if (!token && !isPublic || (!token && notFound)) next ({ name: 'Login' });
 
   //if logged in and wants to access login/register/etc pages, redirect to profile page
   //if logged in and wants to access a page that doesn't exist, redirect to profile page
