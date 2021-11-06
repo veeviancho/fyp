@@ -28,13 +28,6 @@
         </div>
       </div>
 
-      <!-- <div class="field">
-        <label class="label">Email</label>
-        <div class="control">
-          <input class="input" type="email" v-model="email" :placeholder="user.email">
-        </div>
-      </div> -->
-
       <div class="field">
         <label class="label">Username</label>
         <div class="control">
@@ -42,18 +35,10 @@
         </div>
       </div>     
 
-      <!-- <div class="field">
-        <label class="label">Change Password</label>
-        <div class="control">
-          <input class="input" type="password" placeholder="Current Password">
-          <input class="input mt-1" type="password" placeholder="New Password">
-        </div>
-      </div> -->
-
       <div class="field">
         <label class="label">About Me</label>
         <div class="control">
-          <textarea class="textarea" type="textarea" maxlength="300" placeholder="Write something!" v-model="about"></textarea>
+          <textarea class="textarea" type="textarea" maxlength="1000" placeholder="Write something!" v-model="about"></textarea>
         </div>
       </div>
 
@@ -97,7 +82,9 @@ export default {
       this.name = str.join(" ");
     },
     updateUser() {
-      this.capitalize();
+      if (this.name) {
+        this.capitalize();
+      }
       let user = {
         id: this.user._id,
         name: this.name,
@@ -124,5 +111,8 @@ export default {
 </script>
 
 <style scoped>
+button {
+  color: black;
+}
 </style>
 

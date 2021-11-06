@@ -62,7 +62,7 @@
           <p class="has-text-danger has-text-centered mb-3 white" v-if="error">{{ error }}</p>
 
           <div class="control">
-            <button type="submit" class="button is-white is-outlined is-fullwidth">Sign Up</button>&nbsp;
+            <button type="submit" class="button is-fullwidth">Sign Up</button>&nbsp;
           </div>
         </form>
       </div>
@@ -126,10 +126,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-body {
-  background-color: #313843;
-}
-
 .column {
   border-radius: 1em;
   background-color: rgba(0,0,0,0.3);

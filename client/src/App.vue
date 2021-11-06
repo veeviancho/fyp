@@ -18,16 +18,31 @@ export default {
 
 <style lang="scss">
 .has-navbar-fixed-top{
-  // margin: 6rem auto;
   padding-top: 6rem;
   margin: auto;
-  // background-color: pink;
   max-width: 92%;
+}
+
+body {
+  min-height: 100vh;
+  background-color: #313843;
 }
 
 html {
   scroll-behavior: smooth;
 }
+
+button:hover,
+button:focus {
+  background-color: #329AA0;
+  color: white;
+}
+
+//For development purposes
+.pink {
+    border: 2px solid pink;
+}
+
 </style>
 
 

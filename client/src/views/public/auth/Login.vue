@@ -30,7 +30,7 @@
           <p class="has-text-danger has-text-centered mb-3" v-if="loginError">{{ loginError }}</p>
 
           <div class="control">
-            <button type="submit" v-bind:class="[isLoading ? 'is-loading': '', 'button is-white is-outlined is-fullwidth']">Login</button>&nbsp;
+            <button type="submit" v-bind:class="[isLoading ? 'is-loading': '', 'button is-fullwidth']">Login</button>&nbsp;
           </div>
           <a>Forgot Password?</a>
           <br>
@@ -81,7 +81,7 @@ export default {
           if (res.data.success) {
             // If success, user will be directed to the home page
             // console.log(res.data)
-            this.$router.push('/welcome')
+            this.$router.push('/')
           }
         })
         .catch(err => {
@@ -94,14 +94,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// body {
-//   background: linear-gradient(rgba(0, 0, 0, 0.75),rgba(0, 0, 0, 0.7)), url('https://static.dezeen.com/uploads/2017/06/dezeen-features-haworth-office-culture_dezeen_2364_col_12-852x522.jpg') no-repeat center center/cover;
-// }
-
-body {
-  background-color: #313843;
-}
-
 .column {
   border-radius: 1em;
   background-color: rgba(0,0,0,0.3);

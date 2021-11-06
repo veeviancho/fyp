@@ -1,77 +1,147 @@
 <template>
+<body>
+<div class="has-navbar-fixed-top hero is-fullheight">
 
-    <div class="has-navbar-fixed-top">
-        <article class="media">
-        <figure class="media-left">
-            <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
-        </figure>
-        <div class="media-content ml-5">
-            <div class="content">
-                <div class="content">
-                <p>
-                    <span class="is-size-3"><strong>{{ user.name }}</strong> <small>@{{ user.username }}</small></span>
-                    <br>
-                    Student
-                    <br>
-                    {{ user.programme }}
-                    <br>
-                    <button class="button is-small is-light" style="margin: 0.5em 0" @click="showModal">Edit Profile</button>
-                    <EditProfile v-show="isModalVisible" @close="closeModal"/>
-                    &nbsp;
-                    <button class="button is-small is-light" style="margin: 0.5em 0">Profile Report</button>
-                    <!-- <a href="mailto:name@email.com">Email Address</a> -->
-                </p>
+    <div class="section mb-6">
+        <div class="column">
+            <div class="columns">
+                <div class="column is-2">
+                    <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
+                </div>
+
+                <div class="column">
+                        <p>
+                            <span class="is-size-3"><b><span class="has-text-white">{{ user.name }}</span></b> <small>@{{ user.username }}</small></span>
+                            <br>
+                            Student
+                            <br>
+                            {{ user.programme }}
+                            <br>
+                            <button class="button is-small" style="margin: 0.5em 0" @click="showModal">Edit Profile</button>
+                            <EditProfile v-show="isModalVisible" @close="closeModal"/>
+                            &nbsp;
+                            <button class="button is-small" style="margin: 0.5em 0">Profile Report</button>
+                        </p>
+                </div>
+            </div>
+            <div class="columns">
+                <div class="column">
+                    <p><i>About Me:</i></p>
+                    <span class="has-text-white about">{{ user.about }}</span>
                 </div>
             </div>
         </div>
-        </article>
-
-        <section class="section">
-            <div class="is-size-5">About Me:</div>
-            <div class="description">{{ user.about }}</div>
-        </section>
-
-        <section class="section">
-            <div class="is-size-5">Workshops Attended:</div>
-            <div class="description">
-                <ul>
-                    <li>Workshop #1</li>
-                    <li>Workshop #2</li>
-                    <li>Workshop #3</li>
-                </ul>
-            </div>
-        </section>
-
-        <!-- <nav class="level">
-            <div class="level-item has-text-centered">
-            <div>
-                <p class="heading">Workshops Attended</p>
-                <p class="title">12</p>
-            </div>
-            </div>
-            <div class="level-item has-text-centered">
-            <div>
-                <p class="heading">Reviews Given</p>
-                <p class="title">5</p>
-            </div>
-            </div>
-        </nav>
-        &nbsp;
-        <nav class="level">
-            <div class="level-item has-text-centered">
-            <div>
-                <p class="heading">Total Points</p>
-                <p class="title">22</p>
-            </div>
-            </div>
-            <div class="level-item has-text-centered">
-            <div>
-                <p class="heading">Rank</p>
-                <p class="title">#8</p>
-            </div>
-            </div>
-        </nav> -->
     </div>
+
+    
+    <div class="column">
+        <div class="columns">
+
+            <div class="column yellow mr-5 my-3">
+            <div class="px-5 py-3">
+                Registered Workshops
+                <div class="my-5">
+                    <span class="title is-1 has-text-white">0</span> &nbsp; 
+                    <span class="subtitle is-5 has-text-white"><a class="yellow-box px-3 py-2">attended</a> workshops</span>
+                </div>
+                <div class="my-5">
+                    <span class="title is-1 has-text-white">0</span> &nbsp; 
+                    <span class="subtitle is-5 has-text-white"><a class="yellow-box px-3 py-2">upcoming</a> workshops</span>
+                </div>
+            </div>
+            </div>
+
+
+            <div class="column green ml-5 my-3">
+            <div class="px-5 py-3">
+                Booked Rooms
+                 <div class="my-5">
+                    <span class="title is-1 has-text-white">0</span> &nbsp; 
+                    <span class="subtitle is-5 has-text-white"><a class="green-box px-3 py-2">past</a> bookings</span>
+                </div>
+                <div class="my-5">
+                    <span class="title is-1 has-text-white">0</span> &nbsp; 
+                    <span class="subtitle is-5 has-text-white"><a class="green-box px-3 py-2">upcoming</a> bookings</span>
+                </div>
+            </div>
+            </div>
+
+        </div>
+    </div>
+    
+
+    <div class="section my-6">
+        <div class="column">
+            <div class="columns">
+                <div class="column">
+                    <span class="title is-4 category px-3 py-2">Technical Skills</span> &nbsp;
+                    <span class="has-text-white desc">You have attended <strong class="has-text-white">0</strong> technical skills workshops</span>
+
+                    <table class="has-text-white mt-6">
+                        <tr>
+                            <td>01/01/2021</td>
+                            <td><b>Workshop #1</b></td>
+                            <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt...</td>
+                        </tr>
+                        <tr>
+                            <td>01/01/2021</td>
+                            <td><b>Workshop #2</b></td>
+                            <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt...</td>
+                        </tr>
+                        <tr>
+                            <td>01/01/2021</td>
+                            <td><b>Workshop #3</b></td>
+                            <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt...</td>
+                        </tr>
+                        <tr>
+                            <td>01/01/2021</td>
+                            <td><b>Workshop #4</b></td>
+                            <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt...</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section mb-6">
+        <div class="column">
+            <div class="columns">
+                <div class="column">
+                    <span class="title is-4 category px-3 py-2">Soft Skills</span> &nbsp;
+                    <span class="has-text-white desc">You have attended <strong class="has-text-white">0</strong> soft skills workshops</span>
+
+                    <table class="has-text-white mt-6">
+                        <tr>
+                            <td>01/01/2021</td>
+                            <td><b>Workshop #1</b></td>
+                            <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt...</td>
+                        </tr>
+                        <tr>
+                            <td>01/01/2021</td>
+                            <td><b>Workshop #2</b></td>
+                            <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt...</td>
+                        </tr>
+                        <tr>
+                            <td>01/01/2021</td>
+                            <td><b>Workshop #3</b></td>
+                            <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt...</td>
+                        </tr>
+                        <tr>
+                            <td>01/01/2021</td>
+                            <td><b>Workshop #4</b></td>
+                            <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt...</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+</body>
 </template>
 
 <script>
@@ -106,25 +176,61 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.media {
-    max-width: 92%;
-    margin: auto;
-    color: gray;
-    display: flex;
-    align-items: center;
+.section {
+    background-color: #161C20;
 }
 
-.description {
-    color: gray;
+body,
+.has-navbar-fixed-top {
+    background-color: #313843;
 }
 
-.level {
-    max-width: 40%;
-    margin: 0 25%;
+.column {
+    color: #BBB9B9;
 }
 
-.media-left {
-    max-height: 20%;
-    max-width: 20%;
+.yellow {
+    border: 5px solid #FFDA7A;
+    border-radius: 9px;
+}
+
+.green {
+    border: 5px solid #33CDC4;
+    border-radius: 9px;
+}
+
+.yellow-box:hover {
+    background-color: #FFDA7A;
+    color: black;
+    font-weight: bold;
+}
+
+.yellow-box, .green-box {
+    font-weight: bold;
+}
+
+.green-box:hover {
+    background-color: #33CDC4;
+    color: black;
+    font-weight: bold;
+}
+
+.category {
+    background-color: #FFDA7A;
+    color: black;
+    font-weight: bold;
+}
+
+td {
+    padding: 0 2rem 0 0;
+}
+
+@media (max-width: 600px) {
+  td, .about, columns .title {
+    font-size: 3vw;
+  }
+  .desc {
+      line-height: 3rem;
+  }
 }
 </style>

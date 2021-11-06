@@ -9,17 +9,16 @@ import Register from '../views/public/auth/Register.vue'
 
 // User views
 import Workshop from '../views/user/workshop/Workshop.vue'
-import Details from '../views/user/workshop/WorkshopDetails.vue'
-import History from '../views/user/workshop/History.vue'
-import Upcoming from '../views/user/workshop/Upcoming.vue'
+// import Details from '../views/user/workshop/WorkshopDetails.vue'
+// import History from '../views/user/workshop/History.vue'
+// import Upcoming from '../views/user/workshop/Upcoming.vue'
 
 import Booking from '../views/user/booking/Booking.vue'
 import Manage from '../views/user/booking/Manage.vue'
 
 import Activities from '../views/user/activities/RealTime.vue'
-import Timetable from '../views/user/activities/Timetable.vue'
+// import Timetable from '../views/user/activities/Timetable.vue'
 
-import Welcome from '../components/student/user/Welcome.vue'
 import Profile from '../views/user/profile/Profile.vue'
 
 // Admin views
@@ -84,21 +83,21 @@ const routes = [
     name: 'Workshops',
     component: Workshop
   },
-  {
-    path: '/workshop/details',
-    name: 'Workshop Details',
-    component: Details
-  },
-  {
-    path: '/workshop/history',
-    name: 'History',
-    component: History
-  },
-  {
-    path: '/workshop/upcoming-workshops',
-    name: 'Upcoming Workshops',
-    component: Upcoming
-  },
+  // {
+  //   path: '/workshop/details',
+  //   name: 'Workshop Details',
+  //   component: Details
+  // },
+  // {
+  //   path: '/workshop/history',
+  //   name: 'History',
+  //   component: History
+  // },
+  // {
+  //   path: '/workshop/upcoming-workshops',
+  //   name: 'Upcoming Workshops',
+  //   component: Upcoming
+  // },
   // Bookings
   {
     path: '/booking',
@@ -116,17 +115,12 @@ const routes = [
     name: 'Real-time Activities',
     component: Activities
   },
-  {
-    path: '/timetable',
-    name: 'Timetable',
-    component: Timetable
-  },
+  // {
+  //   path: '/timetable',
+  //   name: 'Timetable',
+  //   component: Timetable
+  // },
   // User
-  {
-    path: '/welcome',
-    name: 'Welcome',
-    component: Welcome
-  },
   {
     path: '/profile',
     name: 'Profile',
@@ -175,7 +169,6 @@ const routes = [
     name: 'Admin Profile',
     component: AdminProfile
   },
-
 ]
 
 const router = createRouter({

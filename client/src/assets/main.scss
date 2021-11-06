@@ -1,20 +1,16 @@
 // Customizations for Bulma
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
 // Set initial variables
-// $blue: #1d3785;
-// $green: #3c7a89;
-$family-serif: poppins;
-//$grey: #808080;
-$black: rgba(0,0,0,0.5);
+$family-serif: Poppins;
 
 // Set derived variables
-$link: $black;
-// $warning: $blue;
-$navbar-background-color: rgba(255,255,255, 0.5);
 $family-primary: $family-serif;
-// $navbar-item-active-color: #000000;
-// $navbar-item-active-background-color: rgb(250,250,250);
-$link-focus: #1c37a3;
-
+$link-hover: white;
+$link: white;
+$button-background-color: transparent;
+$button-color: white;
 
 // Bulma Import
 @import '~bulma';
