@@ -59,7 +59,9 @@
           </div>
 
           <!-- Display message when login fails -->
-          <p class="has-text-danger has-text-centered mb-3 white" v-if="error">{{ error }}</p>
+          <p class="has-text-danger has-text-centered mb-3 white" v-if="error">{{ error }} <fa class="fa" icon="info-circle" v-if="info" @click="showModal"/></p>
+          <ErrorMsg v-show="isModalVisible" @close="closeModal"/>
+          
 
           <div class="control">
             <button type="submit" class="button is-fullwidth">Sign Up</button>&nbsp;
@@ -75,6 +77,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import ErrorMsg from '@/components/student/user/ErrorMsg.vue';
 
 export default {
     name: 'Register',
@@ -85,11 +88,16 @@ export default {
         email: '',
         password: '',
         password2: '',
-        programme: 'Communications Engineering'
+        programme: 'Communications Engineering',
+        isModalVisible: false
       }
     },
+    components: {
+      ErrorMsg
+    },
     computed: {
-      ...mapGetters(['error'])
+      ...mapGetters(['error']),
+      ...mapGetters(['info'])
     },
     methods: {
       ...mapActions(['register']),
@@ -120,6 +128,12 @@ export default {
           .catch(err => {
             console.log(err)
           })
+      },
+      showModal() {
+        this.isModalVisible = true;
+      },
+      closeModal() {
+        this.isModalVisible = false;
       }
     }
 }
@@ -129,5 +143,10 @@ export default {
 .column {
   border-radius: 1em;
   background-color: rgba(0,0,0,0.3);
+}
+
+.fa {
+  color: rgb(186, 186, 187);
+  cursor: pointer;
 }
 </style>

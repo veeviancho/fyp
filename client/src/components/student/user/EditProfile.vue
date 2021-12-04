@@ -8,13 +8,13 @@
       <div class="field">
         <label class="label">Name</label>
         <div class="control">
-          <input class="input" type="text" id="name" name="name" v-model="name" placeholder="New name">
+          <input class="input is-warning" type="text" id="name" name="name" v-model="name" placeholder="New name">
         </div>
       </div> 
 
       <div class="field">
         <label class="label">Programme</label>
-        <div class="select is-fullwidth">
+        <div class="select is-fullwidth is-warning">
           <select name="programme" v-model="programme">
             <option disabled>Change Programme</option>
             <option>Communications Engineering</option>
@@ -31,14 +31,14 @@
       <div class="field">
         <label class="label">Username</label>
         <div class="control">
-          <input class="input" type="text" v-model="username" placeholder="New username">
+          <input class="input is-warning" type="text" v-model="username" placeholder="New username">
         </div>
       </div>     
 
       <div class="field">
         <label class="label">About Me</label>
         <div class="control">
-          <textarea class="textarea" type="textarea" maxlength="1000" placeholder="Write something!" v-model="about"></textarea>
+          <textarea class="textarea is-warning" type="textarea" maxlength="1000" placeholder="Write something!" v-model="about"></textarea>
         </div>
       </div>
 
@@ -114,5 +114,6 @@ export default {
 button {
   color: black;
 }
+
 </style>
 

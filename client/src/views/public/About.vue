@@ -6,7 +6,9 @@
   <div class="columns">
 
     <div class="column is-6">
-      <img src="https://static.dezeen.com/uploads/2017/06/dezeen-features-haworth-office-culture_dezeen_2364_col_12-852x522.jpg">
+      <img 
+        style="width:100%;"
+        src="https://static.dezeen.com/uploads/2017/06/dezeen-features-haworth-office-culture_dezeen_2364_col_12-852x522.jpg">
     </div>
 
     <div class="column column-right is-6">
@@ -40,14 +42,21 @@
 <div id="map" class="section mb-6">
   <div class="columns">
 
-    <div class="column is-6">
+    <div class="column column-left is-6">
       <h1 class="title has-text-white mx-5">Address</h1>
       <p class="has-text-white">50 Nanyang Ave, 639798 Singapore</p>
-
-      map map map
+      <iframe
+        width="100%"
+        height="500rem"
+        style="margin: 2rem auto"
+        loading="lazy"
+        allowfullscreen
+        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAX-VzgMYlJNPXG8mYCqSE2zDUjbm1fg8c
+          &q=Nanyang+Technological+University,Singapore">
+      </iframe>
     </div>
 
-    <div class="column is-6 column-right">
+    <div class="column is-6">
       <h1 class="title has-text-white mx-5">How to Get Here?</h1>
       <p class="has-text-white text-left">
         <b>BY CAR</b> <br/>
@@ -97,6 +106,10 @@
 
 .column-right {
   border-left: 1px solid white;
+}
+
+.column-left {
+    border-right: 1px solid white;
 }
 
 .title {
@@ -166,6 +179,9 @@ th, td {
 @media (max-width: 768px) {
   .column-right {
     border-left: none;
+  }
+  .column-left {
+    border-right: none;
   }
   .contact-title {
     margin: 0px 0px 2.5em;

@@ -10,18 +10,18 @@
                 </div>
 
                 <div class="column">
-                        <p>
-                            <span class="is-size-3"><b><span class="has-text-white">{{ user.name }}</span></b> <small>@{{ user.username }}</small></span>
-                            <br>
-                            Student
-                            <br>
-                            {{ user.programme }}
-                            <br>
-                            <button class="button is-small" style="margin: 0.5em 0" @click="showModal">Edit Profile</button>
-                            <EditProfile v-show="isModalVisible" @close="closeModal"/>
-                            &nbsp;
-                            <button class="button is-small" style="margin: 0.5em 0">Profile Report</button>
-                        </p>
+                    <p>
+                        <span class="is-size-3"><b><span class="has-text-white">{{ user.name }}</span></b> <small>@{{ user.username }}</small></span>
+                        <br>
+                        Student
+                        <br>
+                        {{ user.programme }}
+                        <br>
+                        <button class="button is-small" style="margin: 0.5em 0" @click="showModal">Edit Profile</button>
+                        <EditProfile v-show="isModalVisible" @close="closeModal"/>
+                        &nbsp;
+                        <button class="button is-small" style="margin: 0.5em 0">Profile Report</button>
+                    </p>
                 </div>
             </div>
             <div class="columns">
@@ -37,7 +37,7 @@
     <div class="column">
         <div class="columns">
 
-            <div class="column yellow mr-5 my-3">
+            <div class="column yellow">
             <div class="px-5 py-3">
                 Registered Workshops
                 <div class="my-5">
@@ -52,7 +52,7 @@
             </div>
 
 
-            <div class="column green ml-5 my-3">
+            <div class="column green">
             <div class="px-5 py-3">
                 Booked Rooms
                  <div class="my-5">
@@ -192,11 +192,22 @@ body,
 .yellow {
     border: 5px solid #FFDA7A;
     border-radius: 9px;
+    margin: 2rem 2rem 2rem 0;
 }
 
 .green {
     border: 5px solid #33CDC4;
     border-radius: 9px;
+    margin: 2rem 0 2rem 2rem;
+}
+
+@media (max-width: 768px) {
+    .yellow {
+        margin: 2rem 0 2rem 0;
+    }
+    .green {
+        margin: 2rem 0 2rem 0;
+    }
 }
 
 .yellow-box:hover {

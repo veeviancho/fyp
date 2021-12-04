@@ -5,6 +5,7 @@ const state = {
     token: localStorage.getItem('token') || '', //set to empty string if not found
     user: {},
     error: null, //registration error
+    info: null,
     loginError: null,
     updateError: null
 };
@@ -14,6 +15,7 @@ const getters = {
     authState: state => state.status,
     user: state => state.user,
     error: state => state.error,
+    info: state => state.info,
     loginError: state => state.loginError,
     updateError: state => state.updateError
 };
@@ -133,6 +135,7 @@ const mutations = {
     register_error(state, err) {
         state.status = 'failed'
         state.error = err.response.data.msg
+        state.info = err.response.data.info
         state.loginError = null
         state.updateError = null
     },
@@ -141,7 +144,7 @@ const mutations = {
         state.status = 'loading'
     },
     profile_success(state, user) {
-        state.status = 'success',
+        state.status = 'success'
         state.user = user
     },
     // Update mutation

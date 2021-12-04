@@ -1,6 +1,3 @@
-<!-- Login page -->
-<!-- style="background-image: url('https://eastudy.sg/wordpress/wp-content/uploads/2018/06/0625EN01.jpg'); background-repeat: no-repeat; background-size: cover; opacity: 0.5"> -->
-
 <template>
 <body>
 <section class="hero is-fullheight">
@@ -8,7 +5,8 @@
     <div class="container">
       <div class="columns is-centered">
       <div class="column is-9-desktop">
-        <form id="login-form" style="padding: 4em 7em" @submit.prevent="loginUser">
+
+        <form @submit.prevent="loginUser">
           <!-- The submit event will no longer reload the page -->
           <h1 class="title is-size-3 has-text-centered has-text-white"><i>Login</i></h1>
 
@@ -32,10 +30,13 @@
           <div class="control">
             <button type="submit" v-bind:class="[isLoading ? 'is-loading': '', 'button is-fullwidth']">Login</button>&nbsp;
           </div>
-          <a>Forgot Password?</a>
-          <br>
-          <span style="text-align: center; color: rgb(200,200,200);">Don't have an account? <router-link :to="{ name: 'Register' }">Sign up</router-link> now.</span>
         </form>
+
+        <a @click="showModal">Forgot Password?</a>
+        <ForgotPassword v-show="isModalVisible" @close="closeModal"/>
+        <br>
+        <span style="text-align: center; color: rgb(200,200,200);">Don't have an account? <router-link :to="{ name: 'Register' }">Sign up</router-link> now.</span>
+
       </div>
     </div>
     </div>
@@ -46,6 +47,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import ForgotPassword from '@/components/student/user/ForgotPassword.vue'
 
 export default {
   // Adding data values that will bind to the HTML elements
@@ -53,8 +55,11 @@ export default {
     return {
       username: '',
       password: '',
-      // error: '',
+      isModalVisible: false
     }
+  },
+  components: {
+    ForgotPassword
   },
   computed: {
     // ...mapGetters(['msg'])
@@ -88,6 +93,12 @@ export default {
           // this.error = "Wrong information. Please re-enter!!"
           console.log(err)
         })
+    },
+    showModal() {
+      this.isModalVisible = true;
+    },
+    closeModal() {
+      this.isModalVisible = false;
     }
   }
 };
@@ -97,6 +108,7 @@ export default {
 .column {
   border-radius: 1em;
   background-color: rgba(0,0,0,0.3);
+  padding: 4em 7em;
 }
 
 a {
@@ -106,5 +118,11 @@ a {
 a:hover {
   color: white;
   font-weight: bold;
+}
+
+@media (max-width:600px) {
+  #login-form {
+    padding: 2em 3.5em;
+  }
 }
 </style>

@@ -39,7 +39,12 @@ router.post('/register', (req, res) => {
     let check = /^[a-z]+[a-z ,.'-]*$/i;
     if (!check.test(req.body.name)) {
         return res.status(400).json ({
-            msg: "Please enter a valid name."
+            msg: "Please enter a valid name.",
+            info: [
+                { msg: "First character must be an alphabet letter." },
+                { msg: "Numbers are not accepted." }, 
+                { msg: "Special characters other than space ( ), comma (,), period (.), hyphen (-) and apostrophe (') are not accepted." }
+            ]
         })
     }
 
@@ -51,7 +56,13 @@ router.post('/register', (req, res) => {
     check = /^\w{1}([\w][.-_]?){3,23}\w{1}$/i;
     if (!check.test(req.body.username)) {
         return res.status(400).json ({
-            msg: "Please enter a valid username."
+            msg: "Please enter a valid username.",
+            info: [
+                { msg: "Accept alphabet letters, numbers, period (.), hyphen (-) and underscore (_) only." },
+                { msg: "No more than one special character in a row." },
+                { msg: "Cannot begin or end with a special character." },
+                { msg: "3 to 25 characters long." }
+            ]
         });
     }
 
@@ -63,18 +74,31 @@ router.post('/register', (req, res) => {
     check = /^[a-z]+[\w(-.)?]*@(e.)?ntu.edu.sg$/i
     if (!check.test(req.body.email)) {
         return res.status(400).json ({
-            msg: "Please enter a valid NTU email."
+            msg: "Please enter a valid NTU email.",
+            info: [
+                { msg: "Must be an NTU email account." },
+                { msg: "Username accepts any letters, numbers, period (.) and hyphen (-) only." },
+                { msg: "Cannot begin with a number or special character." },
+                { msg: "No more than one special character in a row." }
+            ]
         });
     }
 
     // Password Input Validation
     // Medium: At least one (uppercase, lowercase, number) and at least 6 characters
+    // Only checking for medium strength
     // Strong: At least one (uppercase, lowercase, number, special char) and at least 8 characters
     // check = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})|(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[\W])(?=.{8,})/
     check = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})/
     if (!(check.test(req.body.password))) {
         return res.status(400).json ({
-            msg: "Weak password."
+            msg: "Weak password.",
+            info: [
+                { msg: "At least one uppercase letter." },
+                { msg: "At least one lowercase letter." },
+                { msg: "At least one number." },
+                { msg: "At least 6 characters." }
+            ]
         })
     }
 
@@ -179,7 +203,6 @@ router.post("/login", (req, res) => {
     });
 });
 
-
 /**
  * @route POST api/users/profile
  * @desc Return user's data
@@ -243,6 +266,25 @@ router.put('/update/:id', (req, res) => {
         });
     })
 });
+
+// /**
+//  * @route P api/users/forgotpw
+//  * @desc Send code to user's email and Change Password
+//  * @access Public
+//  */
+
+// router.put('/forgotpw', (req, res) => {
+
+//     const email = req.body.email;
+
+//     User.findOne({ email }).then(user => {
+//         if (!user) {
+//             return res.status(404).json({
+//                 msg4: "Email not found."
+//             })
+//         }
+//     })
+// })
 
 
 //Export router to be used elsewhere
