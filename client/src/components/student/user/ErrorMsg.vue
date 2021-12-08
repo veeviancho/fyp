@@ -4,13 +4,13 @@
         <div class="modal-card">
 
             <header class="modal-card-head">
-                <p class="modal-card-title">Validation Rules</p>
+                <p class="modal-card-title">Why can't I register?</p>
                 <button class="delete" aria-label="close" @click="close()"></button>
             </header>
 
             <section class="modal-card-body">
-                <div v-if="info">
-                    <div v-for="item in info" :key="item.msg">{{ item.msg }}</div>
+                <div v-if="error.info">
+                    <div v-for="item in error.info" :key="item.msg">{{ item.msg }}</div>
                 </div>
             </section>
 
@@ -27,7 +27,7 @@ import { mapGetters } from 'vuex';
 export default {
   name: 'Error Message',
   computed: {
-    ...mapGetters(['info'])
+    ...mapGetters(['error'])
   },
   methods: {
     close() {

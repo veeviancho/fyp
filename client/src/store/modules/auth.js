@@ -4,10 +4,16 @@ const state = {
     status: '',
     token: localStorage.getItem('token') || '', //set to empty string if not found
     user: {},
-    error: null, //registration error
-    info: null,
-    loginError: null,
-    updateError: null
+    error: {
+        register: null,
+        info: null,
+        login: null,
+        update: null,
+        // verify: null,
+    },
+    // verify: '',
+    // resend: {}
+    resend: 'Resend'
 };
 
 const getters = {
@@ -15,9 +21,8 @@ const getters = {
     authState: state => state.status,
     user: state => state.user,
     error: state => state.error,
-    info: state => state.info,
-    loginError: state => state.loginError,
-    updateError: state => state.updateError
+    // verify: state => state.verify
+    resend: state => state.resend
 };
 
 const actions = {
@@ -65,6 +70,18 @@ const actions = {
         }
     },
 
+    // // Verify Email
+    // async verify({ commit }) {
+    //     try {
+    //         let res = await axios.get('http://localhost:5000/api/users/' + res.params.email + '/' + res.params.token);
+    //         if (res.data.success) {
+    //             commit('verify_success');
+    //         }
+    //     } catch (err) {
+    //         commit('verify_error', err)
+    //     }
+    // },
+
     // Get User Profile
     async getProfile({ commit }) {
         commit('profile_request');
@@ -85,59 +102,73 @@ const actions = {
         } catch (err) {
             commit('update_error', err)
         }
+    },
+
+    // Resend Email Confirmation Link
+    async resendLink( { commit }, email) {
+        try {
+            commit('resend_request')
+            let res = await axios.post('http://localhost:5000/api/users/resend/' + email);
+            if (res.data.success) {
+                commit('resend_success');
+            }
+            return res;
+        } catch (err) {
+            commit('resend_error', err)
+        }
     }
 };
 
 const mutations = {
+    // Verify mutations
+    // verify_success(state) {
+    //     state.verify = 'success'
+    //     state.error = {}
+    // },
+    // verify_error(state, err) {
+    //     state.error.verify = err.response.data.msg
+    // },
+
     // Login mutations
     login_request(state) {
         state.status = 'loading'
-        state.error = null
-        state.loginError = null
-        state.updateError = null
+        state.error = {}
     },
     login_success(state, token, user) {
         state.status = 'success'
         state.token = token
         state.user = user
-        state.error = null
-        state.loginError = null
-        state.updateError = null
+        state.error = {}
     },
     login_error(state, err) {
         state.status = 'failed',
-        state.loginError = err.response.data.msg2
-        state.error = null
-        state.updateError = null
+        state.error.login = err.response.data.msg
+        state.error.resend = err.response.data.verify_error
+        state.error.register = null
+        state.error.update = null
     },
     // Logout mutation
     logout(state) {
         state.status = ''
         state.token = ''
         state.user = ''
-        state.error = null
-        state.loginError = null
-        state.updateError = null
+        state.error = {}
     },
     // Register mutation
     register_request(state) {
         state.status = 'loading'
-        state.error = null
-        state.loginError = null
-        state.updateError = null
+        state.error = {}
     },
     register_success(state) {
         state.status = 'success'
-        state.error = null
-        state.loginError = null
-        state.updateError = null
+        state.error = {}
     },
     register_error(state, err) {
         state.status = 'failed'
-        state.error = err.response.data.msg
-        state.info = err.response.data.info
-        state.loginError = null
-        state.updateError = null
+        state.error.register = err.response.data.msg
+        state.error.info = err.response.data.info
+        state.error.login = null
+        state.error.update = null
     },
     // Profile mutation
     profile_request(state) {
@@ -150,22 +181,28 @@ const mutations = {
     // Update mutation
     update_request(state) {
         state.status = 'loading'
-        state.updateError = null
-        state.loginError = null
-        state.error = null
+        state.error = {}
     },
     update_success(state, user) {
         state.status = 'success'
         state.user = user
-        state.updateError = null
-        state.loginError = null
-        state.error = null
+        state.error = {}
     },
     update_error(state, err) {
         state.status = 'failed'
-        state.updateError = err.response.data.msg3
-        state.loginError = null
-        state.error = null
+        state.error.update = err.response.data.msg
+        state.error.login = null,
+        state.error.register = null
+    },
+    // Resend link mutation
+    resend_request(state) {
+        state.resend = "Sending..."
+    },
+    resend_success(state) {
+        state.resend = "Sent!"
+    },
+    resend_error(state, err) {
+        state.resend = err.response.data.msg
     }
 };
 

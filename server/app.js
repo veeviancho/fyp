@@ -1,3 +1,7 @@
+//Env file
+const dotenv = require('dotenv');
+dotenv.config();
+
 //Import installed modules
 const express = require('express');
 const bodyParser = require('body-parser');

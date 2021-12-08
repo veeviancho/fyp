@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 //Import express router
 const express = require('express');
 const router = express.Router();
@@ -17,7 +19,12 @@ const User = require('../../model/User');
 // const validateLoginInput = require('../../validation/login');
 
 //Load keys
-const keys = require('../../config/keys')
+const keys = require('../../config/keys');
+
+//For email verification
+const crypto = require('crypto');
+const nodemailer = require('nodemailer');
+const Token = require('../../model/Token');
 
 /** 
  * @route POST api/users/register
@@ -53,7 +60,7 @@ router.post('/register', (req, res) => {
     // No more than one special char in a row
     // Cannot begin or end with a special char
     // 3-25 characters long
-    check = /^\w{1}([\w][.-_]?){3,23}\w{1}$/i;
+    check = /^\w{1}([\w]*[.\-_]?){1,25}\w{1}$/i;
     if (!check.test(req.body.username)) {
         return res.status(400).json ({
             msg: "Please enter a valid username.",
@@ -123,6 +130,7 @@ router.post('/register', (req, res) => {
                 });
             };  
         } else {
+            // Add user into Database
             const newUser = new User({
                 name: req.body.name,
                 username: req.body.username,
@@ -139,11 +147,70 @@ router.post('/register', (req, res) => {
                     newUser.password = hash;
                     newUser
                         .save()
-                        .then(user => res.json({
-                            user: user,
-                            success: true,
-                            // msg: "User successfully registered! Login now :)"
-                        }))
+                        .then(user => {
+
+                            
+                            // Email verification
+                            const token = new Token({
+                                _userId: newUser._id,
+                                token: crypto.randomBytes(16).toString('hex')
+                            });
+                            token.save((err) => {
+                                if (err) {
+                                    return res.status(400).json({
+                                        msg: "Unable to send link."
+                                    })
+                                }
+
+                                let transporter = nodemailer.createTransport({
+                                    service: 'Gmail',
+                                    auth: {
+                                        type: 'OAuth2',
+                                        user: process.env.MAIL_USERNAME,
+                                        pass: process.env.MAIL_PASSWORD,
+                                        clientId: process.env.OAUTH_CLIENTID,
+                                        clientSecret: process.env.OAUTH_CLIENT_SECRET,
+                                        refreshToken: process.env.OAUTH_REFRESH_TOKEN,
+                                        accessToken: process.env.OAUTH_ACCESS_TOKEN
+                                    }
+                                });
+
+                                const url = 'http:\/\/' + req.headers.host + '\/api\/users\/confirmation\/' + newUser.email + '\/' + token.token;
+
+                                let mailOptions = {
+                                    from: 'EEE Lifelong Learning Space' + '<' + process.env.MAIL_USERNAME + '>',
+                                    to: newUser.email,
+                                    subject: 'Account Verification Link', 
+                                    text: 'Hello ' + req.body.name + ',\n\n' + 'You are receiving this email because you have recently signed up for an account in the EEE Lifelong Learning Space web platform.' + '\n\n' + 'Please verify your account by clicking the link:\n' + url + '\n\nThank you!\n',
+                                }
+
+                                transporter.sendMail(mailOptions, (err) => {
+                                    if (err) {
+                                        return res.status(400).json({
+                                            msg: "Unable to send link."
+                                        })
+                                    }
+                                    return res.status(200).json({
+                                        mail_success: true,
+                                        msg: "User successfully registered! A verification email has been sent to " + newUser.email,
+                                        user: user,
+                                        success: true
+                                    })
+                                })
+                            })
+                            
+                        
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            // res.json({
+                            // user: user,
+                            // success: true,
+                        })
                         .catch(err => console.log(err));
                 });
             });
@@ -159,21 +226,32 @@ router.post('/register', (req, res) => {
  */
 router.post("/login", (req, res) => {
 
-    const username = req.body.username;
+    const email = req.body.email;
     const password = req.body.password;
 
-    User.findOne({ username }).then(user => {
+    User.findOne({ email }).then(user => {
         //Check if user exists
         if (!user) {
             return res.status(404).json({ 
-                msg2: "User not found."
+                msg: "User not found."
             })
         }
 
         //Check password
         bcrypt.compare(password, user.password).then(isMatch => {
-            //Password match, creates JWT Payload
+
+            // Password match
             if (isMatch) {
+
+                //Check if email is confirmed
+                if (!user.isVerified) {
+                    return res.status(404).json({
+                        verify_error: true,
+                        msg: "Please confirm your email by clicking on the link sent to you."
+                    })
+                }
+
+                //Creates JWT Payload
                 const payload = {
                     id: user.id,
                     name: user.name
@@ -183,7 +261,7 @@ router.post("/login", (req, res) => {
                     payload,
                     keys.secretOrKey,
                     {
-                        expiresIn: 604800 // 1 week in seconds
+                        expiresIn: 86400000 //seconds
                     },
                     (err, token) => {
                         res.json({
@@ -194,9 +272,11 @@ router.post("/login", (req, res) => {
                         });
                     }
                 )
+            
+            // Password does not match
             } else {
                 return res.status(400).json({ 
-                    msg2: "You have entered an incorrect password." 
+                    msg: "You have entered an incorrect password." 
                 });
             }
         });
@@ -227,7 +307,7 @@ router.put('/update/:id', (req, res) => {
     let check = /^[a-z]+[a-z ,.'-]*$/i;
     if (!check.test(req.body.name)) {
         return res.status(400).json ({
-            msg3: "Please enter a valid name."
+            msg: "Please enter a valid name."
         })
     }
 
@@ -239,7 +319,7 @@ router.put('/update/:id', (req, res) => {
     check = /^\w{1}([\w][.-_]?){3,23}\w{1}$/i;
     if (!check.test(req.body.username)) {
         return res.status(400).json ({
-            msg3: "Please enter a valid username."
+            msg: "Please enter a valid username."
         });
     }
 
@@ -257,18 +337,140 @@ router.put('/update/:id', (req, res) => {
     .then( () => {
         res.status(201).json({
             success: true
-            // msg3: 'Profile updated successfully!'
+            // msg: 'Profile updated successfully!'
         });
     })
     .catch( (err) => {
         res.status(400).json({
-            msg3: err
+            msg: err
         });
     })
 });
 
+/**
+ * @route GET api/users/confirmation/:email/:token
+ * @desc Registration email verification
+ * @access Private
+ */
+router.get('/confirmation/:email/:token', (req, res) => {
+
+    Token.findOne({ token: req.params.token }).then(token => {
+
+        // If token has expired (and has been deleted from database)
+        if (!token) {
+            console.log('No user found');
+            // return res.status(400).json({
+            //     msg: "Your verification link may have expired. Please click on resend to receive a new link."
+            // })
+
+        } else {
+            User.findOne({ _id: token._userId, email: req.params.email }).then(user => {
+                // If link is invalid
+                if (!user) {
+                    console.log('No user is associated with the link. Please register for an account.')
+                    // return res.status(401).json({
+                    //     msg: "No user is associated with the link. Please register for an account."
+                    // })
+                
+                // If user is already verified
+                } else if (user.isVerified) {
+                    console.log('User is already verified. Please proceed to login.')
+                    // return res.status(200).json({
+                    //     msg: "User is already verified. Please proceed to login."
+                    // })
+                
+                // Verify user
+                } else {
+                    user.isVerified = true;
+                    user.save( (err) => {
+                        if (err) {
+                            console.log(err)
+                        } else {
+                            console.log('User is successfully verified. Please proceed to login.')
+                            // return res.status(201).json({
+                            //     success: true,
+                            //     msg: "User is successfully verified. Please proceed to login."
+                            // })
+                        }
+                    })
+
+                }
+            })
+        }
+    })
+
+    res.redirect('http://localhost:8080/login');
+    return;
+
+    // return res.redirect("http://localhost:8080/login")
+})
+
+/**
+ * @route POST api/users/resend/:email
+ * @desc Resend email verification link
+ * @access Private
+ */
+router.post('/resend/:email', (req, res) => {
+    User.findOne({ email: req.params.email }).then(user => {
+        if (!user) {
+            return res.status(404).json({
+                msg: "User not found."
+            })
+        } else {
+            const token = new Token({
+                _userId: user._id,
+                token: crypto.randomBytes(16).toString('hex')
+            })
+            token.save(err => {
+                if (err) {
+                    return res.status(400).json({
+                        msg: "Unable to send! Please try again."
+                    })
+                }
+                
+                let transporter = nodemailer.createTransport({
+                    service: 'Gmail',
+                    auth: {
+                        type: 'OAuth2',
+                        user: process.env.MAIL_USERNAME,
+                        pass: process.env.MAIL_PASSWORD,
+                        clientId: process.env.OAUTH_CLIENTID,
+                        clientSecret: process.env.OAUTH_CLIENT_SECRET,
+                        refreshToken: process.env.OAUTH_REFRESH_TOKEN,
+                        accessToken: process.env.OAUTH_ACCESS_TOKEN
+                    }
+                })
+
+                const url = 'http:\/\/' + req.headers.host + '\/api\/users\/confirmation\/' + user.email + '\/' + token.token;
+
+                let mailOptions = {
+                    from: 'EEE Lifelong Learning Space' + '<' + process.env.MAIL_USERNAME + '>',
+                    to: user.email,
+                    subject: "Account Verification Link", // Subject line
+                    text: 'Hello ' + user.name + ',\n\n' + 'You are receiving this email because you have recently signed up for an account in the EEE Lifelong Learning Space web platform.' + '\n\n' + 'Please verify your account by clicking the link:\n' + url + '\n\nThank you!\n',
+                };
+
+                transporter.sendMail(mailOptions, (err) => {
+                    if (err) {
+                        return res.status(400).json({
+                            msg: "Unable to send! Please try again."
+                        })
+                    }
+                    return res.status(200).json({
+                        success: true,
+                        msg: "A verification email has been sent to " + user.email
+                    })
+                })
+            })
+        }
+
+    })
+})
+
+
+
 // /**
-//  * @route P api/users/forgotpw
+//  * @route api/users/forgotpw
 //  * @desc Send code to user's email and Change Password
 //  * @access Public
 //  */

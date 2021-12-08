@@ -6,7 +6,9 @@ const WorkshopSchema = new Schema({
         type: String,
         required: true,
     },
-    description: String,
+    description: {
+        type: String,
+    },
     // date: Date,
     // startTime: Date,
     // endTime: Date,

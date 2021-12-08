@@ -13,7 +13,7 @@
             <input class="input" type="email" id="email" name="email" v-model="email" placeholder="johndoe@e.ntu.edu.sg">
           </div>
         </div>
-        <p class="has-text-danger has-text-centered mb-3" v-if="loginError">{{ loginError }}</p>
+        <p class="has-text-danger has-text-centered mb-3"></p>
         <button type="submit" class="button is-outlined is-fullwidth" @click="showNext()">Send Code to Email</button>
       </form>
     </div>

@@ -42,7 +42,7 @@
         </div>
       </div>
 
-      <p class="has-text-danger has-text-centered mb-3" v-if="updateError">{{ updateError }}</p>
+      <p class="has-text-danger has-text-centered mb-3" v-if="error.update">{{ error.update }}</p>
 
       <button type="submit" class="button is-outlined is-fullwidth">Update</button>
 
@@ -67,7 +67,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['user', 'updateError']),
+    ...mapGetters(['user', 'error']),
   },
   methods: {
     ...mapActions(['update', 'getProfile']),

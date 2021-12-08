@@ -12,8 +12,8 @@
 
           <div class="field">
             <div class="control has-icons-left">
-              <input class="input is-size-5" type="text" v-model="username" placeholder="Username" required>
-              <span class="icon is-size-5 is-left"><fa icon="user"/></span>
+              <input class="input is-size-5" type="text" v-model="email" placeholder="Email Address" required>
+              <span class="icon is-size-5 is-left"><fa icon="envelope"/></span>
             </div>
           </div>
 
@@ -25,7 +25,7 @@
           </div>
           
           <!-- Display message when login fails -->
-          <p class="has-text-danger has-text-centered mb-3" v-if="loginError">{{ loginError }}</p>
+          <p class="has-text-danger has-text-centered mb-3" v-if="error.login">{{ error.login }} <span><a class="resend" v-if="link" @click="resendClicked">{{ this.resend }}</a></span></p>
 
           <div class="control">
             <button type="submit" v-bind:class="[isLoading ? 'is-loading': '', 'button is-fullwidth']">Login</button>&nbsp;
@@ -53,9 +53,10 @@ export default {
   // Adding data values that will bind to the HTML elements
   data() {
     return {
-      username: '',
+      email: '',
       password: '',
-      isModalVisible: false
+      isModalVisible: false,
+      link: false
     }
   },
   components: {
@@ -63,20 +64,18 @@ export default {
   },
   computed: {
     // ...mapGetters(['msg'])
-    ...mapGetters(['authState']),
-    ...mapGetters(['loginError']),
+    ...mapGetters(['authState', 'error', 'resend']),
     isLoading() {
       return this.authState === 'loading';
     }
   },
   methods: {
     // Adding actions to the methods of this component
-    ...mapActions(['login']),
+    ...mapActions(['login', 'resendLink']),
     loginUser() {
-      // console.log(`username: ${this.username}, password ${this.password}`);
       // Assign user to be passed to vuex login action
       let user = {
-        username: this.username,
+        email: this.email.toLowerCase(),
         password: this.password
       }
       // Call vuex login action
@@ -85,14 +84,31 @@ export default {
         .then(res => {
           if (res.data.success) {
             // If success, user will be directed to the home page
-            // console.log(res.data)
+            // console.log(this.error.login)
             this.$router.push('/')
           }
         })
         .catch(err => {
           // this.error = "Wrong information. Please re-enter!!"
           console.log(err)
+          if (this.error.resend) {
+            console.log(this.error.resend)
+            this.link = true
+          } else {
+            this.link = false
+          }
         })
+    },
+    resendClicked() {
+      let email = this.email
+      this.resendLink(email).then(res => {
+        if (res.data.success) {
+          console.log(res.data.msg)
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
     },
     showModal() {
       this.isModalVisible = true;
@@ -105,6 +121,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.resend {
+  text-decoration: underline;
+}
+
 .column {
   border-radius: 1em;
   background-color: rgba(0,0,0,0.3);

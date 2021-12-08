@@ -58,13 +58,15 @@
             </div>
           </div>
 
-          <!-- Display message when login fails -->
-          <p class="has-text-danger has-text-centered mb-3 white" v-if="error">{{ error }} <fa class="fa" icon="info-circle" v-if="info" @click="showModal"/></p>
+          <!-- Display message when registration fails -->
+          <p class="has-text-danger has-text-centered mb-3 white" v-if="error.register">{{ error.register }} <fa class="fa" icon="info-circle" v-if="error.info" @click="showModal"/></p>
           <ErrorMsg v-show="isModalVisible" @close="closeModal"/>
-          
+
+          <!-- Display message when registration is successful -->
+          <p class="has-text-success has-text-centered mb-3 white" v-if="success_msg">{{ success_msg }}</p>
 
           <div class="control">
-            <button type="submit" class="button is-fullwidth">Sign Up</button>&nbsp;
+            <button type="submit" v-bind:class="[isLoading ? 'is-loading': '', 'button is-fullwidth']">Sign Up</button>&nbsp;
           </div>
         </form>
       </div>
@@ -89,15 +91,18 @@ export default {
         password: '',
         password2: '',
         programme: 'Communications Engineering',
-        isModalVisible: false
+        isModalVisible: false,
+        success_msg: ''
       }
     },
     components: {
       ErrorMsg
     },
     computed: {
-      ...mapGetters(['error']),
-      ...mapGetters(['info'])
+      ...mapGetters(['error', 'authState']),
+      isLoading() {
+        return this.authState === 'loading';
+    }
     },
     methods: {
       ...mapActions(['register']),
@@ -113,7 +118,7 @@ export default {
         let user = {
           name: this.name,
           username: this.username,
-          email: this.email,
+          email: this.email.toLowerCase(),
           password: this.password,
           password2: this.password2,
           programme: this.programme
@@ -122,7 +127,8 @@ export default {
         this.register(user)
           .then(res => {
             if (res.data.success) {
-              this.$router.push('/login')
+              this.success_msg = res.data.msg
+              // this.$router.push('/login')
             }
           })
           .catch(err => {
