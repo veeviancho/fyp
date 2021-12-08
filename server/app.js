@@ -30,11 +30,11 @@ app.use(cors()); //allow any host or client to access it (cors middleware)
 const db = require('./config/keys').mongoURI;
 
 //Database connection
-mongoose.connect(db, {
-    useNewUrlParser: true
-}).then(() => {
+mongoose.connect(db, { useNewUrlParser: true })
+.then(() => {
     console.log(`Database connected successfully ${db}`)
-}).catch(err => {
+})
+.catch(err => {
     console.log(`Unable to connect to the database ${err}`)
 });
 

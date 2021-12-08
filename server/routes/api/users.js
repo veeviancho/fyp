@@ -25,6 +25,7 @@ const keys = require('../../config/keys');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const Token = require('../../model/Token');
+const e = require('express');
 
 /** 
  * @route POST api/users/register
@@ -149,12 +150,12 @@ router.post('/register', (req, res) => {
                         .save()
                         .then(user => {
 
-                            
                             // Email verification
                             const token = new Token({
                                 _userId: newUser._id,
                                 token: crypto.randomBytes(16).toString('hex')
                             });
+
                             token.save((err) => {
                                 if (err) {
                                     return res.status(400).json({
@@ -198,18 +199,6 @@ router.post('/register', (req, res) => {
                                     })
                                 })
                             })
-                            
-                        
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            // res.json({
-                            // user: user,
-                            // success: true,
                         })
                         .catch(err => console.log(err));
                 });
@@ -289,9 +278,10 @@ router.post("/login", (req, res) => {
  * @access Private
  */
 router.get('/profile', passport.authenticate('jwt', { session: false }), (req, res) => {
-    return res.json({ user: req.user });
+    return res.json({ 
+        user: req.user 
+    });
 });
-
 
 /**
  * @route PUT api/users/update/:id
@@ -325,25 +315,27 @@ router.put('/update/:id', (req, res) => {
 
     //  TODO: username exist in database -> error!!
 
-    // User.findOne({ username: req.body.username }).then(user => {
-    //     //Check if user exists
-    //     if (user) {
-    //         return res.status(400).json({ 
-    //             msg2: "Username is already taken."
-    //         })
-    //     }
-
-    User.updateOne({ _id: req.params.id }, { $set: req.body })
-    .then( () => {
-        res.status(201).json({
-            success: true
-            // msg: 'Profile updated successfully!'
-        });
-    })
-    .catch( (err) => {
-        res.status(400).json({
-            msg: err
-        });
+    User.findOne({ username: req.body.username }).then(user => {
+        //Check if user exists
+        if (user) {
+            return res.status(400).json({ 
+                msg: "Username is already taken."
+            })
+        } else {
+            User.updateOne({ _id: req.params.id }, { $set: req.body })
+                .then( () => {
+                    res.status(201).json({
+                        success: true
+                        // msg: 'Profile updated successfully!'
+                    });
+                })
+                .catch( (err) => {
+                    console.log(err)
+                    res.status(400).json({
+                        msg: "Unable to update. Please try again later."
+                    });
+                })
+        }
     })
 });
 
