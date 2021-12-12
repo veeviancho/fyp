@@ -9,10 +9,7 @@ const state = {
         info: null,
         login: null,
         update: null,
-        // verify: null,
     },
-    // verify: '',
-    // resend: {}
     resend: 'Resend'
 };
 
@@ -38,6 +35,8 @@ const actions = {
                 const user = res.data.user;
                 // Store token in local storage
                 localStorage.setItem('token', token);
+                // Store user ID in local storage
+                localStorage.setItem('userId', user._id)
                 // Set the axios defaults
                 axios.defaults.headers.common['Authorization'] = token;
                 commit('login_success', token, user);
@@ -52,6 +51,8 @@ const actions = {
     logout({ commit }) {
         commit('logout');
         localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        localStorage.removeItem('userId');
         delete axios.defaults.headers.common['Authorization'];
         return;
     },
@@ -69,18 +70,6 @@ const actions = {
             commit('register_error', err)
         }
     },
-
-    // // Verify Email
-    // async verify({ commit }) {
-    //     try {
-    //         let res = await axios.get('http://localhost:5000/api/users/' + res.params.email + '/' + res.params.token);
-    //         if (res.data.success) {
-    //             commit('verify_success');
-    //         }
-    //     } catch (err) {
-    //         commit('verify_error', err)
-    //     }
-    // },
 
     // Get User Profile
     async getProfile({ commit }) {
@@ -120,15 +109,6 @@ const actions = {
 };
 
 const mutations = {
-    // Verify mutations
-    // verify_success(state) {
-    //     state.verify = 'success'
-    //     state.error = {}
-    // },
-    // verify_error(state, err) {
-    //     state.error.verify = err.response.data.msg
-    // },
-
     // Login mutations
     login_request(state) {
         state.status = 'loading'

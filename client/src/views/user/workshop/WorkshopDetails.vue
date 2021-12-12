@@ -29,10 +29,10 @@
                 </div>
 
                 <p class="has-text-success has-text-centered mb-3 white" v-if="success_msg">{{ success_msg }}</p>
-
-                <p><button type="submit" class="button is-fullwidth" @click="registerWorkshop()" :disabled='isDisabled'>{{ buttonMsg }}</button></p>
-
                 <p class="has-text-danger has-text-centered mb-3 white" v-if="workshop_error[0] === this.id">{{ workshop_error[1] }}</p>
+
+                <p><button type="submit" class="button is-fullwidth" @click="registerWorkshop()" :disabled='isDisabled' v-if='showButton'>{{ buttonMsg }}</button></p>
+                <p><button type="submit" class="button is-fullwidth deregister" @click="deregisterWorkshop()" :disabled='isDisabled2' v-if='!showButton'>Deregister from workshop</button></p>
 
             </div>
         </div>  
@@ -53,19 +53,24 @@ export default {
         return {
             buttonMsg: "",
             success_msg: "",
-            isDisabled: ""
+            isDisabled: "",
+            isDisabled2: "",
+            showButton: "",
+            userId: localStorage.getItem('userId')
         }
     },
     props: ['id'],
     computed: {
-        ...mapGetters(['workshop_status', 'workshop', 'workshopItem', 'workshop_error', 'user']),
+        ...mapGetters(['workshop_status', 'workshop', 'workshopItem', 'workshop_error']),
     },
     methods: {
-        ...mapActions(['getWorkshop', 'getProfile', 'registerForWorkshop', 'getWorkshopFromId']),
+        ...mapActions(['getWorkshop', 'registerForWorkshop', 'getWorkshopFromId', 'deregisterFromWorkshop']),
         registerWorkshop() {
-            this.registerForWorkshop([this.$route.params.id, this.user._id])
+            let registration = confirm("You are registrating for " + this.workshopItem.title + ". Do you want to continue?")
+            if (registration) {
+                this.registerForWorkshop([this.id, this.userId])
                 .then(res => {
-                    if (this.workshop_status === 'success') {
+                    if (res.data.success) {
                         this.success_msg = res.data.msg
                         // Temporarily update frontend
                         this.workshopItem.users.length += 1
@@ -76,19 +81,36 @@ export default {
                 .catch(err => {
                     console.log(err)
                 })
+            }
+        },
+        deregisterWorkshop() {
+            let deregistration = confirm("You are deregistrating from " + this.workshopItem.title + ". Do you want to continue?")
+            if (deregistration) {
+                this.deregisterFromWorkshop([this.id, this.userId])
+                .then(res => {
+                    if (res.data.success) {
+                        this.success_msg = res.data.msg
+                        // Temporarily update frontend
+                        this.workshopItem.users.length -= 1
+                        this.showButton = false
+                        this.isDisabled2 = true
+                    }
+                })
+            }
         }
     },
     created() {
-        this.getProfile();
         this.getWorkshop().then( () => {
             this.getWorkshopFromId(this.id);
-            if (this.workshopItem.users.includes(this.user._id)) {
-                this.isDisabled = true
-                this.buttonMsg = "You have registered for this workshop"
+            if (this.workshopItem.users.includes(this.userId)) {
+                this.showButton = false
+                this.isDisabled2 = false
             } else if (this.workshopItem.users.length == this.workshopItem.maxUsers) {
+                this.showButton = true
                 this.isDisabled = true
                 this.buttonMsg = "This workshop is full"
             } else {
+                this.showButton = true
                 this.isDisabled = false
                 this.buttonMsg = "Register for this Workshop"
             }
@@ -101,6 +123,14 @@ export default {
 .button:disabled {
     color: white;
     background-color: #161C20
+}
+
+.deregister {
+    color: hsl(348, 100%, 61%);
+}
+
+.deregister:hover {
+    background-color: #990000;
 }
 
 p {

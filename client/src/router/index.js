@@ -11,7 +11,7 @@ import Register from '../views/public/auth/Register.vue'
 import Workshop from '../views/user/workshop/Workshop.vue'
 import Details from '../views/user/workshop/WorkshopDetails.vue'
 // import History from '../views/user/workshop/History.vue'
-// import Upcoming from '../views/user/workshop/Upcoming.vue'
+import Upcoming from '../views/user/workshop/Upcoming.vue'
 
 import Booking from '../views/user/booking/Booking.vue'
 import Manage from '../views/user/booking/Manage.vue'
@@ -90,15 +90,15 @@ const routes = [
     props: true
   },
   // {
-  //   path: '/workshop/history',
+  //   path: '/profile/attended-workshops',
   //   name: 'History',
   //   component: History
   // },
-  // {
-  //   path: '/workshop/upcoming-workshops',
-  //   name: 'Upcoming Workshops',
-  //   component: Upcoming
-  // },
+  {
+    path: '/profile/upcoming-workshops',
+    name: 'Upcoming Workshops',
+    component: Upcoming
+  },
   // Bookings
   {
     path: '/booking',

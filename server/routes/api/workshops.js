@@ -1,5 +1,6 @@
 // Import express router
 const express = require('express');
+const User = require('../../model/User');
 const router = express.Router();
 
 // Load workshop model
@@ -178,7 +179,55 @@ router.put('/register/:workshopId/:userId', (req, res) => {
  * @desc Deregister a user from a workshop
  * @access Private
  */
-// router.put('/deregister/:workshopId/:userId')
+router.put('/deregister/:workshopId/:userId', (req, res) => {
+    Workshop.findOne({ _id: req.params.workshopId })
+    .then(workshop => {
+        if (!workshop) {
+            return res.status(404).json({
+                msg: "Workshop not found."
+            })
+        }
+        User.findOne({ _id: req.params.userId })
+        .then(user => {
+            if (!user) {
+                return res.status(404).json({
+                    msg: "User not found."
+                })
+            }
+
+            // Check if user is registered in workshop
+            else if (!workshop.users.includes(req.params.userId)) {
+                return res.status(400).json({
+                    msg: "User is not registered in workshop."
+                })
+            }
+
+            // Remove user from workshop
+            let userIndex = workshop.users.indexOf(req.params.userId);
+            workshop.users.splice(userIndex, 1);
+            workshop.save();
+
+            // Remove workshop from user
+            let workshopIndex = user.workshops.indexOf(req.params.workshopId);
+            user.workshops.splice(workshopIndex, 1)
+            user.save();
+
+            return res.status(200).json({
+                success: true,
+                workshop: workshop,
+                user: user,
+                msg: "Deregistered!"
+            })
+
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    })
+    .catch(err => {
+        console.log(err)
+    })
+})
 
 
 /**
@@ -186,25 +235,25 @@ router.put('/register/:workshopId/:userId', (req, res) => {
  * @desc Return one workshop
  * @access Private
  */
-router.get('/:id', (req, res) => {
-    Workshop.findOne({ _id: req.params.id })
-        .then( workshop => {
-            if (!workshop) {
-                return res.status(404).json({
-                    msg: "Workshop not found!"
-                })
-            }
-            return res.status(200).json({
-                workshop: workshop,
-                success: true
-            })
-        })
-        .catch( err => {
-            console.log(err) 
-            return res.status(400).json({
-                msg: "Unable to retrieve workshop. Please try again."
-            })
-        })
-})
+// router.get('/:id', (req, res) => {
+//     Workshop.findOne({ _id: req.params.id })
+//         .then( workshop => {
+//             if (!workshop) {
+//                 return res.status(404).json({
+//                     msg: "Workshop not found!"
+//                 })
+//             }
+//             return res.status(200).json({
+//                 workshop: workshop,
+//                 success: true
+//             })
+//         })
+//         .catch( err => {
+//             console.log(err) 
+//             return res.status(400).json({
+//                 msg: "Unable to retrieve workshop. Please try again."
+//             })
+//         })
+// })
 
 module.exports = router;
