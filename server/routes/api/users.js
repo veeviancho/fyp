@@ -25,7 +25,6 @@ const keys = require('../../config/keys');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const Token = require('../../model/Token');
-const e = require('express');
 
 /** 
  * @route POST api/users/register
@@ -192,7 +191,6 @@ router.post('/register', (req, res) => {
                                         })
                                     }
                                     return res.status(200).json({
-                                        mail_success: true,
                                         msg: "User successfully registered! A verification email has been sent to " + newUser.email,
                                         user: user,
                                         success: true
@@ -458,8 +456,6 @@ router.post('/resend/:email', (req, res) => {
 
     })
 })
-
-
 
 // /**
 //  * @route api/users/forgotpw

@@ -20,7 +20,8 @@ router.post('/create', (req, res) => {
         venue: req.body.venue,
         organiser: req.body.organiser,
         programme: req.body.programme,
-        category: req.body.category
+        category: req.body.category,
+        maxUsers: req.body.maxUsers
     });
     newWorkshop
         .save()
@@ -29,46 +30,6 @@ router.post('/create', (req, res) => {
             success: true
         }))
         .catch(err => console.log(err));
-})
-
-/**
- * @route GET api/workshops/all
- * @desc Return all workshops
- * @access Private
- */
-router.get('/all', (req, res) => {
-    Workshop.find({}).then( workshop => {
-        return res.status(201).json({
-            workshop: workshop,
-            success: true
-        })
-    })
-})
-
-/**
- * @route GET api/workshops/:id
- * @desc Return one workshop
- * @access Private
- */
-router.get('/:id', (req, res) => {
-    Workshop.findOne({ _id: req.params.id })
-        .then( workshop => {
-            if (!workshop) {
-                return res.status(404).json({
-                    msg: "Workshop not found!"
-                })
-            }
-            return res.status(200).json({
-                workshop: workshop,
-                success: true
-            })
-        })
-        .catch( err => {
-            console.log(err) 
-            return res.status(400).json({
-                msg: "Unable to retrieve workshop. Please try again."
-            })
-        })
 })
 
 /**
@@ -113,6 +74,135 @@ router.delete('/delete/:id', (req, res) => {
             console.log(err)
             return res.status(400).json({
                 msg: "Unable to delete. Please try again later."
+            })
+        })
+})
+
+/**
+ * @route GET api/workshops/all
+ * @desc Return all workshops
+ * @access Private
+ */
+ router.get('/all', (req, res) => {
+    Workshop.find({})
+        .then( workshop => {
+            if (!workshop) {
+                return res.status(404).json({
+                    msg: "No workshop available."
+                })
+            }
+            return res.status(201).json({
+                workshop: workshop,
+                success: true
+            })
+        })
+        .catch( err => {
+            console.log(err)
+        })
+})
+
+/**
+ * @route PUT api/workshops/register/:workshopId/:userId
+ * @desc Register users into workshop
+ * @access Private
+ */
+router.put('/register/:workshopId/:userId', (req, res) => {
+    Workshop.findOne({ _id: req.params.workshopId })
+        .then( workshop => {
+
+            // Check if workshop is a legit workshop
+            if (!workshop) {
+                return res.status(404).json({
+                    msg: "Workshop not found."
+                })
+            }
+
+            // Check if user is already registered
+            else if (workshop.users.includes(req.params.userId)) {
+                return res.status(400).json({
+                    msg: "You are already registered."
+                })
+            }
+
+            // Check if workshop has reached max limit
+            else if (workshop.users.length >= workshop.maxUsers) {
+                return res.status(400).json({
+                    msg: "Unable to register. Workshop is full!"
+                })
+            }
+
+            else {
+                
+                // Check if user is a legit user
+                User.findOne({ _id: req.params.userId })
+                    .then(user => {
+                        if (!user) {
+                            return res.status(404).json({
+                                msg: "User not found."
+                            })
+                        }
+
+                        // Update workshops list in user
+                        user.workshops.push(req.params.workshopId)
+                        user.save();
+
+                        // Update users list in workshop
+                        workshop.users.push(req.params.userId);
+                        workshop.save();
+                        
+                        return res.status(200).json({
+                            success: true,
+                            user: user,
+                            workshop: workshop,
+                            msg: "Successfully registered!"
+                        })
+                    })
+                    .catch( err => {
+                        console.log(err)
+                        return res.status(400).json({
+                            msg: "Unable to register. Please try again later."
+                        })
+                    })
+            }
+        })
+        .catch( err => {
+            console.log(err)
+            return res.status(400).json({
+                msg: "Unable to register. Please try again later."
+            })
+        })
+})
+
+/**
+ * @route PUT api/workshops/deregister/:workshopId/:userId
+ * @desc Deregister a user from a workshop
+ * @access Private
+ */
+// router.put('/deregister/:workshopId/:userId')
+
+
+/**
+ * @route GET api/workshops/:id
+ * @desc Return one workshop
+ * @access Private
+ */
+router.get('/:id', (req, res) => {
+    Workshop.findOne({ _id: req.params.id })
+        .then( workshop => {
+            if (!workshop) {
+                return res.status(404).json({
+                    msg: "Workshop not found!"
+                })
+            }
+            return res.status(200).json({
+                workshop: workshop,
+                success: true
+            })
+        })
+        .catch( err => {
+            console.log(err) 
+            return res.status(400).json({
+                msg: "Unable to retrieve workshop. Please try again."
             })
         })
 })

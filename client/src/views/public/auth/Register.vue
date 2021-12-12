@@ -123,7 +123,7 @@ export default {
           password2: this.password2,
           programme: this.programme
         }
-        console.log(user)
+        // console.log(user)
         this.register(user)
           .then(res => {
             if (res.data.success) {

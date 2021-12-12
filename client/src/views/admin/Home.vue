@@ -65,7 +65,7 @@
 
 <script>
 export default {
-    name: 'Table'
+    name: 'Admin Home'
 }
 </script>
 

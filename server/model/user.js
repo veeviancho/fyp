@@ -30,6 +30,9 @@ const UserSchema = new Schema({
         type: Date,
         default: Date.now
     },
+    workshops: {
+        type: Array,
+    },
     isVerified: {
         type: Boolean,
         default: false

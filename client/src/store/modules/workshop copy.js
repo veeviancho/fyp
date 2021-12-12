@@ -1,36 +1,34 @@
-import axios from 'axios';
+import axios from 'axios'
 
 const state = {
     workshop_status: '',
     workshop: [],
-    workshop_error: [],
-    workshopItem: {}
+    error: '',
+    register_status: ''
+    // registered: false
 }
 
 const getters = {
     workshop_status: state => state.workshop_status,
     workshop: state => state.workshop,
-    workshopItem: (state) => state.workshopItem,
+    workshopFromId: (state) => (id) => {
+        return state.workshop.find(item => item._id === id)
+    },
     workshop_error: state => state.workshop_error
 }
 
 const actions = {
-    // Get workshops
+    // Get all workshops
     async getWorkshop({ commit }) {
         try {
+            commit('workshop_request');
             let res = await axios.get('http://localhost:5000/api/workshops/all');
             if (res.data.success) {
-                commit('getWorkshop_success', res.data.workshop);
+                commit('workshop_success', res.data.workshop);
             }
         } catch (err) {
-            console.log(err)
+            commit('workshop_error', err)
         }
-    },
-
-    // Get workshop from ID
-    async getWorkshopFromId({ commit }, id) {
-        const workshopId = state.workshop.find(item => item._id === id)
-        commit('workshopID_success', workshopId)
     },
 
     // Register User to Workshop (update workshop)
@@ -39,43 +37,38 @@ const actions = {
             commit('workshop_request');
             let res = await axios.put('http://localhost:5000/api/workshops/register/' + workshopId + '/' + userId);
             if (res.data.success) {
-                console.log("hello")
-                commit('workshop_success', res.data.workshop);
-                console.log(state.workshop_status)
+                commit('registerWorkshop_success', res.data.workshop);
             }
             return res;
         } catch (err) {
-            commit('workshop_error', [workshopId, err])
+            commit('workshop_error', err)
         }
     }
-}
+};
 
 const mutations = {
-
-    workshopID_success(state, workshop) {
-        state.workshopItem = workshop
-    },
-
-    // Get workshops
-    getWorkshop_success(state, workshop) {
-        state.workshop = workshop
-    },
-
-    // Register user to workshop
+    // Get Workshops
     workshop_request(state) {
         state.workshop_status = 'loading'
         state.workshop_error = ''
     },
     workshop_success(state, workshop) {
         state.workshop_status = 'success'
-        state.workshop_error = ''
         state.workshop = workshop
+        state.workshop_error = ''
     },
-    workshop_error(state, [id, err]) {
+    workshop_error(state, err) {
         state.workshop_status = 'error'
-        state.workshop_error = [id, err.response.data.msg]
+        state.workshop_error = err.response.data.msg
+    },
+    
+    // Register User to Workshop
+    registerWorkshop_success(state, workshop) {
+        state.status.workshop = 'success'
+        state.workshop = workshop
+        state.error.register = ''
     }
-}
+};
 
 export default {
     state,

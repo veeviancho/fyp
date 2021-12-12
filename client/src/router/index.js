@@ -9,7 +9,7 @@ import Register from '../views/public/auth/Register.vue'
 
 // User views
 import Workshop from '../views/user/workshop/Workshop.vue'
-// import Details from '../views/user/workshop/WorkshopDetails.vue'
+import Details from '../views/user/workshop/WorkshopDetails.vue'
 // import History from '../views/user/workshop/History.vue'
 // import Upcoming from '../views/user/workshop/Upcoming.vue'
 
@@ -83,11 +83,12 @@ const routes = [
     name: 'Workshops',
     component: Workshop
   },
-  // {
-  //   path: '/workshop/details',
-  //   name: 'Workshop Details',
-  //   component: Details
-  // },
+  {
+    path: '/workshop/:id',
+    name: 'Workshop Details',
+    component: Details,
+    props: true
+  },
   // {
   //   path: '/workshop/history',
   //   name: 'History',
@@ -138,6 +139,7 @@ const routes = [
     path: '/admin',
     name: 'Admin Home',
     component: AdminHome,
+    isAdmin: true
   },
   {
     path: '/admin/about',

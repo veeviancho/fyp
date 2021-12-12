@@ -9,7 +9,7 @@
         <button class="button">Read More</button>
     </section>
 
-    <div style="margin: 3rem auto; max-width: 92%;">
+    <div style="margin: 3rem auto; width: 92%;">
     <div class="columns">
         <div class="column">
             <div>
@@ -99,7 +99,13 @@
                         </div>
                     </div>
 
-                    <div class=""><WorkshopEvent/></div>
+                    <div>
+                        <div v-for="item in workshop" :key="item.id">
+                            <div><WorkshopEvent :workshopItem="item"/></div>
+                        </div>
+                    </div>
+
+                    <!-- <p class="has-text-white">{{ workshop }}</p> -->
 
                 </div>
             </div>
@@ -110,12 +116,22 @@
 </template>
 
 <script>
-import WorkshopEvent from '@/components/student/workshop/WorkshopEvent.vue'
+import WorkshopEvent from './WorkshopEvent.vue'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
     components: {
         WorkshopEvent
-    }
+    },
+    computed: {
+        ...mapGetters(['workshop'])
+    },
+    methods: {
+        ...mapActions(['getWorkshop'])
+    },
+    created() {
+        this.getWorkshop()
+    },
 }
 </script>
 

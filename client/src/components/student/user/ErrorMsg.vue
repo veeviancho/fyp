@@ -10,7 +10,7 @@
 
             <section class="modal-card-body">
                 <div v-if="error.info">
-                    <div v-for="item in error.info" :key="item.msg">{{ item.msg }}</div>
+                    <li class="list-item" v-for="item in error.info" :key="item.msg">{{ item.msg }}</li>
                 </div>
             </section>
 

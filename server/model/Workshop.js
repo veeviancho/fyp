@@ -9,35 +9,45 @@ const WorkshopSchema = new Schema({
     description: {
         type: String,
     },
-    // date: {
-    //     type: Date,
-    //     required: true
-    // },
-    // startTime: {
-    //     type: Date,
-    //     required: true
-    // },
-    // endTime: {
-    //     type: Date,
-    //     required: true
-    // },
-    // venue: {
-    //     type: String,
-    //     required: true
-    // },
-    // organiser: {
-    //     type: String
-    // },
-    // programme: {
-    //     type: String
-    // },
-    // category: {
-    //     type: String
-    // },
-    // points: {
-    //     type: Number,
-    //     default: 0
-    // },
+    date: {
+        type: String,
+        required: true
+    },
+    startTime: {
+        type: String,
+        required: true
+    },
+    endTime: {
+        type: String,
+        required: true
+    },
+    venue: {
+        type: String,
+        required: true
+    },
+    organiser: {
+        type: String,
+        required: true
+    },
+    programme: {
+        type: String,
+        required: true
+    },
+    category: {
+        type: String,
+        required: true
+    },
+    points: {
+        type: Number,
+        default: 0
+    },
+    maxUsers: {
+        type: Number,
+        required: true
+    },
+    users: {
+        type: Array
+    },
     createdAt: {
         type: Date,
         default: Date.now

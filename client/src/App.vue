@@ -1,8 +1,10 @@
 <template>
-<div>
-  <Nav/>
-  <router-view/>
-</div>
+<body v-bind:class="[this.$route.path == '/admin' ? 'light-bg' : 'dark-bg']">
+  <div>
+    <Nav/>
+    <router-view/>
+  </div>
+</body>
 </template>
 
 <script>
@@ -23,7 +25,12 @@ export default {
   max-width: 92%;
 }
 
-body {
+.light-bg {
+  min-height: 100vh;
+  background-color: white;
+}
+
+.dark-bg {
   min-height: 100vh;
   background-color: #313843;
 }
