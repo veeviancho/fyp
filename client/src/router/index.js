@@ -10,7 +10,7 @@ import Register from '../views/public/auth/Register.vue'
 // User views
 import Workshop from '../views/user/workshop/Workshop.vue'
 import Details from '../views/user/workshop/WorkshopDetails.vue'
-// import History from '../views/user/workshop/History.vue'
+import History from '../views/user/workshop/Past.vue'
 import Upcoming from '../views/user/workshop/Upcoming.vue'
 
 import Booking from '../views/user/booking/Booking.vue'
@@ -89,11 +89,11 @@ const routes = [
     component: Details,
     props: true
   },
-  // {
-  //   path: '/profile/attended-workshops',
-  //   name: 'History',
-  //   component: History
-  // },
+  {
+    path: '/profile/attended-workshops',
+    name: 'Past Workshops',
+    component: History
+  },
   {
     path: '/profile/upcoming-workshops',
     name: 'Upcoming Workshops',
@@ -139,37 +139,57 @@ const routes = [
     path: '/admin',
     name: 'Admin Home',
     component: AdminHome,
-    isAdmin: true
+    meta: {
+      isAdmin: true
+    }
   },
   {
     path: '/admin/about',
     name: 'Admin About',
-    component: AdminAbout
+    component: AdminAbout,
+    meta: {
+      isAdmin: true
+    }
   },
   {
     path: '/admin/articles',
     name: 'Admin Articles',
-    component: AdminArticles
+    component: AdminArticles,
+    meta: {
+      isAdmin: true
+    }
   },
   {
     path: '/admin/workshop',
     name: 'Admin Workshop',
-    component: AdminWorkshop
+    component: AdminWorkshop,
+    meta: {
+      isAdmin: true
+    }
   },
   {
     path: '/admin/booking',
     name: 'Admin Booking',
-    component: AdminBooking
+    component: AdminBooking,
+    meta: {
+      isAdmin: true
+    }
   },
   {
     path: '/admin/realtime',
     name: 'Admin Real Time',
-    component: AdminRealTime
+    component: AdminRealTime,
+    meta: {
+      isAdmin: true
+    }
   },
   {
-    path: '/admin',
+    path: '/admin/profile',
     name: 'Admin Profile',
-    component: AdminProfile
+    component: AdminProfile,
+    meta: {
+      isAdmin: true
+    }
   },
 ]
 

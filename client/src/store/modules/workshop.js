@@ -6,6 +6,8 @@ const state = {
     workshop_error: [],
     workshopItem: {},
 
+    userWorkshop: [],
+
     deregister_status: '',
     deregister_error: []
 }
@@ -15,6 +17,8 @@ const getters = {
     workshop: state => state.workshop,
     workshopItem: (state) => state.workshopItem,
     workshop_error: state => state.workshop_error,
+
+    userWorkshop: state => state.userWorkshop,
 
     deregister_status: state => state.deregister_status,
     deregister_error: state => state.deregister_error
@@ -37,6 +41,12 @@ const actions = {
     async getWorkshopFromId({ commit }, id) {
         const workshopId = state.workshop.find(item => item._id === id)
         commit('workshopID_success', workshopId)
+    },
+
+    // Get workshops associated with user
+    async getUserWorkshop({ commit }, userId) {
+        const userWorkshop = state.workshop.filter(item => item.users.includes(userId))
+        commit('userWorkshop_success', userWorkshop)
     },
 
     // Register User to Workshop (update workshop and user)
@@ -79,6 +89,11 @@ const mutations = {
     // Get workshops
     getWorkshop_success(state, workshop) {
         state.workshop = workshop
+    },
+
+    // Get workshop for user
+    userWorkshop_success(state, workshop) {
+        state.userWorkshop = workshop
     },
 
     // Register user to workshop

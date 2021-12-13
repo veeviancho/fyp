@@ -6,7 +6,7 @@
     <div class="media-content mr-3">
       <div class="content">
         <h1 class="title">{{ workshopItem.title }}<span class="tag is-small">#4</span></h1>
-        <p class="text">{{ workshopItem.description }}</p>
+        <p class="desc">{{ workshopItem.description }}</p>
       </div>
 
       <small class="is-size-7">
@@ -31,13 +31,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.text {
-   overflow: hidden;
-   text-overflow: ellipsis;
-   display: -webkit-box;
-   -webkit-line-clamp: 3; /* show 3 lines max */
-           line-clamp: 3; 
-   -webkit-box-orient: vertical;
+.desc {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* show 3 lines max */
+          line-clamp: 3; 
+  -webkit-box-orient: vertical;
 }
 
 .media {

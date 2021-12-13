@@ -42,7 +42,7 @@
                 Registered Workshops
                 <div class="my-5">
                     <span class="title is-1 has-text-white">0</span> &nbsp; 
-                    <span class="subtitle is-5 has-text-white"><a class="yellow-box px-3 py-2">attended</a> workshops</span>
+                    <span class="subtitle is-5 has-text-white"><router-link :to="{ name: 'Past Workshops' }" class="yellow-box px-3 py-2">attended</router-link> workshops</span>
                 </div>
                 <div class="my-5">
                     <span class="title is-1 has-text-white">0</span> &nbsp; 

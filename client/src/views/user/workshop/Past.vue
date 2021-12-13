@@ -2,7 +2,7 @@
     <div class="hero is-fullheight">
         <section class="section is-small">
         <form class="field has-navbar-fixed-top">
-            <h1 class="title has-text-white">{{ user.name }}'s Upcoming Workshops</h1>
+            <h1 class="title has-text-white">{{ user.name }}'s Past Workshops</h1>
         </form>
         </section>
         <div class="content">
