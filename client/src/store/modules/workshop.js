@@ -9,7 +9,10 @@ const state = {
     userWorkshop: [],
 
     deregister_status: '',
-    deregister_error: []
+    deregister_error: [],
+
+    create_status: '',
+    create_error: ''
 }
 
 const getters = {
@@ -21,7 +24,10 @@ const getters = {
     userWorkshop: state => state.userWorkshop,
 
     deregister_status: state => state.deregister_status,
-    deregister_error: state => state.deregister_error
+    deregister_error: state => state.deregister_error,
+
+    create_status: state => state.create_status,
+    create_error: state => state.create_error
 }
 
 const actions = {
@@ -75,6 +81,21 @@ const actions = {
         } catch (err) {
             commit('deregister_error', [workshopId, err])
         }
+    },
+
+    // Create Workshop
+    async createWorkshop({ commit }, workshop) {
+        try {
+            commit('create_request')
+            let res = await axios.post('http://localhost:5000/api/workshops/create', workshop)
+            if (res.data.success) {
+                commit('create_success')
+            }
+            return res
+        }
+        catch (err) {
+            commit('create_error', err)
+        }
     }
 
 }
@@ -124,6 +145,21 @@ const mutations = {
     deregister_error(state, [id, err]) {
         state.deregister_status = 'error'
         state.deregister_error = [id, err.response.data.msg]
+    },
+
+    // Create new workshop
+    create_request(state) {
+        state.create_status = 'loading'
+        state.create_error = ''
+    },
+    create_success(state, workshop) {
+        state.create_status = 'success'
+        state.create_error = ''
+        state.create = workshop
+    },
+    create_error(state, err) {
+        state.create_status = 'error'
+        state.create_error = err.response.data.msg
     },
 }
 

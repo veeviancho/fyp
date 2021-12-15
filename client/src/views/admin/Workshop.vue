@@ -1,10 +1,19 @@
 <template>
 <div class="has-navbar-fixed-top">
     <div>
-        <button class="button is-link mb-6"><fa icon="plus"/> &nbsp;Add</button>
+        <button class="button is-link mb-6" @click="openCreate()">
+            <fa icon="plus"/> &nbsp;Add New Workshop
+        </button>
+
+        <CreateWorkshop v-show="createVisible" @close="closeCreate"/>
+
         &nbsp;
-        <router-link :to="{ name: 'Workshops' }"><button class="button mb-6">View Workshops Page</button></router-link>
+
+        <router-link :to="{ name: 'Workshops' }">
+            <button class="button mb-6">View Workshops Page</button>
+        </router-link>
     </div>
+
     <table class="table is-hoverable">
 
         <colgroup>
@@ -35,31 +44,61 @@
         <tbody>
 
         <tr v-for="item in workshop" :key="item.id">
-        <td>{{ workshop.indexOf(item) + 1 }}</td>
-        <td>{{ item.title }}</td>
-        <td><div class="desc">{{ item.description }}</div></td>
-        <td>{{ item.date }}</td>
-        <td>{{ item.startTime }} - {{ item.endTime }}</td>
-        <td>{{ item.venue }}</td>
-        <td><button class="button is-info">Edit</button></td>
-        <td><button class="button is-danger">Delete</button></td>
+            <td>{{ workshop.indexOf(item) + 1 }}</td>
+            <td>{{ item.title }}</td>
+            <td><div class="desc">{{ item.description }}</div></td>
+            <td>{{ item.date }}</td>
+            <td>{{ item.startTime }} - {{ item.endTime }}</td>
+            <td>{{ item.venue }}</td>
+
+            <td><button class="button is-info" @click="openEdit(item)">Edit</button></td>
+            <EditWorkshop :workshopItem="modalData" v-show="editVisible && modalData == item" @close="closeEdit"/>
+
+            <td><button class="button is-danger">Delete</button></td>
         </tr>
 
         </tbody>
     </table>
+
 </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import EditWorkshop from './EditWorkshop.vue'
+import CreateWorkshop from './CreateWorkshop.vue'
 
 export default {
     name: 'Table',
+    data() {
+        return {
+            editVisible: false,
+            modalData: null,
+            createVisible: false
+        }
+    },
+    components: {
+        EditWorkshop,
+        CreateWorkshop
+    },
     computed: {
         ...mapGetters(['workshop'])
     },
     methods: {
-        ...mapActions(['getWorkshop'])
+        ...mapActions(['getWorkshop']),
+        openEdit(item) {
+            this.modalData = item;
+            this.editVisible = true;
+        },
+        closeEdit() {
+            this.editVisible = false;
+        },
+        openCreate() {
+            this.createVisible = true;
+        },
+        closeCreate() {
+            this.createVisible = false;
+        }
     },
     created() {
         this.getWorkshop()
@@ -84,5 +123,9 @@ table {
 
 .button {
     color: black;
+}
+
+.has-navbar-fixed-top, .button {
+    font-size: 1.1vw;
 }
 </style>
