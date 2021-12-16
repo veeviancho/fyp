@@ -53,11 +53,19 @@
             <td>{{ item.startTime }} - {{ item.endTime }}</td>
             <td>{{ item.venue }}</td>
 
-            <td><button class="button is-info" @click="openEdit(item)">Edit</button>
-                <EditWorkshop :workshopItem="modalData" v-show="editVisible && modalData == item" @close="closeEdit"/></td>
+            <td>
+                <button class="button is-info" @click="openEdit(item)">Edit</button>
+                <EditWorkshop :workshopItem="modalData" v-show="editVisible && modalData == item" @close="closeEdit"/>
+            </td>
 
-                <td><button class="button is-info" @click="openUsers(item)">Users</button></td>
-                <td><button class="button is-danger">Delete</button></td>
+            <td>
+                <button class="button is-info" @click="openUsers(item)">Users</button>
+                <WorkshopUsers :workshopItem="modalData" v-show="usersVisible && modalData == item" @close="closeUsers"/>
+            </td>
+
+            <td>
+                <button class="button is-danger" @click="removeWorkshop(item)">Delete</button>
+            </td>
         </tr>
 
         </tbody>
@@ -70,6 +78,7 @@
 import { mapGetters, mapActions } from 'vuex';
 import EditWorkshop from './EditWorkshop.vue'
 import CreateWorkshop from './CreateWorkshop.vue'
+import WorkshopUsers from './WorkshopUsers.vue'
 
 export default {
     name: 'Table',
@@ -77,18 +86,20 @@ export default {
         return {
             editVisible: false,
             modalData: null,
-            createVisible: false
+            createVisible: false,
+            usersVisible: false
         }
     },
     components: {
         EditWorkshop,
-        CreateWorkshop
+        CreateWorkshop,
+        WorkshopUsers
     },
     computed: {
-        ...mapGetters(['workshop'])
+        ...mapGetters(['workshop', 'workshopStatus'])
     },
     methods: {
-        ...mapActions(['getWorkshop']),
+        ...mapActions(['getWorkshop', 'deleteWorkshop']),
         openEdit(item) {
             this.modalData = item;
             this.editVisible = true;
@@ -101,6 +112,23 @@ export default {
         },
         closeCreate() {
             this.createVisible = false;
+        },
+        openUsers(item) {
+            this.modalData = item;
+            this.usersVisible = true;
+        },
+        closeUsers() {
+            this.usersVisible = false;
+        },
+        removeWorkshop(item) {
+            let deleteConfirm = confirm("Are you sure you want to delete " + item.title + "?")
+            if (deleteConfirm) {
+                this.deleteWorkshop(item._id).then( () => {
+                    if (this.workshopStatus.delete == 'success') {
+                        window.location.reload();
+                    }
+                })
+            }
         }
     },
     created() {

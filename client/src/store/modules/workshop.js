@@ -9,7 +9,8 @@ const state = {
         register: '',
         deregister: '',
         create: '',
-        update: ''
+        update: '',
+        delete: ''
     },
 
     workshopError: {
@@ -17,6 +18,7 @@ const state = {
         deregister: '',
         create: '',
         update: '',
+        delete: ''
     }
 }
 
@@ -109,6 +111,21 @@ const actions = {
         catch (err) {
             commit('update_error', err)
         }
+    },
+
+    // Delete Workshop
+    async deleteWorkshop({ commit }, id) {
+        try {
+            commit('delete_request')
+            let res = await axios.delete("http://localhost:5000/api/workshops/delete/" + id)
+            if (res.data.success) {
+                commit('delete_success')
+            }
+            return res
+        }
+        catch (err) {
+            commit('delete_error', err)
+        }
     }
 
 }
@@ -184,9 +201,21 @@ const mutations = {
     update_error(state, err) {
         state.workshopStatus.update = 'error'
         state.workshopError.update = err.response.data.msg
-    }
+    },
 
     // Delete workshop
+    delete_request(state) {
+        state.workshopStatus.delete = 'loading'
+        state.workshopError.delete = ''
+    },
+    delete_success(state) {
+        state.workshopStatus.delete = 'success'
+        state.workshopError.delete = ''
+    },
+    delete_error(state, err) {
+        state.workshopStatus.delete = 'error'
+        state.workshopError.delete = err.response.data.msg
+    }
 }
 
 export default {
