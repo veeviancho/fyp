@@ -34,12 +34,31 @@ router.post('/create', (req, res) => {
 })
 
 /**
- * @route PUT api/workshops/update/:id
+ * @route PUT api/workshops/update
  * @desc Update workshop information
  * @access Private (admin only)
  */
-router.put('/update/:id', (req, res) => {
-    Workshop.findOneAndUpdate({ _id: req.params.id }, { $set: req.body })
+router.put('/update', (req, res) => {
+    let params = {
+        title: req.body.title,
+        description: req.body.description,
+        date: req.body.date,
+        startTime: req.body.startTime,
+        endTime: req.body.endTime,
+        venue: req.body.venue,
+        organiser: req.body.organiser,
+        programme: req.body.programme,
+        category: req.body.category,
+        maxUsers: req.body.maxUsers
+    }
+
+    for (let prop in params) {
+        if (!params[prop]) {
+            delete params[prop]
+        }
+    }
+
+    Workshop.findOneAndUpdate({ _id: req.body.id }, { $set: params })
         .then(workshop => {
             if (!workshop) {
                 return res.status(404).json({

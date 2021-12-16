@@ -24,7 +24,8 @@
             <col span="1" style="width: 7%;">
             <col span="1" style="width: 10%;">
             <col span="1" style="width: 7%;">
-            <col span="1" style="width: 10%;">
+            <col span="1" style="width: 8%;">
+            <col span="1" style="width: 8%;">
         </colgroup>
 
         <thead>
@@ -35,8 +36,9 @@
         <th>Date</th>
         <th>Time</th>
         <th>Venue</th>
-        <!-- Organiser, programme, category -->
+
         <th>Edit</th>
+        <th>Manage</th>
         <th>Delete</th>
         </tr>
         </thead>
@@ -51,10 +53,11 @@
             <td>{{ item.startTime }} - {{ item.endTime }}</td>
             <td>{{ item.venue }}</td>
 
-            <td><button class="button is-info" @click="openEdit(item)">Edit</button></td>
-            <EditWorkshop :workshopItem="modalData" v-show="editVisible && modalData == item" @close="closeEdit"/>
+            <td><button class="button is-info" @click="openEdit(item)">Edit</button>
+                <EditWorkshop :workshopItem="modalData" v-show="editVisible && modalData == item" @close="closeEdit"/></td>
 
-            <td><button class="button is-danger">Delete</button></td>
+                <td><button class="button is-info" @click="openUsers(item)">Users</button></td>
+                <td><button class="button is-danger">Delete</button></td>
         </tr>
 
         </tbody>

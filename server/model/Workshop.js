@@ -8,6 +8,7 @@ const WorkshopSchema = new Schema({
     },
     description: {
         type: String,
+        default: "No description."
     },
     date: {
         type: String,
@@ -27,15 +28,15 @@ const WorkshopSchema = new Schema({
     },
     organiser: {
         type: String,
-        required: true
+        default: "No organiser listed"
     },
     programme: {
         type: String,
-        required: true
+        default: "All"
     },
     category: {
         type: String,
-        required: true
+        default: "All"
     },
     points: {
         type: Number,

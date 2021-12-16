@@ -8,7 +8,7 @@
         <div class="field">
             <label class="label">Title</label>
             <div class="control">
-            <input class="input is-warning" type="text" placeholder="New Workshop" v-model="title">
+            <input class="input is-warning" type="text" placeholder="New Workshop" v-model="title" required>
             </div>
         </div> 
 
@@ -19,13 +19,12 @@
             </div>
         </div>
 
-
         <div class="columns">
         <div class="column">
             <div class="field">
                 <label class="label">Date</label>
                 <div class="control">
-                <input class="input is-warning" type="date" v-model="date">
+                <input class="input is-warning" type="date" v-model="date" required>
                 </div>
             </div>
         </div>
@@ -33,19 +32,18 @@
             <div class="field">
                 <label class="label">Venue</label>
                 <div class="control">
-                <input class="input is-warning" type="text" placeholder="Enter a room" v-model="venue">
+                <input class="input is-warning" type="text" placeholder="Enter a room" v-model="venue" required>
                 </div>
             </div>
         </div>
         </div>
-
 
         <div class="columns">
         <div class="column">
             <div class="field">
                 <label class="label">Start Time</label>
                 <div class="control">
-                <input class="input is-warning" type="time" v-model="startTime">
+                <input class="input is-warning" type="time" v-model="startTime" required>
                 </div>
             </div>
         </div>
@@ -53,7 +51,7 @@
             <div class="field">
                 <label class="label">End Time</label>
                 <div class="control">
-                <input class="input is-warning" type="time" v-model="endTime">
+                <input class="input is-warning" type="time" v-model="endTime" required>
                 </div>
             </div>
         </div>
@@ -92,9 +90,12 @@
         <div class="field">
             <label class="label">Maximum number of participants</label>
             <div class="control">
-            <input class="input is-warning" type="number" id="maxUsers" name="maxUsers" placeholder="Enter a number" v-model="maxUsers">
+            <input class="input is-warning" type="number" id="maxUsers" name="maxUsers" placeholder="Enter a number" v-model="maxUsers" required>
             </div>
         </div>
+
+        <!-- Error message -->
+        <p class="has-text-danger has-text-centered mb-3" v-if="workshopError.create">{{ workshopError.create }}</p>
 
         <button type="submit" class="button is-outlined is-fullwidth">Create New Workshop</button>
 
@@ -106,7 +107,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
     data() {
@@ -122,6 +123,9 @@ export default {
             category: '',
             maxUsers: null
         }
+    },
+    computed: {
+        ...mapGetters(['workshopError'])
     },
     methods: {
         ...mapActions(['createWorkshop']),
@@ -142,10 +146,13 @@ export default {
                 maxUsers: this.maxUsers
             }
             this.createWorkshop(workshop)
-            .then( (res) => {
+            .then( res => {
                 if (res.data.success) {
-                    console.log("success!")
+                    window.location.reload();
                 }
+            })
+            .catch( err => {
+                console.log(err)
             })
         }
     }

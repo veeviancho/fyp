@@ -1,33 +1,31 @@
 import axios from 'axios';
 
 const state = {
-    workshop_status: '',
     workshop: [],
-    workshop_error: [],
     workshopItem: {},
-
     userWorkshop: [],
 
-    deregister_status: '',
-    deregister_error: [],
+    workshopStatus: {
+        register: '',
+        deregister: '',
+        create: '',
+        update: ''
+    },
 
-    create_status: '',
-    create_error: ''
+    workshopError: {
+        register: [],
+        deregister: '',
+        create: '',
+        update: '',
+    }
 }
 
-const getters = {
-    workshop_status: state => state.workshop_status,
+const getters = { 
     workshop: state => state.workshop,
     workshopItem: (state) => state.workshopItem,
-    workshop_error: state => state.workshop_error,
-
     userWorkshop: state => state.userWorkshop,
-
-    deregister_status: state => state.deregister_status,
-    deregister_error: state => state.deregister_error,
-
-    create_status: state => state.create_status,
-    create_error: state => state.create_error
+    workshopStatus: state => state.workshopStatus,
+    workshopError: state => state.workshopError
 }
 
 const actions = {
@@ -36,7 +34,7 @@ const actions = {
         try {
             let res = await axios.get('http://localhost:5000/api/workshops/all');
             if (res.data.success) {
-                commit('getWorkshop_success', res.data.workshop);
+                commit('getWorkshops_success', res.data.workshop);
             }
         } catch (err) {
             console.log(err)
@@ -75,7 +73,7 @@ const actions = {
             commit('deregister_request');
             let res = await axios.put('http://localhost:5000/api/workshops/deregister/' + workshopId + '/' + userId);
             if (res.data.success) {
-                commit('deregister_success', res.data.workshop);
+                commit('deregister_success');
             }
             return res;
         } catch (err) {
@@ -96,71 +94,99 @@ const actions = {
         catch (err) {
             commit('create_error', err)
         }
+    },
+
+    // Update Workshop
+    async updateWorkshop({ commit }, workshop) {
+        try {
+            commit('update_request')
+            let res = await axios.put('http://localhost:5000/api/workshops/update', workshop)
+            if (res.data.success) {
+                commit('update_success')
+            }
+            return res
+        }
+        catch (err) {
+            commit('update_error', err)
+        }
     }
 
 }
 
-const mutations = {
+const mutations = { 
+    // Get workshops
+    getWorkshops_success(state, workshop) {
+        state.workshop = workshop
+    },
 
-    // Get one workshop
+    // Get one workshop from ID
     workshopID_success(state, workshop) {
         state.workshopItem = workshop
     },
 
-    // Get workshops
-    getWorkshop_success(state, workshop) {
-        state.workshop = workshop
-    },
-
-    // Get workshop for user
+    // Get workshops for user
     userWorkshop_success(state, workshop) {
         state.userWorkshop = workshop
     },
 
     // Register user to workshop
     workshop_request(state) {
-        state.workshop_status = 'loading'
-        state.workshop_error = ''
+        state.workshopStatus.register = 'loading'
+        state.workshopError.register = ''
     },
     workshop_success(state, workshop) {
-        state.workshop_status = 'success'
-        state.workshop_error = ''
+        state.workshopStatus.register = 'success'
+        state.workshopError.register = ''
         state.workshop = workshop
     },
     workshop_error(state, [id, err]) {
-        state.workshop_status = 'error'
-        state.workshop_error = [id, err.response.data.msg]
+        state.workshopStatus.register = 'error'
+        state.workshopError.register= [id, err.response.data.msg]
     },
 
     // Deregister user from workshop
     deregister_request(state) {
-        state.deregister_status = 'loading'
-        state.deregister_error = ''
+        state.workshopStatus.deregister = 'loading'
+        state.workshopError.deregister = ''
     },
-    deregister_success(state, workshop) {
-        state.deregister_status = 'success'
-        state.deregister_error = ''
-        state.deregister = workshop
+    deregister_success(state) {
+        state.workshopStatus.deregister = 'success'
+        state.workshopError.deregister = ''
     },
     deregister_error(state, [id, err]) {
-        state.deregister_status = 'error'
-        state.deregister_error = [id, err.response.data.msg]
+        state.workshopStatus.deregister = 'error'
+        state.workshopError.deregister = [id, err.response.data.msg]
     },
 
     // Create new workshop
     create_request(state) {
-        state.create_status = 'loading'
-        state.create_error = ''
+        state.workshopStatus.create = 'loading'
+        state.workshopError.create = ''
     },
-    create_success(state, workshop) {
-        state.create_status = 'success'
-        state.create_error = ''
-        state.create = workshop
+    create_success(state) {
+        state.workshopStatus.create = 'success'
+        state.workshopError.create = ''
     },
     create_error(state, err) {
-        state.create_status = 'error'
-        state.create_error = err.response.data.msg
+        state.workshopStatus.create = 'error'
+        state.workshopError.create = err.response.data.msg
     },
+
+    // Update workshop
+    update_request(state) {
+        state.workshopStatus.update = 'loading'
+        state.workshopError.update = ''
+    },
+    update_success(state) {
+        state.workshopStatus.update = 'success'
+        state.workshopError.update = ''
+    },
+    update_error(state, err) {
+        state.workshopStatus.update = 'error'
+        state.workshopError.update = err.response.data.msg
+    }
+
+    // Delete workshop
 }
 
 export default {
