@@ -29,10 +29,6 @@ const actions = {
         let user = state.usersList.find(item => item._id === userId)
         commit("getUserFromId_success", user)
     }
-
-    // Remove User from Workshop
-    
-
 };
 
 const mutations = {

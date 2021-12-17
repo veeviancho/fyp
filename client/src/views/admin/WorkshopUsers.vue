@@ -1,5 +1,7 @@
 <template>
 <div class="admin-content" v-if="workshopItem">
+    <router-link :to="{ name: 'Admin Workshop' }"><button class="button router">Back</button></router-link>
+
     <h1 class="title" @click="console()">List of Users registered for 
         <router-link :to="'/workshop/' + workshopItem._id">
             <span class="workshop">{{ workshopItem.title }}</span>
@@ -56,9 +58,16 @@ export default {
         ...mapGetters(['workshopItem', 'userById'])
     },
     methods: {
-        ...mapActions(['getWorkshop', 'getWorkshopFromId', 'getAllUsers', 'getUserFromId']),
-        removeUser(id) {
-            this.removeUserFromWorkshop(id)
+        ...mapActions(['getWorkshop', 'getWorkshopFromId', 'getAllUsers', 'getUserFromId', 'deregisterFromWorkshop']),
+        removeUser(userId) {
+            let confirmRemove = confirm("Remove user from workshop?")
+            if (confirmRemove) {
+                this.deregisterFromWorkshop([this.id, userId]).then(res => {
+                    if (res.data.success) {
+                        window.location.reload();
+                    }
+                })
+            }
         }
     },
     created() {
@@ -89,6 +98,11 @@ export default {
 
 .workshop:hover {
     text-decoration: underline;
+}
+
+.router {
+    color: black;
+    margin-bottom: 2rem;
 }
 </style>
 

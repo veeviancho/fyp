@@ -19,13 +19,15 @@
         <colgroup>
             <col span="1" style="width: 4%;">
             <col span="1" style="width: 10%;">
-            <col span="1" style="width: 30%;">
+            <col span="1" style="width: 20%;">
             <col span="1" style="width: 10%;">
             <col span="1" style="width: 7%;">
             <col span="1" style="width: 10%;">
             <col span="1" style="width: 7%;">
+
+            <col span="1" style="width: 7%;">
             <col span="1" style="width: 8%;">
-            <col span="1" style="width: 8%;">
+            <col span="1" style="width: 10%;">
         </colgroup>
 
         <thead>
@@ -36,6 +38,7 @@
         <th>Date</th>
         <th>Time</th>
         <th>Venue</th>
+        <th>Users</th>
 
         <th>Edit</th>
         <th>Manage</th>
@@ -52,6 +55,7 @@
             <td>{{ item.date }}</td>
             <td>{{ item.startTime }} - {{ item.endTime }}</td>
             <td>{{ item.venue }}</td>
+            <td>{{ item.users.length }}/{{ item.maxUsers }}</td>
 
             <td>
                 <button class="button is-info" @click="openEdit(item)">Edit</button>
