@@ -103,7 +103,7 @@ router.delete('/delete/:id', (req, res) => {
  * @desc Return all workshops
  * @access Private
  */
- router.get('/all', (req, res) => {
+router.get('/all', (req, res) => {
     Workshop.find({})
         .then( workshop => {
             if (!workshop) {

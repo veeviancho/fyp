@@ -1,5 +1,5 @@
 <template>
-<div class="has-navbar-fixed-top">
+<div class="admin-content">
     <div>
         <button class="button is-link mb-6" @click="openCreate()">
             <fa icon="plus"/> &nbsp;Add New Workshop
@@ -29,7 +29,7 @@
         </colgroup>
 
         <thead>
-        <tr id="head">
+        <tr>
         <th>No</th>
         <th>Title</th>
         <th>Description</th>
@@ -59,8 +59,7 @@
             </td>
 
             <td>
-                <button class="button is-info" @click="openUsers(item)">Users</button>
-                <WorkshopUsers :workshopItem="modalData" v-show="usersVisible && modalData == item" @close="closeUsers"/>
+                <router-link :to="'/admin/workshop/' + item._id"><button class="button is-user" @click="openUsers(item)">Users</button></router-link>
             </td>
 
             <td>
@@ -78,7 +77,6 @@
 import { mapGetters, mapActions } from 'vuex';
 import EditWorkshop from './EditWorkshop.vue'
 import CreateWorkshop from './CreateWorkshop.vue'
-import WorkshopUsers from './WorkshopUsers.vue'
 
 export default {
     name: 'Table',
@@ -92,8 +90,7 @@ export default {
     },
     components: {
         EditWorkshop,
-        CreateWorkshop,
-        WorkshopUsers
+        CreateWorkshop
     },
     computed: {
         ...mapGetters(['workshop', 'workshopStatus'])
@@ -121,7 +118,7 @@ export default {
             this.usersVisible = false;
         },
         removeWorkshop(item) {
-            let deleteConfirm = confirm("Are you sure you want to delete " + item.title + "?")
+            let deleteConfirm = confirm('Are you sure you want to delete the workshop "' + item.title + '"?')
             if (deleteConfirm) {
                 this.deleteWorkshop(item._id).then( () => {
                     if (this.workshopStatus.delete == 'success') {
@@ -158,5 +155,10 @@ table {
 
 .has-navbar-fixed-top, .button {
     font-size: 1.1vw;
+}
+
+.is-user {
+    background-color: #329AA0;
+    color: white;
 }
 </style>

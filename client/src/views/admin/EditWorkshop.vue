@@ -7,7 +7,7 @@
 
         <div class="field">
             <label class="label">Title &nbsp;&nbsp;
-                <small class="edit-btn" v-if="!showTitle" @click="showTitle=true">Edit</small>
+                <small class="edit-btn" v-if="!showTitle" @click="showTitle=true;">Edit</small>
                 <small class="edit-btn" v-if="showTitle" @click="this.title=''; showTitle=false">Cancel</small>
             </label>
             <div class="control">
@@ -149,7 +149,9 @@
         <!-- Error message -->
         <p class="has-text-danger has-text-centered mb-3" v-if="workshopError.update">{{ workshopError.update }}</p>
 
-        <button type="submit" class="button is-outlined is-fullwidth">Update</button>
+        <button type="submit" class="button is-outlined is-fullwidth" v-if="showBtn()">
+            Update
+        </button>
 
     </form>
 
@@ -198,6 +200,10 @@ export default {
         close() {
             this.$emit('close')
         },
+        showBtn() {
+            let update = (this.showTitle || this.showDescription || this.showDate || this.showStartTime || this.showEndTime || this.showVenue || this.showOrganiser || this.showProgramme || this.showCategory || this.showMaxUsers) ? true : false;
+            return update;
+        },
         editWorkshop() {
             let workshop = {
                 id: this.id,
@@ -231,6 +237,15 @@ export default {
 
 
 <style scoped>
+.box {
+    padding: 2rem 3rem;
+    /* width: ; */
+}
+
+.modal-content {
+    min-width: 55vw;
+}
+
 .button {
     color: black;
 }

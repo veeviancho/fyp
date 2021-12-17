@@ -29,7 +29,7 @@
                 </div>
 
                 <p class="has-text-success has-text-centered mb-3 white" v-if="success_msg">{{ success_msg }}</p>
-                <p class="has-text-danger has-text-centered mb-3 white" v-if="workshop_error[0] === this.id">{{ workshop_error[1] }}</p>
+                <p class="has-text-danger has-text-centered mb-3 white" v-if="workshopError.register[0] === this.id">{{ workshopError.register[1] }}</p>
 
                 <p><button type="submit" class="button is-fullwidth" @click="registerWorkshop()" :disabled='isDisabled' v-if='showButton'>{{ buttonMsg }}</button></p>
                 <p><button type="submit" class="button is-fullwidth deregister" @click="deregisterWorkshop()" :disabled='isDisabled2' v-if='!showButton'>Deregister from workshop</button></p>
@@ -61,7 +61,7 @@ export default {
     },
     props: ['id'],
     computed: {
-        ...mapGetters(['workshop_status', 'workshop', 'workshopItem', 'workshop_error']),
+        ...mapGetters(['workshop_status', 'workshop', 'workshopItem', 'workshopError']),
     },
     methods: {
         ...mapActions(['getWorkshop', 'registerForWorkshop', 'getWorkshopFromId', 'deregisterFromWorkshop']),

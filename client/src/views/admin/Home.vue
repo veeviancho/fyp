@@ -1,5 +1,5 @@
 <template>
-<div class="has-navbar-fixed-top">
+<div class="admin-content">
     <div>
         <button class="button is-link mb-6"><fa icon="plus"/> &nbsp;Add</button>
         &nbsp;

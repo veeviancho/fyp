@@ -24,7 +24,7 @@ const state = {
 
 const getters = { 
     workshop: state => state.workshop,
-    workshopItem: (state) => state.workshopItem,
+    workshopItem: state => state.workshopItem,
     userWorkshop: state => state.userWorkshop,
     workshopStatus: state => state.workshopStatus,
     workshopError: state => state.workshopError

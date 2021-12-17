@@ -26,7 +26,7 @@ import AdminHome from '../views/admin/Home.vue'
 import AdminAbout from '../views/admin/About.vue'
 import AdminArticles from '../views/admin/Articles.vue'
 import AdminWorkshop from '../views/admin/Workshop.vue'
-import EditWorkshop from '../views/admin/EditWorkshop.vue'
+import WorkshopUsers from '../views/admin/WorkshopUsers.vue'
 import AdminBooking from '../views/admin/Booking.vue'
 import AdminRealTime from '../views/admin/RealTime.vue'
 import AdminProfile from '../views/admin/RealTime.vue'
@@ -170,8 +170,9 @@ const routes = [
   },
   {
     path: '/admin/workshop/:id',
-    name: 'Edit Workshop',
-    component: EditWorkshop,
+    name: 'Workshop Users',
+    component: WorkshopUsers,
+    props: true,
     meta: {
       isAdmin: true
     }

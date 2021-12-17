@@ -475,6 +475,5 @@ router.post('/resend/:email', (req, res) => {
 //     })
 // })
 
-
 //Export router to be used elsewhere
 module.exports = router;

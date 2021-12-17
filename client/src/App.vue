@@ -28,8 +28,14 @@ export default {
 </script>
 
 <style lang="scss">
-.has-navbar-fixed-top{
+.has-navbar-fixed-top {
   padding-top: 6rem;
+  margin: auto;
+  max-width: 92%;
+}
+
+.admin-content {
+  padding-top: 3rem;
   margin: auto;
   max-width: 92%;
 }
