@@ -21,7 +21,7 @@
         </ul>
         <p class="menu-label">Users</p>
         <ul class="menu-list">
-            <li><a>Manage Users</a></li>
+            <li><router-link class="router" active-class="active" :to="{ name: 'Admin Users' }">Manage Users</router-link></li>
         </ul>
     </aside>
 </div>

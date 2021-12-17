@@ -25,11 +25,13 @@ import Profile from '../views/user/profile/Profile.vue'
 import AdminHome from '../views/admin/Home.vue'
 import AdminAbout from '../views/admin/About.vue'
 import AdminArticles from '../views/admin/Articles.vue'
-import AdminWorkshop from '../views/admin/Workshop.vue'
-import WorkshopUsers from '../views/admin/WorkshopUsers.vue'
 import AdminBooking from '../views/admin/Booking.vue'
 import AdminRealTime from '../views/admin/RealTime.vue'
 import AdminProfile from '../views/admin/RealTime.vue'
+
+import AdminWorkshop from '../views/admin/Workshop.vue'
+import WorkshopUsers from '../views/admin/WorkshopUsers.vue'
+import AdminUsers from '../views/admin/ManageUsers.vue'
 
 const routes = [
   // Public views
@@ -201,6 +203,14 @@ const routes = [
       isAdmin: true
     }
   },
+  {
+    path: '/admin/users',
+    name: 'Admin Users',
+    component: AdminUsers,
+    meta: {
+      isAdmin: true
+    }
+  }
 ]
 
 const router = createRouter({

@@ -60,6 +60,10 @@ button:focus {
   color: white;
 }
 
+td {
+    word-wrap: break-word
+}
+
 //For development purposes
 .pink {
     border: 2px solid pink;

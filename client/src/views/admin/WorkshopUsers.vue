@@ -12,18 +12,19 @@
     <table class="table is-hoverable">
     <thead>
         <tr id="head">
-        <th>No</th>
-        <th>Name</th>
-        <th>Username</th>
-        <th>Email Address</th>
-        <th>Programme</th>
-        <!-- <th>Workshops registered</th> -->
-        <th>Member since</th>
+            <th>No</th>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Email Address</th>
+            <th>Programme</th>
+            <!-- <th>Workshops registered</th> -->
+            <th>Member since</th>
 
-        <th>Remove</th>
+            <th>Remove</th>
         </tr>
     </thead>
     
+    <tbody>
     <tr v-for="user in users" :key="user._id">
         <td>{{ users.indexOf(user) + 1 }}</td>
         <td>{{ user.name }}</td>
@@ -37,8 +38,8 @@
         <td>
             <button class="button is-danger" @click="removeUser(user._id)">Remove</button>
         </td>
-
     </tr>
+    </tbody>
 
     </table>
 </div>
