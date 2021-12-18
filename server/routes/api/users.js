@@ -186,7 +186,7 @@ router.post('/register', (req, res) => {
                                 transporter.sendMail(mailOptions, (err) => {
                                     if (err) {
                                         return res.status(400).json({
-                                            msg: "Unable to send link."
+                                            msg: "Unable to send link to " + newUser.email + "."
                                         })
                                     }
                                     return res.status(200).json({
@@ -531,6 +531,8 @@ router.get('/all', (req, res) => {
                 msg: "Unable to delete. Please try again later."
             })
         })
+
+        // TODO: remove the user from the workshop
 })
 
 // /**

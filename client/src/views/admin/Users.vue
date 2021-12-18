@@ -2,10 +2,10 @@
 <div class="admin-content">
 
     <div>
-        <button class="button is-link mb-6">
+        <button class="button is-link mb-6" @click="openCreate()">
             <fa icon="plus"/> &nbsp;Add New User
         </button>
-        <CreateUser v-show="createVisible" @close="closeCreate"/>   
+        <CreateUser v-show="createVisible" @close="closeCreate()"/>   
     </div>
     
     <table class="table is-hoverable" v-if="usersList">
@@ -82,6 +82,12 @@ export default {
     },
     methods: {
         ...mapActions(['getAllUsers', 'deleteUser']),
+        openCreate() {
+            this.createVisible = true
+        },
+        closeCreate() {
+            this.createVisible = false
+        },
         editUser(data) {
             this.modalData = data
             this.editVisible = true

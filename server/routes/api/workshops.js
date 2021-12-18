@@ -96,6 +96,7 @@ router.delete('/delete/:id', (req, res) => {
                 msg: "Unable to delete. Please try again later."
             })
         })
+        // TODO: remove the workshop from the user
 })
 
 /**

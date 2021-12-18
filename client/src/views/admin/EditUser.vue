@@ -42,7 +42,7 @@
             </label>
             <div class="control">
                 <p v-if="!show[2]">{{ userItem.email }}</p>
-                <input class="input is-warning" type="text" placeholder="johndoe@e.ntu.edu.sg" v-if="show[2]" v-model="email">
+                <input class="input is-warning" type="email" placeholder="johndoe@e.ntu.edu.sg" v-if="show[2]" v-model="email">
             </div>
         </div> 
         </div> 
