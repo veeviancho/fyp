@@ -92,7 +92,7 @@ export default {
         username: this.username,
         about: this.about
       }
-      console.log(user)
+      // console.log(user)
       this.update(user)
       .then(res => {
         if (res.data.success) {

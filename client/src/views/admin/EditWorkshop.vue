@@ -7,23 +7,23 @@
 
         <div class="field">
             <label class="label">Title &nbsp;&nbsp;
-                <small class="edit-btn" v-if="!showTitle" @click="showTitle=true;">Edit</small>
-                <small class="edit-btn" v-if="showTitle" @click="this.title=''; showTitle=false">Cancel</small>
+                <small class="edit-btn" v-if="!show[0]" @click="show[0]=true;">Edit</small>
+                <small class="edit-btn" v-if="show[0]" @click="this.title=''; show[0]=false">Cancel</small>
             </label>
             <div class="control">
-                <p v-if="!showTitle">{{ workshopItem.title }}</p>
-                <input class="input is-warning" type="text" placeholder="Lifelong Learning Workshop" v-if="showTitle" v-model="title">
+                <p v-if="!show[0]">{{ workshopItem.title }}</p>
+                <input class="input is-warning" type="text" placeholder="Lifelong Learning Workshop" v-if="show[0]" v-model="title">
             </div>
         </div> 
 
         <div class="field">
             <label class="label">Description &nbsp;&nbsp;
-                <small class="edit-btn" v-if="!showDescription" @click="showDescription=true">Edit</small>
-                <small class="edit-btn" v-if="showDescription" @click="this.description=''; showDescription=false">Cancel</small>
+                <small class="edit-btn" v-if="!show[1]" @click="show[1]=true">Edit</small>
+                <small class="edit-btn" v-if="show[1]" @click="this.description=''; show[1]=false">Cancel</small>
             </label>
             <div class="control">
-                <p v-if="!showDescription">{{ workshopItem.description }}</p>
-                <textarea class="textarea is-warning" type="textarea" placeholder="Enter information about the workshop." v-if="showDescription" v-model="description"></textarea>
+                <p v-if="!show[1]">{{ workshopItem.description }}</p>
+                <textarea class="textarea is-warning" type="textarea" placeholder="Enter information about the workshop." v-if="show[1]" v-model="description"></textarea>
             </div>
         </div>
 
@@ -31,24 +31,24 @@
         <div class="column">
             <div class="field">
                 <label class="label">Date &nbsp;&nbsp;
-                    <small class="edit-btn" v-if="!showDate" @click="showDate=true">Edit</small>
-                    <small class="edit-btn" v-if="showDate" @click="this.date=null; showDate=false">Cancel</small>
+                    <small class="edit-btn" v-if="!show[2]" @click="show[2]=true">Edit</small>
+                    <small class="edit-btn" v-if="show[2]" @click="this.date=null; show[2]=false">Cancel</small>
                 </label>
                 <div class="control">
-                    <p v-if="!showDate">{{ workshopItem.date }}</p>
-                    <input class="input is-warning" type="date" v-if="showDate" v-model="date">
+                    <p v-if="!show[2]">{{ workshopItem.date }}</p>
+                    <input class="input is-warning" type="date" v-if="show[2]" v-model="date">
                 </div>
             </div>
         </div>
         <div class="column">
             <div class="field">
                 <label class="label">Venue &nbsp;&nbsp;
-                    <small class="edit-btn" v-if="!showVenue" @click="showVenue=true">Edit</small>
-                    <small class="edit-btn" v-if="showVenue" @click="this.venue=''; showVenue=false">Cancel</small>
+                    <small class="edit-btn" v-if="!show[3]" @click="show[3]=true">Edit</small>
+                    <small class="edit-btn" v-if="show[3]" @click="this.venue=''; show[3]=false">Cancel</small>
                 </label>
                 <div class="control">
-                    <p v-if="!showVenue">{{ workshopItem.venue }}</p>
-                    <input class="input is-warning" type="text" placeholder="Enter a room" v-if="showVenue" v-model="venue">
+                    <p v-if="!show[3]">{{ workshopItem.venue }}</p>
+                    <input class="input is-warning" type="text" placeholder="Enter a room" v-if="show[3]" v-model="venue">
                 </div>
             </div>
         </div>
@@ -58,24 +58,24 @@
         <div class="column">
             <div class="field">
                 <label class="label">Start Time &nbsp;&nbsp;
-                    <small class="edit-btn" v-if="!showStartTime" @click="showStartTime=true">Edit</small>
-                    <small class="edit-btn" v-if="showStartTime" @click="this.startTime=null; showStartTime=false">Cancel</small>
+                    <small class="edit-btn" v-if="!show[4]" @click="show[4]=true">Edit</small>
+                    <small class="edit-btn" v-if="show[4]" @click="this.startTime=null; show[4]=false">Cancel</small>
                 </label>
                 <div class="control">
-                    <p v-if="!showStartTime">{{ workshopItem.startTime }}</p>
-                    <input class="input is-warning" type="time" v-if="showStartTime" v-model="startTime">
+                    <p v-if="!show[4]">{{ workshopItem.startTime }}</p>
+                    <input class="input is-warning" type="time" v-if="show[4]" v-model="startTime">
                 </div>
             </div>
         </div>
         <div class="column">
             <div class="field">
                 <label class="label">End Time &nbsp;&nbsp;
-                    <small class="edit-btn" v-if="!showEndTime" @click="showEndTime=true">Edit</small>
-                    <small class="edit-btn" v-if="showEndTime" @click="this.endTime=null; showEndTime=false">Cancel</small>
+                    <small class="edit-btn" v-if="!show[5]" @click="show[5]=true">Edit</small>
+                    <small class="edit-btn" v-if="show[5]" @click="this.endTime=null; show[5]=false">Cancel</small>
                 </label>
                 <div class="control">
-                    <p v-if="!showEndTime">{{ workshopItem.endTime }}</p>
-                    <input class="input is-warning" type="time" v-if="showEndTime" v-model="endTime">
+                    <p v-if="!show[5]">{{ workshopItem.endTime }}</p>
+                    <input class="input is-warning" type="time" v-if="show[5]" v-model="endTime">
                 </div>
             </div>
         </div>
@@ -85,24 +85,24 @@
         <div class="column">
             <div class="field">
                 <label class="label">Organiser &nbsp;&nbsp;
-                    <small class="edit-btn" v-if="!showOrganiser" @click="showOrganiser=true">Edit</small>
-                    <small class="edit-btn" v-if="showOrganiser" @click="this.organiser=''; showOrganiser=false">Cancel</small>
+                    <small class="edit-btn" v-if="!show[6]" @click="show[6]=true">Edit</small>
+                    <small class="edit-btn" v-if="show[6]" @click="this.organiser=''; show[6]=false">Cancel</small>
                 </label>
                 <div class="control">
-                    <p v-if="!showOrganiser">{{ workshopItem.organiser }}</p>
-                    <input class="input is-warning" type="text" placeholder="Enter the oganiser's name" v-if="showOrganiser" v-model="organiser">
+                    <p v-if="!show[6]">{{ workshopItem.organiser }}</p>
+                    <input class="input is-warning" type="text" placeholder="Enter the oganiser's name" v-if="show[6]" v-model="organiser">
                 </div>
             </div>
         </div>
         <div class="column">
             <div class="field">
                 <label class="label">Programme  &nbsp;&nbsp;
-                    <small class="edit-btn" v-if="!showProgramme" @click="showProgramme=true">Edit</small>
-                    <small class="edit-btn" v-if="showProgramme" @click="this.programme=''; showProgramme=false">Cancel</small>
+                    <small class="edit-btn" v-if="!show[7]" @click="show[7]=true">Edit</small>
+                    <small class="edit-btn" v-if="show[7]" @click="this.programme=''; show[7]=false">Cancel</small>
                 </label>
                 <div class="control">
-                    <p v-if="!showProgramme">{{ workshopItem.programme }}</p>
-                    <div class="select is-fullwidth is-warning" v-if="showProgramme">
+                    <p v-if="!show[7]">{{ workshopItem.programme }}</p>
+                    <div class="select is-fullwidth is-warning" v-if="show[7]">
                     <select name="programme" v-model="programme">
                         <option disabled>Change Programme</option>
                         <option>Communications Engineering</option>
@@ -123,24 +123,24 @@
         <div class="column">
             <div class="field">
                 <label class="label">Category &nbsp;&nbsp;
-                    <small class="edit-btn" v-if="!showCategory" @click="showCategory=true">Edit</small>
-                    <small class="edit-btn" v-if="showCategory" @click="this.category=''; showCategory=false">Cancel</small>
+                    <small class="edit-btn" v-if="!show[8]" @click="show[8]=true">Edit</small>
+                    <small class="edit-btn" v-if="show[8]" @click="this.category=''; show[8]=false">Cancel</small>
                 </label>
                 <div class="control">
-                    <p v-if="!showCategory">{{ workshopItem.category }}</p>
-                    <input class="input is-warning" type="text" placeholder="Category" v-if="showCategory" v-model="category">
+                    <p v-if="!show[8]">{{ workshopItem.category }}</p>
+                    <input class="input is-warning" type="text" placeholder="Category" v-if="show[8]" v-model="category">
                 </div>
             </div>
         </div>
         <div class="column">
             <div class="field">
                 <label class="label">Max no of participants &nbsp;&nbsp;
-                    <small class="edit-btn" v-if="!showMaxUsers" @click="showMaxUsers=true">Edit</small>
-                    <small class="edit-btn" v-if="showMaxUsers" @click="this.maxUsers=''; showMaxUsers=false">Cancel</small>
+                    <small class="edit-btn" v-if="!show[9]" @click="show[9]=true">Edit</small>
+                    <small class="edit-btn" v-if="show[9]" @click="this.maxUsers=''; show[9]=false">Cancel</small>
                 </label>
                 <div class="control">
-                    <p v-if="!showMaxUsers">{{ workshopItem.maxUsers }}</p>
-                    <input class="input is-warning" type="number" id="maxUsers" name="maxUsers" placeholder="Enter a number" v-if="showMaxUsers" v-model="maxUsers">
+                    <p v-if="!show[9]">{{ workshopItem.maxUsers }}</p>
+                    <input class="input is-warning" type="number" id="maxUsers" name="maxUsers" placeholder="Enter a number" v-if="show[9]" v-model="maxUsers">
                 </div>
             </div>
         </div>
@@ -176,16 +176,7 @@ export default {
             category: '',
             maxUsers: 0,
 
-            showTitle: false,
-            showDescription: false,
-            showDate: false,
-            showStartTime: false,
-            showEndTime: false,
-            showVenue: false,
-            showOrganiser: false,
-            showProgramme: false,
-            showCategory: false,
-            showMaxUsers: false
+            show: [false, false, false, false, false, false, false, false, false, false]
         }
     },
     computed: {
@@ -201,8 +192,11 @@ export default {
             this.$emit('close')
         },
         showBtn() {
-            let update = (this.showTitle || this.showDescription || this.showDate || this.showStartTime || this.showEndTime || this.showVenue || this.showOrganiser || this.showProgramme || this.showCategory || this.showMaxUsers) ? true : false;
-            return update;
+            for (let i=0; i<this.show.length; i++) {
+                if (this.show[i] == true) {
+                    return true
+                }
+            }
         },
         editWorkshop() {
             let workshop = {

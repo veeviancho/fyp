@@ -288,29 +288,63 @@ router.get('/profile', passport.authenticate('jwt', { session: false }), (req, r
 
 //TODO: passport authenticate??
 router.put('/update/:id', (req, res) => {
+    // let params = {
+    //     name: req.body.name,
+    //     username: req.body.username,
+    //     email: req.body.email,
+    //     programme: req.body.programme,
+    //     about: req.body.about,
+    //     isVerified: req.body.isVerified,
+    // }
+    // console.log(params)
+
+    // for (let prop in params) {
+    //     if (!params[prop]) {
+    //         delete params[prop]
+    //     }
+    // }
+
+    // console.log(params)
+
     // Name Input Validation
-    // Accepts lower/uppercase letters, space and special char (,.'-) only
-    // First char must be a letter
-    let check = /^[a-z]+[a-z ,.'-]*$/i;
-    if (!check.test(req.body.name)) {
-        return res.status(400).json ({
-            msg: "Please enter a valid name."
-        })
+    if (req.body.name) {
+        let check = /^[a-z]+[a-z ,.'-]*$/i;
+        if (!check.test(req.body.name)) {
+            return res.status(400).json ({
+                msg: "Please enter a valid name."
+            })
+        }
     }
 
     // Username Input Validation
-    // Accepts any word character [A-Za-z0-9], special char (.-_) only
-    // No more than one special char in a row
-    // Cannot begin or end with a special char
-    // 3-25 characters long
-    check = /^\w{1}([\w][.-_]?){3,23}\w{1}$/i;
-    if (!check.test(req.body.username)) {
-        return res.status(400).json ({
-            msg: "Please enter a valid username."
-        });
+    if (req.body.username) {
+        check = /^\w{1}([\w][.-_]?){3,23}\w{1}$/i;
+        if (!check.test(req.body.username)) {
+            return res.status(400).json ({
+                msg: "Please enter a valid username."
+            });
+        }
     }
 
-    //  TODO: username exist in database -> error!!
+    // Admin - change email
+    if (req.body.email) {
+        // Email Input Validation
+        check = /^[a-z]+[\w(-.)?]*@(e.)?ntu.edu.sg$/i
+        if (!check.test(req.body.email)) {
+            return res.status(400).json ({
+                msg: "Please enter a valid NTU email.",
+            });
+        }
+
+        // Check if email exists
+        User.findOne({ email: req.body.email }).then(user => {
+            if (user) {
+                return res.status(400).json({
+                    msg: "Email address is already taken."
+                })
+            }
+        })
+    }
 
     User.findOne({ username: req.body.username }).then(user => {
         //Check if user exists
@@ -454,6 +488,49 @@ router.post('/resend/:email', (req, res) => {
         }
 
     })
+})
+
+/**
+ * @route GET api/users/all
+ * @desc Return all users
+ * @access Private (admin)
+ */
+router.get('/all', (req, res) => {
+    User.find({})
+        .then( users => {
+            if (!users) {
+                return res.status(404).json({
+                    msg: "No user available."
+                })
+            }
+            return res.status(201).json({
+                users: users,
+                success: true
+            })
+        })
+        .catch( err => {
+            console.log(err)
+        })
+})
+
+/**
+ * @route DELETE api/users/delete/:id
+ * @desc Delete user by ID
+ * @access Private (admin)
+ */
+ router.delete('/delete/:id', (req, res) => {
+    User.findOneAndDelete( { _id: req.params.id } )
+        .then( () => {
+            return res.status(200).json({
+                success: true
+            })
+        })
+        .catch( err => {
+            console.log(err)
+            return res.status(400).json({
+                msg: "Unable to delete. Please try again later."
+            })
+        })
 })
 
 // /**

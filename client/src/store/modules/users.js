@@ -2,19 +2,21 @@ import axios from 'axios';
 
 const state = {
     usersList: [],
-    userById: {}
+    userById: {},
+    deleteUserRequest: ''
 };
 
 const getters = {
     usersList: state => state.usersList,
-    userById: state => state.userById
+    userById: state => state.userById,
+    deleteUserRequest: state => state.deleteUserRequest
 };
 
 const actions = {
     // Get all users
     async getAllUsers({ commit }) {
         try {
-            let res = await axios.get("http://localhost:5000/api/members/all")
+            let res = await axios.get("http://localhost:5000/api/users/all")
             if (res.data.success) {
                 commit("getUsers_success", res.data.users)
             }
@@ -28,6 +30,20 @@ const actions = {
     async getUserFromId({ commit }, userId) {
         let user = state.usersList.find(item => item._id === userId)
         commit("getUserFromId_success", user)
+    },
+
+    // Delete user
+    async deleteUser({ commit }, id) {
+        try {
+            let res = await axios.delete("http://localhost:5000/api/users/delete/" + id)
+            if (res.data.success) {
+                commit('deleteUser_success')
+            }
+            return res
+        }
+        catch (err) {
+            console.log(err)
+        }
     }
 };
 
@@ -40,6 +56,11 @@ const mutations = {
     // Get user from ID
     getUserFromId_success(state, user) {
         state.userById = user
+    },
+
+    // Delete user
+    deleteUser_success(state) {
+        state.deleteUser = "success"
     }
 };
 

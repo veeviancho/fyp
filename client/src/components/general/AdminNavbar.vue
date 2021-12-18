@@ -1,7 +1,7 @@
 <template>
 <div class="adminNav">
-    <h1 class="title pl-4 pt-4">EEE Lifelong Learning Space</h1>
-    <h2 class="subtitle pl-4 pt-2">Admin Panel</h2>
+    <h1 class="title pl-5 pt-5">EEE Lifelong Learning Space</h1>
+    <h2 class="subtitle pl-5 pt-2">Admin Panel</h2>
     <aside class="menu">
         <p class="menu-label">General</p>
         <ul class="menu-list">
@@ -34,7 +34,7 @@
 }
 
 .menu-label, .menu-list a  {
-    padding-left: 1rem;
+    padding-left: 1.6rem;
 }
 
 .router:hover {

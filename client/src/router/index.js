@@ -31,7 +31,7 @@ import AdminProfile from '../views/admin/RealTime.vue'
 
 import AdminWorkshop from '../views/admin/Workshop.vue'
 import WorkshopUsers from '../views/admin/WorkshopUsers.vue'
-import AdminUsers from '../views/admin/ManageUsers.vue'
+import AdminUsers from '../views/admin/Users.vue'
 
 const routes = [
   // Public views

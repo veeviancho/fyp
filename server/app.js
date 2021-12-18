@@ -45,8 +45,6 @@ const users = require('./routes/api/users');
 //NOTSURE: pulling in workshop
 const workshops = require('./routes/api/workshops');
 app.use('/api/workshops', workshops);
-const members = require('./routes/api/members');
-app.use('/api/members', members);
 //NOTSURE
 
 app.use(passport.initialize()); //passport middleware
