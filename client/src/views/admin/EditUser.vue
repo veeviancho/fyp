@@ -1,6 +1,6 @@
 <template>
 <div class="modal is-active" v-if="userItem">
-  <div class="modal-background"></div>
+  <div class="modal-background" @click="close()"></div>
   <div class="modal-content">
     
     <form class="box" @submit.prevent="editUser">
@@ -116,10 +116,10 @@
         </div>
         </div>
         </div>
-        
-
-        <!-- Error message -->
+    
+        <!-- update message -->
         <p class="has-text-danger has-text-centered mb-3" v-if="error.update">{{ error.update }}</p>
+        <p class="has-text-success has-text-centered mb-3 white" v-if="success_msg">{{ success_msg }}</p>
 
         <button type="submit" class="button is-outlined is-fullwidth" v-if="showBtn()">
             Update
@@ -144,7 +144,8 @@ export default {
             programme: this.programme,
             about: this.about,
             isVerified: this.isVerified,
-            show: [false, false, false, false, false, false]
+            show: [false, false, false, false, false, false],
+            success_msg: ''
         }
     },
     props: ['userItem'],

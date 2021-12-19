@@ -14,11 +14,6 @@
             <li><router-link class="router" active-class="active" :to="{ name: 'Admin Workshop' }">Manage Workshops</router-link></li>
             <li><a>View Past Workshops</a></li>
         </ul>
-        <p class="menu-label">Rooms</p>
-        <ul class="menu-list">
-            <li><a>Past Bookings</a></li>
-            <li><a>Current Bookings</a></li>
-        </ul>
         <p class="menu-label">Users</p>
         <ul class="menu-list">
             <li><router-link class="router" active-class="active" :to="{ name: 'Admin Users' }">Manage Users</router-link></li>

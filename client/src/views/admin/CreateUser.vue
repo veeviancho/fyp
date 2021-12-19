@@ -1,6 +1,6 @@
 <template>
 <div class="modal is-active">
-  <div class="modal-background"></div>
+  <div class="modal-background" @click="close()"></div>
   <div class="modal-content">
     
     <form class="box" @submit.prevent="createUser">

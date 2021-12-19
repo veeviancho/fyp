@@ -185,6 +185,7 @@ router.post('/register', (req, res) => {
 
                                 transporter.sendMail(mailOptions, (err) => {
                                     if (err) {
+                                        console.log(err)
                                         return res.status(400).json({
                                             msg: "Unable to send link to " + newUser.email + "."
                                         })
@@ -288,23 +289,6 @@ router.get('/profile', passport.authenticate('jwt', { session: false }), (req, r
 
 //TODO: passport authenticate??
 router.put('/update/:id', (req, res) => {
-    // let params = {
-    //     name: req.body.name,
-    //     username: req.body.username,
-    //     email: req.body.email,
-    //     programme: req.body.programme,
-    //     about: req.body.about,
-    //     isVerified: req.body.isVerified,
-    // }
-    // console.log(params)
-
-    // for (let prop in params) {
-    //     if (!params[prop]) {
-    //         delete params[prop]
-    //     }
-    // }
-
-    // console.log(params)
 
     // Name Input Validation
     if (req.body.name) {
@@ -356,8 +340,8 @@ router.put('/update/:id', (req, res) => {
             User.updateOne({ _id: req.params.id }, { $set: req.body })
                 .then( () => {
                     res.status(201).json({
-                        success: true
-                        // msg: 'Profile updated successfully!'
+                        success: true,
+                        msg: 'Profile updated successfully!'
                     });
                 })
                 .catch( (err) => {
@@ -518,7 +502,7 @@ router.get('/all', (req, res) => {
  * @desc Delete user by ID
  * @access Private (admin)
  */
- router.delete('/delete/:id', (req, res) => {
+router.delete('/delete/:id', (req, res) => {
     User.findOneAndDelete( { _id: req.params.id } )
         .then( () => {
             return res.status(200).json({
