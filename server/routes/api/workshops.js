@@ -1,8 +1,9 @@
 // Import express router
 const express = require('express');
-const User = require('../../model/User');
 const router = express.Router();
 
+// Load user model
+const User = require('../../model/User');
 // Load workshop model
 const Workshop = require('../../model/Workshop')
 

@@ -47,8 +47,8 @@ const users = require('./routes/api/users');
 const workshops = require('./routes/api/workshops');
 app.use('/api/workshops', workshops);
 //Pulling in Rooms route
-// const rooms = require('./routes/api/rooms');
-// app.use('/api/rooms', rooms);
+const rooms = require('./routes/api/rooms');
+app.use('/api/rooms', rooms);
 //NOTSURE
 
 app.use(passport.initialize()); //passport middleware
