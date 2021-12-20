@@ -26,4 +26,27 @@ router.post('/create', (req, res) => {
         .catch(err => console.log(err));
 })
 
+/**
+ * @route GET api/rooms/all
+ * @desc Read all rooms in database
+ * @access Public
+ */
+router.get('/all', (req, res) => {
+    Room.find({})
+        .then( rooms => {
+            if (!rooms) {
+                return res.status(404).json({
+                    msg: "No room available."
+                })
+            }
+            return res.status(201).json({
+                rooms: rooms,
+                success: true
+            })
+        })
+        .catch( err => {
+            console.log(err)
+        })
+})
+
 module.exports = router;

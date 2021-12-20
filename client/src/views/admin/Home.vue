@@ -6,7 +6,7 @@
         &nbsp;
         <router-link :to="{ name: 'Home' }"><button class="button">Home</button></router-link>
     </div>
-    <table class="table is-hoverable">
+    <table class="table is-hoverable" v-if="rooms">
         <thead>
         <tr id="head">
         <th>No</th>
@@ -19,10 +19,10 @@
         </thead>
 
         <tbody>
-        <tr>
-        <td>1</td>
-        <td>Room #1</td>
-        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</td>
+        <tr v-for="room in rooms" :key="room._id">
+        <td>{{ rooms.indexOf(room) + 1 }}</td>
+        <td>{{ room.title }}</td>
+        <td>{{ room.description }}</td>
         <td><button class="button is-info">Edit</button></td>
         <td><button class="button btn">Bookings</button></td>
         <td><button class="button is-danger">Delete</button></td>
@@ -34,7 +34,7 @@
 
 <script>
 import CreateRoom from './CreateRoom.vue'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
     name: 'Admin Home',
@@ -43,11 +43,17 @@ export default {
             createVisible: false,
         }
     },
-    computed: {
-        ...mapGetters(['roomStatus'])
-    },
     components: {
         CreateRoom
+    },
+    computed: {
+        ...mapGetters(['rooms', 'roomStatus'])
+    },
+    methods: {
+        ...mapActions(['getAllRooms'])
+    },
+    created() {
+        this.getAllRooms()
     }
 }
 </script>
