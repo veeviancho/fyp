@@ -28,7 +28,7 @@
             <EditRoom :room="roomData" v-show="editVisible" @close="editVisible = false"/>
         </td>
         <td><button class="button btn">Bookings</button></td>
-        <td><button class="button is-danger">Delete</button></td>
+        <td><button class="button is-danger" @click="remove(room)">Delete</button></td>
         </tr>
         </tbody>
     </table>
@@ -57,7 +57,24 @@ export default {
         ...mapGetters(['rooms', 'roomStatus'])
     },
     methods: {
-        ...mapActions(['getAllRooms']),
+        ...mapActions(['getAllRooms', 'removeRoom']),
+        remove(room) {
+            console.log(room)
+            console.log(room._id)
+            let confirmRemove = confirm("Are you sure you want to remove the room " + room.title)
+            if (confirmRemove) {
+                this.removeRoom(room._id).then( () => {
+                    if (this.roomStatus.remove == "success") {
+                        // console.log("success")
+                        window.location.reload()
+                    }
+                })
+                .catch(err => {
+                    alert("Unable to delete! Please try again later.")
+                    console.log(err)
+                })
+            }
+        }
     },
     created() {
         this.getAllRooms()

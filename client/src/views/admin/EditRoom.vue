@@ -28,8 +28,8 @@
         </div>
     
         <!-- update message -->
-        <!-- <p class="has-text-danger has-text-centered mb-3" v-if="error.update">{{ error.update }}</p>
-        <p class="has-text-success has-text-centered mb-3 white" v-if="success_msg">{{ success_msg }}</p> -->
+        <p class="has-text-danger has-text-centered mb-3" v-if="roomError.update">{{ roomError.update }}</p>
+        <!-- <p class="has-text-success has-text-centered mb-3 white" v-if="success_msg">{{ success_msg }}</p> -->
 
         <button type="submit" class="button is-outlined is-fullwidth" v-if="showBtn()">
             Update

@@ -75,4 +75,30 @@ router.put('/update', (req, res) => {
         })
 })
 
+/**
+ * @route DELETE api/rooms/delete
+ * @desc Delete workshop
+ * @access Private (admin only)
+ */
+router.delete('/delete/:id', (req, res) => {
+    Room.findOneAndDelete( { _id: req.params.id } )
+        .then( room => {
+            if (!room) {
+                return res.status(404).json({
+                    msg: "Room not found!"
+                })
+            }
+            return res.status(200).json({
+                success: true
+            })
+        })
+        .catch( err => {
+            console.log(err)
+            return res.status(400).json({
+                msg: "Unable to delete. Please try again later."
+            })
+        })
+        // TODO: remove the workshop from the user
+})
+
 module.exports = router;

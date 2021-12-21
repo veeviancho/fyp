@@ -4,11 +4,15 @@ const state = {
     rooms: [],
     roomStatus: {
         getAll: '',
-        create: ''
+        create: '',
+        update: '',
+        remove: ''
     },
     roomError: {
         getAll: '',
-        create: ''
+        create: '',
+        update: '',
+        remove: ''
     }
 }
 
@@ -49,12 +53,26 @@ const actions = {
     async updateRoom({ commit }, room) {
         try {
             commit('updateRoom_request')
+            console.log(room._id)
             let res = await axios.put("http://localhost:5000/api/rooms/update", room)
             if (res.data.success) {
                 commit('updateRoom_success')
             }
         } catch (err) {
             commit('updateRoom_error', err)
+        }
+    },
+
+    // Remove room
+    async removeRoom({ commit }, roomId) {
+        try {
+            commit('removeRoom_request')
+            let res = await axios.delete("http://localhost:5000/api/rooms/delete/" + roomId)
+            if (res.data.success) {
+                commit('removeRoom_success')
+            }
+        } catch (err) {
+            commit('removeRoom_error', err)
         }
     }
 }
@@ -101,6 +119,20 @@ const mutations = {
     updateRoom_error(state, err) {
         state.roomStatus.update = 'error'
         state.roomError.update = err.response.data.msg
+    },
+
+    // Remove room
+    removeRoom_request(state) {
+        state.roomStatus.remove = 'loading'
+        state.roomError.remove = ''
+    },
+    removeRoom_success(state) {
+        state.roomStatus.remove = 'success'
+        state.roomError.remove = ''
+    },
+    removeRoom_error(state, err) {
+        state.roomStatus.remove = 'error'
+        state.roomError.remove = err.response.data.msg
     },
 }
 
