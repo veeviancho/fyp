@@ -43,6 +43,19 @@ const actions = {
         } catch (err) {
             commit('createRoom_error', err)
         }
+    },
+
+    // Update room information
+    async updateRoom({ commit }, room) {
+        try {
+            commit('updateRoom_request')
+            let res = await axios.put("", room)
+            if (res.data.success) {
+                commit('updateRoom_success')
+            }
+        } catch (err) {
+            commit('updateRoom_error', err)
+        }
     }
 }
 

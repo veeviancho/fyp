@@ -49,4 +49,30 @@ router.get('/all', (req, res) => {
         })
 })
 
+/**
+ * @route PUT api/workshops/update
+ * @desc Update workshop information
+ * @access Private (admin only)
+ */
+ router.put('/update', (req, res) => {
+    Room.findOneAndUpdate({ _id: req.body.id }, { $set: req.body })
+        .then(room => {
+            if (!room) {
+                return res.status(404).json({
+                    msg: "Room not found!"
+                })
+            }
+            return res.status(200).json({
+                msg: "Updated successfully!",
+                success: true
+            })
+        })
+        .catch(err => {
+            console.log(err)
+            return res.status(400).json({
+                msg: "Encountered an error. Unable to update!"
+            })
+        })
+})
+
 module.exports = router;

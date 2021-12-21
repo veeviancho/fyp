@@ -23,7 +23,10 @@
         <td>{{ rooms.indexOf(room) + 1 }}</td>
         <td>{{ room.title }}</td>
         <td>{{ room.description }}</td>
-        <td><button class="button is-info">Edit</button></td>
+        <td>
+            <button class="button is-info" @click="editVisible=true; roomData=room">Edit</button>
+            <EditRoom :room="roomData" v-show="editVisible" @close="editVisible = false"/>
+        </td>
         <td><button class="button btn">Bookings</button></td>
         <td><button class="button is-danger">Delete</button></td>
         </tr>
@@ -34,6 +37,7 @@
 
 <script>
 import CreateRoom from './CreateRoom.vue'
+import EditRoom from './EditRoom.vue'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -41,16 +45,19 @@ export default {
     data() {
         return {
             createVisible: false,
+            editVisible: false,
+            roomData: {}
         }
     },
     components: {
-        CreateRoom
+        CreateRoom,
+        EditRoom
     },
     computed: {
         ...mapGetters(['rooms', 'roomStatus'])
     },
     methods: {
-        ...mapActions(['getAllRooms'])
+        ...mapActions(['getAllRooms']),
     },
     created() {
         this.getAllRooms()
