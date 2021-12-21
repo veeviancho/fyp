@@ -71,12 +71,14 @@ export default {
         },
         editRoom() {
             const room = {
+                id: this.room._id,
                 title: this.title,
                 description: this.description
             }
             this.updateRoom(room).then( () => {
                 if (this.roomStatus.update == "success") {
-                    console.log("success")
+                    // console.log("success")
+                    window.location.reload();
                 }
             })
             .catch(err => {

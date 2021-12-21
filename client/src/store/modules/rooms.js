@@ -49,7 +49,7 @@ const actions = {
     async updateRoom({ commit }, room) {
         try {
             commit('updateRoom_request')
-            let res = await axios.put("", room)
+            let res = await axios.put("http://localhost:5000/api/rooms/update", room)
             if (res.data.success) {
                 commit('updateRoom_success')
             }
@@ -87,7 +87,21 @@ const mutations = {
     createRoom_error(state, err) {
         state.roomStatus.create = 'error'
         state.roomError.create = err.response.data.msg
-    }
+    },
+
+    // Update room
+    updateRoom_request(state) {
+        state.roomStatus.update = 'loading'
+        state.roomError.update = ''
+    },
+    updateRoom_success(state) {
+        state.roomStatus.update = 'success'
+        state.roomError.update = ''
+    },
+    updateRoom_error(state, err) {
+        state.roomStatus.update = 'error'
+        state.roomError.update = err.response.data.msg
+    },
 }
 
 export default {

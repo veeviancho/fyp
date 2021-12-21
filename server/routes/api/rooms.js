@@ -50,11 +50,11 @@ router.get('/all', (req, res) => {
 })
 
 /**
- * @route PUT api/workshops/update
+ * @route PUT api/rooms/update
  * @desc Update workshop information
  * @access Private (admin only)
  */
- router.put('/update', (req, res) => {
+router.put('/update', (req, res) => {
     Room.findOneAndUpdate({ _id: req.body.id }, { $set: req.body })
         .then(room => {
             if (!room) {
