@@ -59,8 +59,8 @@ export default {
     methods: {
         ...mapActions(['getAllRooms', 'removeRoom']),
         remove(room) {
-            console.log(room)
-            console.log(room._id)
+            // console.log(room)
+            // console.log(room._id)
             let confirmRemove = confirm("Are you sure you want to remove the room " + room.title)
             if (confirmRemove) {
                 this.removeRoom(room._id).then( () => {

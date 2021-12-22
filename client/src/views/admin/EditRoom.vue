@@ -12,7 +12,7 @@
             </label>
             <div class="control">
                 <p v-if="!show[0]">{{ room.title }}</p>
-                <input class="input is-warning" type="text" placeholder="Lifelong Learning Workshop" v-if="show[0]" v-model="title">
+                <input class="input is-warning" type="text" placeholder="Lifelong Learning Room" v-if="show[0]" v-model="title">
             </div>
         </div> 
 

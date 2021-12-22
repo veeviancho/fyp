@@ -68,6 +68,15 @@ export default {
 </script>
 
 <style scoped>
+.box {
+    padding: 2rem 3rem;
+    /* width: ; */
+}
+
+.modal-content {
+    min-width: 55vw;
+}
+
 .button {
     color: black;
 }

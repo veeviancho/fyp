@@ -15,20 +15,43 @@
         <router-link :to="{ name: 'Profile' }" class="student-name" v-if="user">{{ user.name }}</router-link>
       </transition>
     </h1>
-    <p>description</p>
+
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
     <br>
     <router-link :to="{ name: 'About' }"><button class="button">Explore</button></router-link>
   </section>
 
-  <div v-for="item in rooms" :key="item._id">
-  <section>
-    <h1>{{ item.title }}</h1>
-    <p>{{ item.description }}<br>Book this room now.</p>
+  <section id="space-1">
+    <h1>Space 1</h1>
+    <p>Some description. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <br> Book this room now.</p>
     <br>
     <router-link :to="{ name: 'Login' }"><button class="button" v-if="!isLoggedIn">Login</button></router-link>
     <router-link :to="{ name: 'Book A Room!' }"><button class="button" v-if="isLoggedIn">Book Now</button></router-link>
   </section>
-  </div>
+
+  <section id="space-2">
+    <h1>Space 2</h1>
+    <p>Some description. Book this room now.</p>
+    <br>
+    <router-link :to="{ name: 'Login' }"><button class="button" v-if="!isLoggedIn">Login</button></router-link>
+    <router-link :to="{ name: 'Book A Room!' }"><button class="button" v-if="isLoggedIn">Book Now</button></router-link>
+  </section>
+
+  <section id="space-3">
+    <h1>Space 3</h1>
+    <p>Some description. Book this room now.</p>
+    <br>
+    <router-link :to="{ name: 'Login' }"><button class="button" v-if="!isLoggedIn">Login</button></router-link>
+    <router-link :to="{ name: 'Book A Room!' }"><button class="button" v-if="isLoggedIn">Book Now</button></router-link>
+  </section>
+
+  <section id="space-4">
+    <h1>Space 4</h1>
+    <p>Some description. Book this room now.</p>
+    <br>
+    <router-link :to="{ name: 'Login' }"><button class="button" v-if="!isLoggedIn">Login</button></router-link>
+    <router-link :to="{ name: 'Book A Room!' }"><button class="button" v-if="isLoggedIn">Book Now</button></router-link>
+  </section>
 
 </body>
 </template>
@@ -39,13 +62,12 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
     name: 'Home',
     computed: {
-      ...mapGetters(['isLoggedIn', 'user', 'rooms'])
+      ...mapGetters(['isLoggedIn', 'user'])
     },
     methods: {
-      ...mapActions(['getProfile', 'getAllRooms'])
+      ...mapActions(['getProfile'])
     },
     created() {
-      this.getAllRooms();
       if (this.isLoggedIn) {
         this.getProfile();
       }
