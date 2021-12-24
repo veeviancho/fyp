@@ -49,7 +49,7 @@
                             Organiser
                         </p>
                         <ul class="menu-list">
-                            <li><input type="checkbox"><span class="check-name">Orgnaniser #1</span></li>
+                            <li><input type="checkbox"><span class="check-name">Organiser #1</span></li>
                             <li><input type="checkbox"><span class="check-name">Organiser #2</span></li>
                             <li><input type="checkbox"><span class="check-name">Organiser #3</span></li>
                         </ul>
@@ -83,29 +83,31 @@
                 <div class="column">
                     <div class="pb-4" style="margin-top: 2em;">
                         <span class="pr-3 has-text-white">Sort by:</span>
+
                         <div class="select is-small">
-                            <select>
-                                <option>Date created (Ascending)</option>
-                                <option>Date created (Descending)</option>
-                                <option>Date of workshop (Ascending)</option>
-                                <option>Date of workshop (Descending)</option>
-                                <option>Title (Ascending)</option>
-                                <option>Title (Descending)</option>
-                                <option>Popularity (Ascending)</option>
-                                <option>Popularity (Descending)</option>
-                                <option>No of Reviews (Ascending)</option>
-                                <option>No of Reviews (Descending)</option>
+                            <select v-model="sortBy">
+                                <option value='datePosted'>Date posted</option>
+                                <option value='title'>Title</option>
+                                <option value='date'>Date</option>
+                                <option value='popularity'>Popularity</option>
+                                <option value='reviewsNo'>No of Reviews</option>
+                               
+                            </select>
+                        </div>
+                        &nbsp;
+                        <div class="select is-small">
+                            <select v-model="order">
+                                <option value='ascending'>Ascending</option>
+                                <option value='descending'>Descending</option>
                             </select>
                         </div>
                     </div>
 
                     <div>
-                        <div v-for="item in workshop" :key="item.id">
+                        <div v-for="item in sortedWorkshop" :key="item.id">
                             <div><WorkshopEvent :workshopItem="item"/></div>
                         </div>
                     </div>
-
-                    <!-- <p class="has-text-white">{{ workshop }}</p> -->
 
                 </div>
             </div>
@@ -120,11 +122,51 @@ import WorkshopEvent from './WorkshopEvent.vue'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
+    data() {
+        return {
+            order: 'descending',
+            sortBy: 'datePosted'
+        }
+    },
     components: {
         WorkshopEvent
     },
     computed: {
-        ...mapGetters(['workshop'])
+        ...mapGetters(['workshop']),
+        sortedWorkshop() {
+            let tempWorkshop = this.workshop
+
+            tempWorkshop = tempWorkshop.sort( (a,b) => {
+                if (this.sortBy === 'datePosted') {
+                    return new Date(a.createdAt) - new Date(b.createdAt)
+                }
+
+                else if (this.sortBy === 'title') {
+                    let titleA = a.title.toLowerCase(), titleB = b.title.toLowerCase()
+                    if (titleA < titleB) {
+                        return -1
+                    }
+                    if (titleA > titleB) {
+                        return 1
+                    }
+                    return 0
+                }
+
+                else if (this.sortBy === 'date') {
+                    return new Date(a.date) - new Date(b.date)
+                }
+
+                else if (this.sortBy === 'popularity') {
+                    return a.points - b.points
+                }
+            })
+
+            if (this.order == 'descending') {
+                tempWorkshop.reverse()
+            }
+
+            return tempWorkshop
+        }
     },
     methods: {
         ...mapActions(['getWorkshop'])
@@ -136,6 +178,19 @@ export default {
 </script>
 
 <style scoped>
+.icon {
+    cursor: pointer;
+}
+
+select {
+    background: none !important;
+    color: white !important;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+}
+
 li {
     font-size: 0.89rem;
     margin: 0.2rem 0;

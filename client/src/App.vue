@@ -1,16 +1,18 @@
 <template>
 <body v-bind:class="[this.$route.meta.isAdmin ? 'light-bg' : 'dark-bg']">
-  <div v-if="!this.$route.meta.isAdmin">
-    <Nav/>
-    <router-view/>
-  </div>
-
+  
   <div v-if="this.$route.meta.isAdmin">
     <div class="columns">
       <div class="column is-one-fifth"><AdminNav/></div>
       <div class="column"><router-view/></div>
     </div>
   </div>
+
+  <div v-else>
+    <Nav/>
+    <router-view/>
+  </div>
+
 </body>
 </template>
 

@@ -36,7 +36,19 @@ const actions = {
         try {
             let res = await axios.get('http://localhost:5000/api/workshops/all');
             if (res.data.success) {
-                commit('getWorkshops_success', res.data.workshop);
+                // calculate ranking
+                let workshops = res.data.workshop
+                let ranking = 1
+                workshops.sort( (a,b) => {
+                    return b.points - a.points
+                })
+                for (let i=0; i<workshops.length; i++) {
+                    if ((i>0) && (workshops[i].points < workshops[i-1].points)) {
+                        ranking++
+                    }
+                    workshops[i].rank = ranking
+                }
+                commit('getWorkshops_success', workshops);
             }
         } catch (err) {
             console.log(err)

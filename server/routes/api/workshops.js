@@ -50,7 +50,7 @@ router.put('/update', (req, res) => {
         organiser: req.body.organiser,
         programme: req.body.programme,
         category: req.body.category,
-        maxUsers: req.body.maxUsers
+        maxUsers: req.body.maxUsers,
     }
 
     for (let prop in params) {
@@ -170,6 +170,8 @@ router.put('/register/:workshopId/:userId', (req, res) => {
 
                         // Update users list in workshop
                         workshop.users.push(req.params.userId);
+                        // Update workshop points
+                        workshop.points = workshop.points + 1;
                         workshop.save();
                         
                         return res.status(200).json({
@@ -226,6 +228,8 @@ router.put('/deregister/:workshopId/:userId', (req, res) => {
             // Remove user from workshop
             let userIndex = workshop.users.indexOf(req.params.userId);
             workshop.users.splice(userIndex, 1);
+            // Update workshop points
+            workshop.points = workshop.points - 1;
             workshop.save();
 
             // Remove workshop from user

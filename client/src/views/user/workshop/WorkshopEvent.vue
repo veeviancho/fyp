@@ -1,11 +1,12 @@
 <template>
 
 <router-link :to="'/workshop/' + workshopItem._id"> 
+
   <article class="media">
 
     <div class="media-content mr-3">
       <div class="content">
-        <h1 class="title">{{ workshopItem.title }}<span class="tag is-small">#4</span></h1>
+        <h1 class="title">{{ workshopItem.title }}<span class="tag is-small">#{{ workshopItem.rank }}</span></h1>
         <p class="desc">{{ workshopItem.description }}</p>
       </div>
 
