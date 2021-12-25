@@ -1,6 +1,6 @@
 <template>
 <div class="hero is-fullheight">
-    <section class="section is-medium">
+    <section class="section is-medium" v-if="popularWorkshop">
         <p class="has-text-grey-light mt-5">POPULAR WORKSHOP</p>
         <h1>{{ popularWorkshop.title }}</h1>
         <p class="has-text-grey-light" v-if="popularWorkshop.organiser">by <i>{{ popularWorkshop.organiser }}</i></p>
@@ -13,6 +13,7 @@
     <div class="columns">
         <div class="column">
             <div>
+                <!-- Search Bar -->
                 <div class="field">
                     <p class="control has-icons-left has-icons-right">
                         <input class="input" type="text" v-model="searchInput" placeholder="Find Workshops">
@@ -22,19 +23,19 @@
             </div>
         
             <div class="columns">
-                <!-- Left -->
+                <!-- Filter box -->
                 <div class="column is-one-quarter" style="margin-top: 2em;">
                     <div class="notification">
                         <aside class="menu">
                         <p class="menu-label">
                             Date
                         </p>
-                        <ul><input class="" type="date" value="2021-10-22"></ul>
+                        <ul><input class="" type="date"></ul>
 
                         <p class="menu-label">
                             Time
                         </p>
-                        <ul><input class="" type="time" value="2021-10-22"></ul>
+                        <ul><input class="" type="time"></ul>
 
                         <p class="menu-label">
                             Venue
@@ -79,7 +80,7 @@
                     </div>
                 </div>
 
-                <!-- Right -->
+                <!-- Sorting Option -->
                 <div class="column">
                     <div class="pb-4" style="margin-top: 2em;">
                         <span class="pr-3 has-text-white">Sort by:</span>
@@ -126,14 +127,14 @@ export default {
         return {
             order: 'descending',
             sortBy: 'datePosted',
-            searchInput: '',
+            searchInput: ''
         }
     },
     components: {
         WorkshopEvent
     },
     computed: {
-        ...mapGetters(['workshop']),
+        ...mapGetters(['workshop', 'popularWorkshop']),
         filteredWorkshop() {
             let tempWorkshop = this.workshop
 
@@ -174,15 +175,6 @@ export default {
             }
 
             return tempWorkshop
-        },
-        popularWorkshop() {
-            let tempWorkshop = this.workshop
-            
-            tempWorkshop = tempWorkshop.sort( (a,b) => {
-                return b.points - a.points
-            })
-
-            return tempWorkshop[0]
         }
     },
     methods: {

@@ -4,6 +4,7 @@ const state = {
     workshop: [],
     workshopItem: {},
     userWorkshop: [],
+    popularWorkshop: {},
 
     workshopStatus: {
         register: '',
@@ -26,6 +27,7 @@ const getters = {
     workshop: state => state.workshop,
     workshopItem: state => state.workshopItem,
     userWorkshop: state => state.userWorkshop,
+    popularWorkshop: state => state.popularWorkshop,
     workshopStatus: state => state.workshopStatus,
     workshopError: state => state.workshopError
 }
@@ -49,6 +51,7 @@ const actions = {
                     workshops[i].rank = ranking
                 }
                 commit('getWorkshops_success', workshops);
+                commit('popularWorkshop_success', workshops[0]);
             }
         } catch (err) {
             console.log(err)
@@ -156,6 +159,11 @@ const mutations = {
     // Get workshops for user
     userWorkshop_success(state, workshop) {
         state.userWorkshop = workshop
+    },
+
+    // Get popular workshop
+    popularWorkshop_success(state, workshop) {
+        state.popularWorkshop = workshop
     },
 
     // Register user to workshop
