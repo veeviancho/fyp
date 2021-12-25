@@ -32,15 +32,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.desc {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 3; /* show 3 lines max */
-          line-clamp: 3; 
-  -webkit-box-orient: vertical;
-}
-
 .media {
   padding: 1.5em 2.0em;
   margin-bottom: 1.5em;

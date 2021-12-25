@@ -2,11 +2,11 @@
 <div class="hero is-fullheight">
     <section class="section is-medium">
         <p class="has-text-grey-light mt-5">POPULAR WORKSHOP</p>
-        <h1>Workshop Title</h1>
-        <p class="has-text-grey-light">by <i>Entrepreneur</i></p>
-        <p class="has-text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <h1>{{ popularWorkshop.title }}</h1>
+        <p class="has-text-grey-light" v-if="popularWorkshop.organiser">by <i>{{ popularWorkshop.organiser }}</i></p>
+        <p class="has-text-white desc">{{ popularWorkshop.description }}</p>
         <br>
-        <button class="button">Read More</button>
+        <router-link :to="'/workshop/' + popularWorkshop._id "><button class="button">Read More</button></router-link>
     </section>
 
     <div style="margin: 3rem auto; width: 92%;">
@@ -15,7 +15,7 @@
             <div>
                 <div class="field">
                     <p class="control has-icons-left has-icons-right">
-                        <input class="input" type="text" placeholder="Find Workshops">
+                        <input class="input" type="text" v-model="searchInput" placeholder="Find Workshops">
                         <span class="icon is-small is-left"><fa icon="search"/></span>
                     </p>
                 </div>
@@ -104,7 +104,7 @@
                     </div>
 
                     <div>
-                        <div v-for="item in sortedWorkshop" :key="item.id">
+                        <div v-for="item in filteredWorkshop" :key="item.id">
                             <div><WorkshopEvent :workshopItem="item"/></div>
                         </div>
                     </div>
@@ -125,7 +125,8 @@ export default {
     data() {
         return {
             order: 'descending',
-            sortBy: 'datePosted'
+            sortBy: 'datePosted',
+            searchInput: '',
         }
     },
     components: {
@@ -133,9 +134,16 @@ export default {
     },
     computed: {
         ...mapGetters(['workshop']),
-        sortedWorkshop() {
+        filteredWorkshop() {
             let tempWorkshop = this.workshop
 
+            // Search bar
+            if (this.searchInput != '')
+                tempWorkshop = tempWorkshop.filter(word => {
+                    return word.title.toLowerCase().includes(this.searchInput.toLowerCase())
+                })
+
+            // Sorting selection
             tempWorkshop = tempWorkshop.sort( (a,b) => {
                 if (this.sortBy === 'datePosted') {
                     return new Date(a.createdAt) - new Date(b.createdAt)
@@ -166,6 +174,15 @@ export default {
             }
 
             return tempWorkshop
+        },
+        popularWorkshop() {
+            let tempWorkshop = this.workshop
+            
+            tempWorkshop = tempWorkshop.sort( (a,b) => {
+                return b.points - a.points
+            })
+
+            return tempWorkshop[0]
         }
     },
     methods: {

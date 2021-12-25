@@ -42,6 +42,15 @@ export default {
   max-width: 92%;
 }
 
+.desc {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* show 3 lines max */
+          line-clamp: 3; 
+  -webkit-box-orient: vertical;
+}
+
 .light-bg {
   min-height: 100vh;
   background-color: white;
