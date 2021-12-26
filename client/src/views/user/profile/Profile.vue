@@ -75,7 +75,7 @@
             <div class="columns">
                 <div class="column">
                     <span class="title is-4 category px-3 py-2">Technical Skills</span> &nbsp;
-                    <span class="has-text-white desc">You have attended <strong class="has-text-white">0</strong> technical skills workshops</span>
+                    <span class="has-text-white description">You have attended <strong class="has-text-white">0</strong> technical skills workshops</span>
 
                     <table class="has-text-white mt-6">
                         <tr>
@@ -109,7 +109,7 @@
             <div class="columns">
                 <div class="column">
                     <span class="title is-4 category px-3 py-2">Soft Skills</span> &nbsp;
-                    <span class="has-text-white desc">You have attended <strong class="has-text-white">0</strong> soft skills workshops</span>
+                    <span class="has-text-white description">You have attended <strong class="has-text-white">0</strong> soft skills workshops</span>
 
                     <table class="has-text-white mt-6">
                         <tr>
@@ -240,7 +240,7 @@ td {
   td, .about, columns .title {
     font-size: 3vw;
   }
-  .desc {
+  .description {
       line-height: 3rem;
   }
 }

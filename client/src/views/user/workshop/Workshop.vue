@@ -30,51 +30,53 @@
                         <p class="menu-label">
                             Date
                         </p>
-                        <ul><input class="" type="date"></ul>
+                        <ul><input type="date" v-model="filterBy.date"></ul>
 
                         <p class="menu-label">
                             Time
                         </p>
-                        <ul><input class="" type="time"></ul>
+                        <ul><input type="time" v-model="filterBy.time"></ul>
 
                         <p class="menu-label">
                             Venue
                         </p>
                         <ul class="menu-list">
-                            <li><input type="checkbox"><span class="check-name">Space #1</span></li>
-                            <li><input type="checkbox"><span class="check-name">Space #2</span></li>
-                            <li><input type="checkbox"><span class="check-name">Space #3</span></li>
+                            <li v-for="item in workshop.filter((el,i,arr) => el.venue != '' && arr.findIndex(ele => ele.venue === el.venue) === i)" :key="item._id">
+                                <input type="checkbox" :value="item.venue" v-model="filterBy.venue">
+                                <label class="check-name">{{ item.venue }}</label>
+                            </li>
                         </ul>
+                        
 
                         <p class="menu-label">
                             Organiser
                         </p>
                         <ul class="menu-list">
-                            <li><input type="checkbox"><span class="check-name">Organiser #1</span></li>
-                            <li><input type="checkbox"><span class="check-name">Organiser #2</span></li>
-                            <li><input type="checkbox"><span class="check-name">Organiser #3</span></li>
+                            <li v-for="item in workshop.filter((element, index, self) => element.organiser != '' && self.findIndex(el=>(element.organiser === el.organiser)) === index)" :key="item._id">
+                                <input type="checkbox" id="organiser" :value="item.organiser" v-model="filterBy.organiser">
+                                <label for="organiser" class="check-name">{{ item.organiser }}</label>
+                            </li>
                         </ul>
+                        
 
                         <p class="menu-label">
                             Programme
                         </p>
                         <ul class="menu-list">
-                            <li><input type="checkbox"><span class="check-name">Communications Engineering</span></li>
-                            <li><input type="checkbox"><span class="check-name">Computer Control & Automation</span></li>
-                            <li><input type="checkbox"><span class="check-name">Electronic</span></li>
-                            <li><input type="checkbox"><span class="check-name">Power Engineering</span></li>
-                            <li><input type="checkbox"><span class="check-name">Signal Processing</span></li>
-                            <li><input type="checkbox"><span class="check-name">Green Electronics</span></li>
-                            <li><input type="checkbox"><span class="check-name">Integrated Circuit Design</span></li>
+                            <li v-for="item in workshop.filter((element, index, self) => element.programme != '' && self.findIndex(el=>(element.programme === el.programme)) === index)" :key="item._id">
+                                <input type="checkbox" id="organiser" :value="item.programme" v-model="filterBy.programme">
+                                <label for="organiser" class="check-name">{{ item.programme }}</label>
+                            </li>
                         </ul>
 
                         <p class="menu-label">
                             Category
                         </p>
                         <ul class="menu-list">
-                            <li><input type="checkbox"><span class="check-name">Technical Skills</span></li>
-                            <li><input type="checkbox"><span class="check-name">Soft Skills</span></li>
-                            <li><input type="checkbox"><span class="check-name">Career Advice</span></li>
+                            <li v-for="item in workshop.filter((element, index, self) => element.category != '' && self.findIndex(el=>(element.category === el.category)) === index)" :key="item._id">
+                                <input type="checkbox" id="organiser" :value="item.category" v-model="filterBy.category">
+                                <label for="organiser" class="check-name">{{ item.category }}</label>
+                            </li>
                         </ul>
                         </aside>    
                     </div>
@@ -127,7 +129,15 @@ export default {
         return {
             order: 'descending',
             sortBy: 'datePosted',
-            searchInput: ''
+            searchInput: '',
+            filterBy: {
+                date: '',
+                time: '',
+                venue: [],
+                organiser: [],
+                programme: [],
+                category: []
+            }
         }
     },
     components: {
@@ -140,9 +150,27 @@ export default {
 
             // Search bar
             if (this.searchInput != '')
-                tempWorkshop = tempWorkshop.filter(word => {
-                    return word.title.toLowerCase().includes(this.searchInput.toLowerCase())
+                tempWorkshop = tempWorkshop.filter(arr => {
+                    return arr.title.toLowerCase().includes(this.searchInput.toLowerCase())
                 })
+
+            // Filtering
+            for (let prop in this.filterBy) {
+                if (this.filterBy[prop] != '') {
+                    // special case for time
+                    if (prop == 'time') {
+                        console.log(this.filterBy['time'])
+                        tempWorkshop = tempWorkshop.filter(element => {
+                            return this.filterBy.time <= element.endTime && this.filterBy.time >= element.startTime
+                        })
+                    } else {
+                        tempWorkshop = tempWorkshop.filter(element => {
+                            return element[prop].includes(this.filterBy[prop])
+                        })
+                    }
+                }
+            }
+            // if (this.filterBy)
 
             // Sorting selection
             tempWorkshop = tempWorkshop.sort( (a,b) => {
@@ -175,7 +203,8 @@ export default {
             }
 
             return tempWorkshop
-        }
+        },
+        
     },
     methods: {
         ...mapActions(['getWorkshop'])
