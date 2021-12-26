@@ -93,7 +93,7 @@
                                 <option value='title'>Title</option>
                                 <option value='date'>Date</option>
                                 <option value='popularity'>Popularity</option>
-                                <option value='reviewsNo'>No of Reviews</option>
+                                <!-- <option value='reviewsNo'>No of Reviews</option> -->
                                
                             </select>
                         </div>
