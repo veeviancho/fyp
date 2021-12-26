@@ -12,17 +12,17 @@
                     <div class="columns">
                         <div class="column">
                             <label class="has-text-white py-1">START TIME</label>
-                            <input class="input" type="time">
+                            <input class="input" type="time" v-model="filterBy.startTime">
                         </div>
                         <div class="column">
                             <label class="has-text-white py-1">END TIME</label>
-                            <input class="input" type="time">
+                            <input class="input" type="time" v-model="filterBy.endTime">
                         </div>
                     </div>
                 </div>
             </div>
             <button class="button ml-5 mb-2">Show Results</button>
-            <button class="button ml-5 mb-2">Show Current</button>
+            <button class="button ml-5 mb-2">Show Currently Available Rooms</button>
         </form>
     </section>
 
@@ -35,8 +35,9 @@
             </span>
         </h1>
 
-        <div class="columns my-5">
-            <div class="column is-one-quarter">
+        <div class="columns is-multiline my-5">
+
+            <div class="column is-one-quarter" v-for="item in rooms" :key="item._id">
                 <div class="card available">
                 <div class="card-image">
                     <figure class="image is-4by3">
@@ -45,60 +46,17 @@
                 </div>
                 <div class="card-content">
                     <div class="content">
-                        <p class="subtitle has-text-weight-bold">Room #1 <span class="tag is-primary is-light">Available</span></p>
-                        <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris. </p> 
+                        <p class="subtitle has-text-weight-bold">
+                            {{ item.title }} 
+                            <span class="tag is-primary is-light">Available</span>
+                            <span class="tag is-danger is-light">Occupied</span>
+                        </p>
+                        <p class="desc">{{ item.description }}</p> 
                     </div>
                 </div>
                 </div>
             </div>
 
-            <div class="column is-one-quarter">
-                <div class="card not-available">
-                <div class="card-image">
-                    <figure class="image is-4by3">
-                    <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-                    </figure>
-                </div>
-                <div class="card-content">
-                    <div class="content">
-                        <p class="subtitle has-text-weight-bold">Room #2 <span class="tag is-danger is-light">Occupied</span></p> 
-                        <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris. </p> 
-                    </div>
-                </div>
-                </div>
-            </div>
-
-            <div class="column is-one-quarter">
-                <div class="card available">
-                <div class="card-image">
-                    <figure class="image is-4by3">
-                    <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-                    </figure>
-                </div>
-                <div class="card-content">
-                    <div class="content">
-                        <p class="subtitle has-text-weight-bold">Room #3 <span class="tag is-primary is-light">Available</span></p>
-                        <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris. </p> 
-                    </div>
-                </div>
-                </div>
-            </div>
-
-            <div class="column is-one-quarter">
-                <div class="card available">
-                <div class="card-image">
-                    <figure class="image is-4by3">
-                    <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-                    </figure>
-                </div>
-                <div class="card-content">
-                    <div class="content">
-                        <p class="subtitle has-text-weight-bold">Room #4 <span class="tag is-primary is-light">Available</span></p>
-                        <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris. </p> 
-                    </div>
-                </div>
-                </div>
-            </div>
         </div>
 
         <Timetable/>
@@ -109,11 +67,29 @@
 
 <script>
 import Timetable from '@/components/student/booking/Timetable.vue'
+import { mapGetters, mapActions } from  'vuex'
 
 export default {
     name: 'Room',
+    data() {
+        return {
+            filterBy: {
+                startTime: '09:30',
+                endTime: '10:00'
+            }
+        }
+    },
     components: {
         Timetable
+    },
+    computed: {
+        ...mapGetters(['rooms'])
+    },
+    methods: {
+        ...mapActions(['getAllRooms'])
+    },
+    created() {
+        this.getAllRooms();
     }
 }
 </script>
@@ -132,19 +108,4 @@ export default {
         font-size: 1rem;
     }
 }
-
-// .column {
-//     display: flex;
-//     justify-content: center;
-// }
-
-// .available:hover {
-//     border: 0.2em solid #3c7a89;
-//     border-radius: 0.5rem;
-// }
-
-// .not-available:hover {
-//     border: 0.2em solid #893c68;
-//     border-radius: 0.5rem;
-// }
 </style>

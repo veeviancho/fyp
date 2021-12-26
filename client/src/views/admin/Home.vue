@@ -22,7 +22,7 @@
         <tr v-for="room in rooms" :key="room._id">
         <td>{{ rooms.indexOf(room) + 1 }}</td>
         <td>{{ room.title }}</td>
-        <td>{{ room.description }}</td>
+        <td><div class="desc">{{ room.description }}</div></td>
         <td>
             <button class="button is-info" @click="editVisible=true; roomData=room">Edit</button>
             <EditRoom :room="roomData" v-show="editVisible" @close="editVisible = false"/>

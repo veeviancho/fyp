@@ -63,7 +63,7 @@
                             Programme
                         </p>
                         <ul class="menu-list">
-                            <li v-for="item in workshop.filter((element, index, self) => element.programme != '' && self.findIndex(el=>(element.programme === el.programme)) === index)" :key="item._id">
+                            <li v-for="item in workshop.filter((element, index, self) => element.programme != '' && index === self.findIndex(el=>(element.programme === el.programme)))" :key="item._id">
                                 <input type="checkbox" id="organiser" :value="item.programme" v-model="filterBy.programme">
                                 <label for="organiser" class="check-name">{{ item.programme }}</label>
                             </li>

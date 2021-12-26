@@ -2,20 +2,22 @@
 
 <router-link :to="'/workshop/' + workshopItem._id"> 
 
-  <article class="media">
+  <article :class="[fullWorkshop ? 'full' : 'not-full', 'media']">
 
     <div class="media-content mr-3">
       <div class="content">
-        <h1 class="title">{{ workshopItem.title }}<span class="tag is-small">#{{ workshopItem.rank }}</span></h1>
+        <h1 :class="[fullWorkshop ? 'title gray' : 'title white']">{{ workshopItem.title }}
+          <span :class="[fullWorkshop ? 'tag-full' : 'tag-not-full', 'tag is-small']">#{{ workshopItem.rank }}</span>
+        </h1>
         <p class="desc">{{ workshopItem.description }}</p>
       </div>
 
       <small class="is-size-7">
-        <span class="info"><strong class="has-text-white">Date:</strong> {{ workshopItem.date }}</span>
-        <span class="info"><strong class="has-text-white">Time:</strong> {{ workshopItem.startTime }}-{{ workshopItem.endTime }}</span>
-        <span class="info"><strong class="has-text-white">Venue:</strong> {{ workshopItem.venue }}</span>
-        <span class="info"><strong class="has-text-white" v-if="workshopItem.organiser">Organiser:</strong> {{ workshopItem.organiser }}</span>
-        <span class="info"><strong class="has-text-white">Posted on:</strong> {{ workshopItem.createdAt.slice(0,10) }}</span>
+        <span class="info"><strong :class="[fullWorkshop ? 'gray' : 'white']">Date:</strong> {{ workshopItem.date }}</span>
+        <span class="info"><strong :class="[fullWorkshop ? 'gray' : 'white']">Time:</strong> {{ workshopItem.startTime }}-{{ workshopItem.endTime }}</span>
+        <span class="info"><strong :class="[fullWorkshop ? 'gray' : 'white']">Venue:</strong> {{ workshopItem.venue }}</span>
+        <span class="info"><strong :class="[fullWorkshop ? 'gray' : 'white']" v-if="workshopItem.organiser">Organiser:</strong> {{ workshopItem.organiser }}</span>
+        <span class="info"><strong :class="[fullWorkshop ? 'gray' : 'white']">Posted on:</strong> {{ workshopItem.createdAt.slice(0,10) }}</span>
       </small>
     </div>
 
@@ -27,12 +29,17 @@
 <script>
 export default {
     name: 'WorkshopEvent',
-    props: ['workshopItem']
+    props: ['workshopItem'],
+    computed: {
+      fullWorkshop() {
+        return this.workshopItem.users.length === this.workshopItem.maxUsers
+      }
+    }
 }
 </script>
 
 <style lang="scss" scoped>
-.media {
+.not-full {
   padding: 1.5em 2.0em;
   margin-bottom: 1.5em;
   border-radius: 0.4em;
@@ -40,13 +47,30 @@ export default {
   border: 0.3em solid #FFDA7A;
 }
 
-.tag {
+.full {
+  padding: 1.5em 2.0em;
+  margin-bottom: 1.5em;
+  border-radius: 0.4em;
+  color: gray !important;
+  border: 0.3em solid #b19757;
+}
+
+.tag-not-full {
   background-color: #FFDA7A;
   margin-left: 1rem;
 }
 
-.title {
+.tag-full {
+  background-color: #b19757;
+  margin-left: 1rem;
+}
+
+.white {
   color: white;
+}
+
+.gray {
+  color: gray !important;
 }
 
 .media:hover {
@@ -64,9 +88,9 @@ export default {
 }
 
 @media (max-width: 600px) {
-  small {
-    margin-right: 1rem;
-  }
+  // small {
+  //   margin-right: 1rem;
+  // }
   .title {
     font-size: 4vw;
   }
