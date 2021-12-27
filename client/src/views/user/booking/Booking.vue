@@ -6,7 +6,7 @@
             <div class="columns">
                 <div class="column mx-5">
                     <label class="has-text-white py-1">DATE</label>
-                    <input class="input" type="date" placeholder="Find Workshops">
+                    <input class="input" type="date" placeholder="Find Workshops" v-model="filterBy.date">
                 </div>
                 <div class="column mx-5">
                     <div class="columns">
@@ -38,7 +38,7 @@
         <div class="columns is-multiline my-5">
 
             <div class="column is-one-quarter" v-for="item in rooms" :key="item._id">
-                <div class="card available">
+                <div class="card">
                 <div class="card-image">
                     <figure class="image is-4by3">
                     <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
@@ -49,7 +49,7 @@
                         <p class="subtitle has-text-weight-bold">
                             {{ item.title }} 
                             <span class="tag is-primary is-light">Available</span>
-                            <span class="tag is-danger is-light">Occupied</span>
+                            <!-- <span class="tag is-danger is-light">Occupied</span> -->
                         </p>
                         <p class="desc">{{ item.description }}</p> 
                     </div>
@@ -58,6 +58,8 @@
             </div>
 
         </div>
+
+        {{ dateNow }}
 
         <Timetable/>
     </div>
@@ -74,6 +76,7 @@ export default {
     data() {
         return {
             filterBy: {
+                date: '',
                 startTime: '09:30',
                 endTime: '10:00'
             }
@@ -83,7 +86,20 @@ export default {
         Timetable
     },
     computed: {
-        ...mapGetters(['rooms'])
+        ...mapGetters(['rooms']),
+        dateNow() {
+            const today = new Date()
+            let dd = today.getDate()
+            // let dd = String(today.getDate()).padStart(2, '0');
+            let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            let yyyy = today.getFullYear();
+
+            return mm + '/' + dd + '/' + yyyy;
+        },
+        timeNow() {
+            const today = new Date()
+            return today
+        }
     },
     methods: {
         ...mapActions(['getAllRooms'])
@@ -95,6 +111,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.card-content {
+    min-height: 21vh;
+}
+
 .section {
     background-color: #161C20;
 }

@@ -166,30 +166,14 @@ export default {
             // Filtering
             for (let prop in this.filterBy) {
                 if (this.filterBy[prop] != '') {
-                    // time
+                    // special case for time
                     if (prop == 'time') {
                         tempWorkshop = tempWorkshop.filter(element => {
                             return this.filterBy.time <= element.endTime && this.filterBy.time >= element.startTime
                         })
-                    // full workshop
-                    } else if (prop == 'isFull') {
-                        tempWorkshop = tempWorkshop.filter(element => {
-                            if (this.filterBy.isFull.length === 1) {
-                                if (this.filterBy.isFull == "yes") {
-                                    return element.users.length === element.maxUsers
-                                } else {
-                                    return element.users.length !== element.maxUsers
-                                }
-                            } else {
-                                return element
-                            }
-                        })
-                    // others
                     } else {
                         tempWorkshop = tempWorkshop.filter(element => {
-                            return this.filterBy[prop].some(el => {
-                                return element[prop].includes(el)
-                            })    
+                            return element[prop].includes(this.filterBy[prop])
                         })
                     }
                 }
