@@ -6,10 +6,12 @@
         <p class="has-text-grey-light" v-if="popularWorkshop.organiser">by <i>{{ popularWorkshop.organiser }}</i></p>
         <p class="has-text-white desc">{{ popularWorkshop.description }}</p>
         <br>
-        <router-link :to="'/workshop/' + popularWorkshop._id "><button class="button">Read More</button></router-link>
+        <router-link :to="'/workshop/' + popularWorkshop._id"><button class="button">Read More</button></router-link>
     </section>
+    
+    <p v-else class="has-text-white has-navbar-fixed-top"><b>There are currently no workshops available. Please come back later.</b></p>
 
-    <div style="margin: 3rem auto; width: 92%;">
+    <div style="margin: 3rem auto; width: 92%;" v-if="popularWorkshop">
     <div class="columns">
         <div class="column">
             <div>
@@ -83,7 +85,7 @@
                             Display
                         </p>
                         <ul class="menu-list">
-                            <li><input type="checkbox" value="no" v-model="filterBy.isFull"><label class="check-name">Vacant workshops</label></li>
+                            <li><input type="checkbox" value="no" v-model="filterBy.isFull"><label class="check-name">Available workshops</label></li>
                             <li><input type="checkbox" value="yes" v-model="filterBy.isFull"><label class="check-name">Full worshops</label></li>
                         </ul>
                         </aside>    

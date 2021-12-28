@@ -41,7 +41,7 @@
                 <div class="card">
                 <div class="card-image">
                     <figure class="image is-4by3">
-                    <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
+                    <img src="https://styledegree.sg/wp-content/uploads/2020/04/10-Ingenious-Yet-Functional-HDB-Study-Room-Designs-StyleMag.jpg" alt="Placeholder image">
                     </figure>
                 </div>
                 <div class="card-content">
@@ -87,19 +87,19 @@ export default {
     },
     computed: {
         ...mapGetters(['rooms']),
-        dateNow() {
-            const today = new Date()
-            let dd = today.getDate()
-            // let dd = String(today.getDate()).padStart(2, '0');
-            let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-            let yyyy = today.getFullYear();
+        // dateNow() {
+        //     const today = new Date()
+        //     let dd = today.getDate()
+        //     // let dd = String(today.getDate()).padStart(2, '0');
+        //     let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        //     let yyyy = today.getFullYear();
 
-            return mm + '/' + dd + '/' + yyyy;
-        },
-        timeNow() {
-            const today = new Date()
-            return today
-        }
+        //     return mm + '/' + dd + '/' + yyyy;
+        // },
+        // timeNow() {
+        //     const today = new Date()
+        //     return today
+        // }
     },
     methods: {
         ...mapActions(['getAllRooms'])

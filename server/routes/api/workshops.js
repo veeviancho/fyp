@@ -85,8 +85,25 @@ router.put('/update', (req, res) => {
  * @access Private (admin only)
  */
 router.delete('/delete/:id', (req, res) => {
-    Workshop.findOneAndDelete( { _id: req.params.id } )
-        .then( () => {
+    const workshopId = req.params.id
+    // Delete workshop
+    Workshop.findOneAndDelete( { _id: workshopId } )
+        .then(workshop => {
+
+            // Remove workshop from user
+            for (let i=0; i<workshop.users.length; i++) {
+                let userId = workshop.users[i]
+                User.findOne({ _id: userId }).then( user => {
+                    let index = user.workshops.indexOf(workshopId)
+                    if (index > -1) {
+                        user.workshops.splice(index, 1)
+                    }
+                    user.save()
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+            }
             return res.status(200).json({
                 success: true
             })

@@ -13,6 +13,8 @@ const passport = require('passport');
 
 //Load user model
 const User = require('../../model/User');
+//Load workshop model
+const Workshop = require('../../model/Workshop')
 
 //Load input validation
 // const validateRegisterInput = require('../../validation/register');
@@ -503,8 +505,27 @@ router.get('/all', (req, res) => {
  * @access Private (admin)
  */
 router.delete('/delete/:id', (req, res) => {
-    User.findOneAndDelete( { _id: req.params.id } )
-        .then( () => {
+    const userId = req.params.id
+
+    User.findOneAndDelete( { _id: userId } )
+        .then(user => {
+
+            // Remove user from workshop
+            for (let i=0; i<user.workshops.length; i++) {
+                let workshopId = user.workshops[i]
+                Workshop.findOne({ _id: workshopId }).then(workshop => {
+                    let index = workshop.users.indexOf(userId)
+                    if (index > -1) {
+                        workshop.users.splice(index, 1)
+                        workshop.points -= 1
+                    }
+                    workshop.save()
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+            }
+
             return res.status(200).json({
                 success: true
             })
@@ -515,8 +536,6 @@ router.delete('/delete/:id', (req, res) => {
                 msg: "Unable to delete. Please try again later."
             })
         })
-
-        // TODO: remove the user from the workshop
 })
 
 // /**
