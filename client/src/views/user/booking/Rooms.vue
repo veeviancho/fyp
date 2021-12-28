@@ -38,6 +38,7 @@
         <div class="columns is-multiline my-5">
 
             <div class="column is-one-quarter" v-for="item in rooms" :key="item._id">
+                <router-link :to="'/rooms/' + item._id">
                 <div class="card">
                 <div class="card-image">
                     <figure class="image is-4by3">
@@ -55,11 +56,10 @@
                     </div>
                 </div>
                 </div>
+                </router-link>
             </div>
 
         </div>
-
-        {{ dateNow }}
 
         <Timetable/>
     </div>
@@ -77,7 +77,7 @@ export default {
         return {
             filterBy: {
                 date: '',
-                startTime: '09:30',
+                startTime: '09:00',
                 endTime: '10:00'
             }
         }

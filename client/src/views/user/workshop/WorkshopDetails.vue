@@ -138,7 +138,8 @@ p {
 }
 
 .has-navbar-fixed-top {
-    width: 70%
+    width: 70%;
+    padding: 10% 0;
 }
 
 .workshop-details {
@@ -148,10 +149,6 @@ p {
 .section {
     background-color: #161C20;
     margin: 0 0 2rem 0;
-}
-
-.has-navbar-fixed-top {
-    padding: 10% 0;
 }
 
 </style>

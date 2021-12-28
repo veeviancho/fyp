@@ -2,6 +2,7 @@ import axios from 'axios'
 
 const state = {
     rooms: [],
+    roomId: {},
     roomStatus: {
         getAll: '',
         create: '',
@@ -18,6 +19,7 @@ const state = {
 
 const getters = {
     rooms: state => state.rooms,
+    roomId: state => state.roomId,
     roomStatus: state => state.roomStatus,
     roomError: state => state.roomError
 }
@@ -32,8 +34,14 @@ const actions = {
                 commit('getAllRooms_success', res.data.rooms)
             }
         } catch (err) {
-            commit('getAllRooms_error', )
+            commit('getAllRooms_error', err)
         }
+    },
+
+    // Get Room from ID
+    async getRoomFromId({ commit }, id) {
+        const roomId = state.rooms.find(item => item._id === id)
+        commit('roomID_success', roomId)
     },
 
     // Create room
@@ -91,6 +99,10 @@ const mutations = {
     getAllRooms_error(state, err) {
         state.roomStatus.getAll = 'error'
         state.roomError.getAll = err.response.data.msg
+    },
+
+    roomID_success(state, room) {
+        state.roomId = room
     },
 
     // Create room

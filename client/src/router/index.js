@@ -13,7 +13,8 @@ import Details from '../views/user/workshop/WorkshopDetails.vue'
 import History from '../views/user/workshop/Past.vue'
 import Upcoming from '../views/user/workshop/Upcoming.vue'
 
-import Booking from '../views/user/booking/Booking.vue'
+import Room from '../views/user/booking/Rooms.vue'
+import RoomDetails from '../views/user/booking/RoomDetails.vue'
 import Manage from '../views/user/booking/Manage.vue'
 
 import Activities from '../views/user/activities/RealTime.vue'
@@ -104,9 +105,15 @@ const routes = [
   },
   // Bookings
   {
-    path: '/booking',
-    name: 'Book A Room!',
-    component: Booking
+    path: '/rooms',
+    name: 'Rooms',
+    component: Room
+  },
+  {
+    path: '/rooms/:id',
+    name: 'Room Details',
+    component: RoomDetails,
+    props: true
   },
   {
     path: '/booking/manage',

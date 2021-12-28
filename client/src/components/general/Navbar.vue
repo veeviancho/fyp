@@ -21,7 +21,7 @@
       <router-link :to="{ name: 'Articles' }" active-class="active" class="navbar-item py-5 px-5">ARTICLES</router-link>
       <router-link :to="{ name: 'Login' }" class="navbar-item pr-5" v-if="!isLoggedIn && this.$route.name!='Login'"><button class="button">LOGIN</button></router-link>
       <router-link :to="{ name: 'Workshops' }" active-class="active" class="navbar-item py-5 px-4" v-if="isLoggedIn">WORKSHOPS</router-link>
-      <router-link :to="{ name: 'Book A Room!' }" active-class="active" class="navbar-item py-5 px-4" v-if="isLoggedIn">BOOK A ROOM</router-link>
+      <router-link :to="{ name: 'Rooms' }" active-class="active" class="navbar-item py-5 px-4" v-if="isLoggedIn">BOOK A ROOM</router-link>
       <router-link :to="{ name: 'Real-time Activities' }" active-class="active" class="navbar-item py-5 px-4" v-if="isLoggedIn">REAL-TIME</router-link>
       <router-link :to="{ name: 'Profile' }" active-class="active" class="navbar-item py-5 px-4" v-if="isLoggedIn">PROFILE</router-link>
       <a class="navbar-item py-5 px-4" @click="logoutUser" v-if="isLoggedIn"><fa icon="power-off"/></a>

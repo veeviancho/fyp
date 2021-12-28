@@ -26,7 +26,7 @@
     <p>Some description. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <br> Book this room now.</p>
     <br>
     <router-link :to="{ name: 'Login' }"><button class="button" v-if="!isLoggedIn">Login</button></router-link>
-    <router-link :to="{ name: 'Book A Room!' }"><button class="button" v-if="isLoggedIn">Book Now</button></router-link>
+    <router-link :to="{ name: 'Rooms' }"><button class="button" v-if="isLoggedIn">Book Now</button></router-link>
   </section>
 
   <section id="space-2">
@@ -34,7 +34,7 @@
     <p>Some description. Book this room now.</p>
     <br>
     <router-link :to="{ name: 'Login' }"><button class="button" v-if="!isLoggedIn">Login</button></router-link>
-    <router-link :to="{ name: 'Book A Room!' }"><button class="button" v-if="isLoggedIn">Book Now</button></router-link>
+    <router-link :to="{ name: 'Rooms' }"><button class="button" v-if="isLoggedIn">Book Now</button></router-link>
   </section>
 
   <section id="space-3">
@@ -42,7 +42,7 @@
     <p>Some description. Book this room now.</p>
     <br>
     <router-link :to="{ name: 'Login' }"><button class="button" v-if="!isLoggedIn">Login</button></router-link>
-    <router-link :to="{ name: 'Book A Room!' }"><button class="button" v-if="isLoggedIn">Book Now</button></router-link>
+    <router-link :to="{ name: 'Rooms' }"><button class="button" v-if="isLoggedIn">Book Now</button></router-link>
   </section>
 
   <section id="space-4">
@@ -50,7 +50,7 @@
     <p>Some description. Book this room now.</p>
     <br>
     <router-link :to="{ name: 'Login' }"><button class="button" v-if="!isLoggedIn">Login</button></router-link>
-    <router-link :to="{ name: 'Book A Room!' }"><button class="button" v-if="isLoggedIn">Book Now</button></router-link>
+    <router-link :to="{ name: 'Rooms' }"><button class="button" v-if="isLoggedIn">Book Now</button></router-link>
   </section>
 
 </body>
