@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const state = {
     workshop: [],
+    pastWorkshop: [],
     workshopItem: {},
     userWorkshop: [],
     popularWorkshop: {},
@@ -25,6 +26,7 @@ const state = {
 
 const getters = { 
     workshop: state => state.workshop,
+    pastWorkshop: state => state.pastWorkshop,
     workshopItem: state => state.workshopItem,
     userWorkshop: state => state.userWorkshop,
     popularWorkshop: state => state.popularWorkshop,
@@ -33,25 +35,40 @@ const getters = {
 }
 
 const actions = {
-    // Get workshops
+    // Get current workshops
     async getWorkshop({ commit }) {
         try {
             let res = await axios.get('http://localhost:5000/api/workshops/all');
             if (res.data.success) {
-                // calculate ranking
                 let workshops = res.data.workshop
+
+                // get current workshops
+                let today = new Date()
+                const currentWorkshops = workshops.filter(item => {
+                    let workshopDate = new Date(item.date.replace('-',','))
+                    return workshopDate.getTime() >= today.getTime()
+                })
+
+                // get past workshops
+                const pastWorkshops = workshops.filter(item => {
+                    let workshopDate = new Date(item.date.replace('-',','))
+                    return workshopDate.getTime() < today.getTime()
+                })
+                
+                // calculate ranking for current workshops
                 let ranking = 1
-                workshops.sort( (a,b) => {
+                currentWorkshops.sort( (a,b) => {
                     return b.points - a.points
                 })
-                for (let i=0; i<workshops.length; i++) {
-                    if ((i>0) && (workshops[i].points < workshops[i-1].points)) {
+                for (let i=0; i<currentWorkshops.length; i++) {
+                    if ((i>0) && (currentWorkshops[i].points < currentWorkshops[i-1].points)) {
                         ranking++
                     }
-                    workshops[i].rank = ranking
+                    currentWorkshops[i].rank = ranking
                 }
-                commit('getWorkshops_success', workshops);
-                commit('popularWorkshop_success', workshops[0]);
+                commit('getWorkshops_success', currentWorkshops);
+                commit('getPastWorkshops_success', pastWorkshops);
+                commit('popularWorkshop_success', currentWorkshops[0]);
             }
         } catch (err) {
             console.log(err)
@@ -149,6 +166,11 @@ const mutations = {
     // Get workshops
     getWorkshops_success(state, workshop) {
         state.workshop = workshop
+    },
+
+    // Get past workshops
+    getPastWorkshops_success(state, workshop) {
+        state.pastWorkshop = workshop
     },
 
     // Get one workshop from ID

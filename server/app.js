@@ -42,14 +42,19 @@ mongoose.connect(db, { useNewUrlParser: true })
 const passport = require('passport');
 const users = require('./routes/api/users');
 
-//NOTSURE
+//*********NOTSURE***************************************************************
 //Pulling in Workshop route
 const workshops = require('./routes/api/workshops');
 app.use('/api/workshops', workshops);
+
 //Pulling in Rooms route
 const rooms = require('./routes/api/rooms');
 app.use('/api/rooms', rooms);
-//NOTSURE
+
+//Pulling in Rooms route
+const articles = require('./routes/api/articles');
+app.use('/api/articles', articles);
+//*********NOTSURE***************************************************************
 
 app.use(passport.initialize()); //passport middleware
 require('./config/passport')(passport); //passport config

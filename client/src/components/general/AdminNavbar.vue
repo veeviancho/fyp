@@ -12,7 +12,7 @@
         <p class="menu-label">Workshops</p>
         <ul class="menu-list">
             <li><router-link class="router" active-class="active" :to="{ name: 'Admin Workshop' }">Manage Workshops</router-link></li>
-            <li><a>View Past Workshops</a></li>
+            <li><router-link class="router" active-class="active" :to="{ name: 'Admin Past Workshop' }">View Past Workshops</router-link></li>
         </ul>
         <p class="menu-label">Users</p>
         <ul class="menu-list">

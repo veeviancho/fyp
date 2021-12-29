@@ -31,6 +31,7 @@ import AdminRealTime from '../views/admin/RealTime.vue'
 import AdminProfile from '../views/admin/RealTime.vue'
 
 import AdminWorkshop from '../views/admin/Workshop.vue'
+import AdminPastWorkshop from '../views/admin/PastWorkshop.vue'
 import WorkshopUsers from '../views/admin/WorkshopUsers.vue'
 import AdminUsers from '../views/admin/Users.vue'
 
@@ -173,6 +174,14 @@ const routes = [
     path: '/admin/workshop',
     name: 'Admin Workshop',
     component: AdminWorkshop,
+    meta: {
+      isAdmin: true
+    }
+  },
+  {
+    path: '/admin/past-workshop',
+    name: 'Admin Past Workshop',
+    component: AdminPastWorkshop,
     meta: {
       isAdmin: true
     }

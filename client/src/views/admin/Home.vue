@@ -25,7 +25,7 @@
         <td><div class="desc">{{ room.description }}</div></td>
         <td>
             <button class="button is-info" @click="editVisible=true; roomData=room">Edit</button>
-            <EditRoom :room="roomData" v-show="editVisible" @close="editVisible = false"/>
+            <EditRoom :room="roomData" v-show="editVisible && roomData==room" @close="editVisible = false"/>
         </td>
         <td><button class="button btn">Bookings</button></td>
         <td><button class="button is-danger" @click="remove(room)">Delete</button></td>
