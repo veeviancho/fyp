@@ -81,6 +81,12 @@ const actions = {
         commit('workshopID_success', workshopId)
     },
 
+    // Get past workshop from ID
+    async getPastWorkshopFromId({ commit }, id) {
+        const workshopId = state.pastWorkshop.find(item => item._id === id)
+        commit('workshopID_success', workshopId)
+    },
+
     // Get workshops associated with user
     async getUserWorkshop({ commit }, userId) {
         const userWorkshop = state.workshop.filter(item => item.users.includes(userId))

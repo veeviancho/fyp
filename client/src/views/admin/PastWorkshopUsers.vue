@@ -59,7 +59,7 @@ export default {
         ...mapGetters(['workshopItem', 'userById'])
     },
     methods: {
-        ...mapActions(['getWorkshop', 'getWorkshopFromId', 'getAllUsers', 'getUserFromId', 'deregisterFromWorkshop']),
+        ...mapActions(['getWorkshop', 'getPastWorkshopFromId', 'getAllUsers', 'getUserFromId', 'deregisterFromWorkshop']),
         removeUser(userId) {
             let confirmRemove = confirm("Remove user from workshop?")
             if (confirmRemove) {
@@ -74,7 +74,7 @@ export default {
     created() {
         this.getAllUsers().then( () => {
             this.getWorkshop().then( () => {
-                this.getWorkshopFromId(this.id)
+                this.getPastWorkshopFromId(this.id)
                 let workshopUsers = this.workshopItem.users
                 for (let i=0; i<workshopUsers.length; i++) {
                     this.getUserFromId(workshopUsers[i])

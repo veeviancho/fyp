@@ -63,7 +63,7 @@
             </td>
 
             <td>
-                <router-link :to="'/admin/workshop/' + item._id"><button class="button is-user" @click="openUsers(item)">Users</button></router-link>
+                <router-link :to="'/admin/past-workshop/' + item._id"><button class="button is-user" @click="openUsers(item)">Users</button></router-link>
             </td>
 
             <td>
