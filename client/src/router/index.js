@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 // Public views
 import Home from '../views/public/Home.vue'
 import Articles from '../views/public/Articles.vue'
+import ArticleDetails from '../views/public/ArticleDetails.vue'
 import About from '../views/public/About.vue'
 import Login from '../views/public/auth/Login.vue'
 import Register from '../views/public/auth/Register.vue'
@@ -50,6 +51,15 @@ const routes = [
     path: '/articles',
     name: 'Articles',
     component: Articles,
+    meta: {
+      public: true
+    }
+  },
+  {
+    path: '/articles/:id',
+    name: 'Article Details',
+    component: ArticleDetails,
+    props: true,
     meta: {
       public: true
     }

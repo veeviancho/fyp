@@ -6,16 +6,33 @@ const ArticleSchema = new Schema({
         type: String,
         required: true,
     },
-    description: {
+    content: {
         type: String,
         required: true,
     },
+    tags: {
+        type: String,
+        default: ''
+    },
     author: {
         type: String,
+        default: ''
+    },
+    programme: {
+        type: String,
+        default: ''
+    },
+    category: {
+        type: String,
+        default: ''
     },
     views: {
         type: Number,
         default: 0
+    },
+    featured: {
+        type: Boolean,
+        default: false
     },
     updatedAt: {
         type: Date

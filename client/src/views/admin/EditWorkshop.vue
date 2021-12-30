@@ -5,6 +5,8 @@
     
     <form class="box" @submit.prevent="editWorkshop">
 
+        <div class="columns">
+        <div class="column">
         <div class="field">
             <label class="label">Title &nbsp;&nbsp;
                 <small class="edit-btn" v-if="!show[0]" @click="show[0]=true;">Edit</small>
@@ -15,6 +17,16 @@
                 <input class="input is-warning" type="text" placeholder="Lifelong Learning Workshop" v-if="show[0]" v-model="title">
             </div>
         </div> 
+        </div>
+        <div class="column">
+        <div class="field">
+            <label class="label">Points</label>
+            <div class="control">
+                <p>{{ workshopItem.points }}</p>
+            </div>
+        </div>
+        </div> 
+        </div>
 
         <div class="field">
             <label class="label">Description &nbsp;&nbsp;

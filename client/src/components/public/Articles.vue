@@ -1,34 +1,34 @@
 <template>
-<a>
+<router-link :to="'/articles/' + articleItem._id">
+  <article class="media">
+    <div class="media-content mr-3">
 
-<article class="media">
-  <div class="media-content">
+      <div class="content">
+        <h1 class="title">{{ articleItem.title }}</h1>
+        <p class="desc">{{ articleItem.content }}</p>
+      </div>
 
-    <div class="content">
-        <h1 class="title">The Importance of Lifelong Learning</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Enim tortor at auctor urna. Congue eu consequat ac felis donec et odio pellentesque. Pharetra diam sit amet nisl suscipit adipiscing bibendum est. Nunc faucibus a pellentesque sit amet porttitor eget dolor morbi. Magna eget est lorem ipsum. Pellentesque massa placerat duis ultricies lacus.</p>
+      <small class="is-size-7" v-if="articleItem.tags">Tags: 
+        <span class="tag is-small" v-for="(tag, index) in articleItem.tags.split(' ')" :key="index">
+          {{ tag }}
+        </span>
+      </small>
+
     </div>
-
-    <small class="is-size-7">Tags: 
-        <span class="tag is-small">education</span>
-        <span class="tag is-small">skillz</span>
-    </small>
-
-  </div>
-</article>
-
-</a>
+  </article>
+</router-link>
 </template>
 
 <script>
 export default {
-    name: 'Article'
+  props: ['articleItem']
 }
 </script>
 
 <style lang="scss" scoped>
 .media {
   padding: 1.5em 2.0em;
+  margin-bottom: 1.5em;
   border-radius: 0.4em;
   color: white;
   border: 0.3em solid #33CDC4;
@@ -47,5 +47,4 @@ export default {
 .media:hover {
   background-color: rgba(0, 0, 0, 0.25);
 }
-
 </style>

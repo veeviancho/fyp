@@ -82,11 +82,6 @@ export default {
   margin-right: 2rem;
 }
 
-.column {
-  padding-top: 0px;
-  padding-bottom: 0px;
-}
-
 @media (max-width: 600px) {
   // small {
   //   margin-right: 1rem;
