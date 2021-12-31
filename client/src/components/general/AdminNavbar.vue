@@ -7,7 +7,7 @@
         <ul class="menu-list">
             <li><router-link class="router" active-class="active" :to="{ name: 'Admin Home' }">Home</router-link></li>
             <li><a>About</a></li>
-            <li><a>Articles</a></li>
+            <li><router-link class="router" active-class="active" :to="{ name: 'Admin Articles' }">Articles</router-link></li>
         </ul>
         <p class="menu-label">Workshops</p>
         <ul class="menu-list">
