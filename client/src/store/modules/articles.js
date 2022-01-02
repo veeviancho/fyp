@@ -2,12 +2,22 @@ import axios from 'axios'
 
 const state = {
     articles: [],
-    articleItem: {}
+    articleItem: {},
+
+    articleStatus: {
+        create: ''
+    },
+
+    articleError: {
+        create: ''
+    }
 }
 
 const getters = {
     articles: state => state.articles,
-    articleItem: state => state.articleItem
+    articleItem: state => state.articleItem,
+    articleStatus: state => state.articleStatus,
+    articleError: state => state.articleError
 }
 
 const actions = {
@@ -28,6 +38,20 @@ const actions = {
         const article = state.articles.find(item => item._id === id)
         commit('getArticleById_success', article)
     },
+
+    // Post article
+    async postArticle({ commit }, article) {
+        try {
+            commit('postArticle_request')
+            let res = await axios.post('http://localhost:5000/api/articles/create', article)
+            if (res.data.success) {
+                commit('postArticle_success')
+            }
+        }
+        catch (err) {
+            commit('postArticle_error', err)
+        }
+    }
 }
 
 const mutations = {
@@ -40,6 +64,20 @@ const mutations = {
     getArticleById_success(state, article) {
         state.articleItem = article
     },
+
+    // Create article
+    postArticle_request(state) {
+        state.articleStatus.create = 'loading'
+    },
+    postArticle_success(state) {
+        state.articleStatus.create = 'success'
+    },
+    postArticle_error(state, err) {
+        state.articleStatus.create = 'error'
+        state.articleError.create = err.response.data.msg
+    },
+
+    
 }
 
 export default {

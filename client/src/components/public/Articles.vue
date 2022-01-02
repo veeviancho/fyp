@@ -9,7 +9,7 @@
       </div>
 
       <small class="is-size-7" v-if="articleItem.tags">Tags: 
-        <span class="tag is-small" v-for="(tag, index) in articleItem.tags.split(' ')" :key="index">
+        <span class="tag is-small" v-for="(tag, index) in articleItem.tags" :key="index">
           {{ tag }}
         </span>
       </small>

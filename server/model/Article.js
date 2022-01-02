@@ -11,8 +11,8 @@ const ArticleSchema = new Schema({
         required: true,
     },
     tags: {
-        type: String,
-        default: ''
+        type: Array,
+        default: []
     },
     author: {
         type: String,

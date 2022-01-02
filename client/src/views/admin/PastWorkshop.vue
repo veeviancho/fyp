@@ -1,9 +1,9 @@
 <template>
 <div class="admin-content">
     <div>
-        <button class="button is-link mb-6" @click="openCreate()">
+        <!-- <button class="button is-link mb-6" @click="openCreate()">
             <fa icon="plus"/> &nbsp;Add New Workshop
-        </button>
+        </button> -->
 
         <CreateWorkshop v-show="createVisible" @close="closeCreate"/>
 

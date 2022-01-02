@@ -6,8 +6,8 @@
     <form class="box" @submit.prevent="create">
   
         <div class="field">
-            <label class="label">Title</label>
-            <div class="control"><input class="input is-warning" type="text" placeholder="John Doe" v-model="title" required></div>
+            <label class="label">Room Name</label>
+            <div class="control"><input class="input is-warning" type="text" placeholder="Room Name" v-model="title" required></div>
         </div>
 
         <div class="field">

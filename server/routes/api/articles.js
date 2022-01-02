@@ -25,7 +25,12 @@ router.post('/create', (req, res) => {
             article: article,
             success: true
         }))
-        .catch(err => console.log(err));
+        .catch(err => {
+            console.log(err)
+            res.status(400).json({
+                msg: "Unable to post article. Please try again later."
+            })
+        });
 })
 
 /**

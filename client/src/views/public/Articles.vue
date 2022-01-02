@@ -9,7 +9,9 @@
     <router-link :to="'/articles/' + featuredArticle._id" @click="updateViews(featuredArticle._id)"><button class="button">Read More</button></router-link>
     </section>
 
-    <div style="margin: 3rem auto; width: 92%;" v-if="articles">
+    <p v-else class="has-text-white has-navbar-fixed-top"><b>No article has been posted. Please come back later.</b></p>
+
+    <div style="margin: 3rem auto; width: 92%;" v-if="articles.length != 0">
     <div class="columns">
         <div class="column">
             <div>
@@ -31,9 +33,9 @@
                             Tags
                         </p>
                         <ul class="menu-list">
-                            <li v-for="item in articles.filter((element, index, self) => element.tags != '' && self.findIndex(el=>(element.tags === el.tags)) === index)" :key="item._id">
-                                <input type="checkbox">
-                                <span class="check-name">{{ item.tags }}</span>
+                            <li v-for="item in filteredTags" :key="item._id">
+                                <input type="checkbox" :value="item" v-model="filterBy.tags">
+                                <span class="check-name">{{ item }}</span>
                             </li>
                         </ul>
 
@@ -202,6 +204,17 @@ export default {
             } else {
                 return this.articles[0]
             }
+        },
+        filteredTags() {
+            let tags = []
+            for (let i=0; i<this.articles.length; i++) {
+                for (let j=0; j<this.articles[i].tags.length; j++) {
+                    if (!tags.includes(this.articles[i].tags[j])) {
+                        tags.push(this.articles[i].tags[j])
+                    }
+                } 
+            }
+            return tags
         }
     },
     components: {
