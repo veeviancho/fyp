@@ -57,7 +57,7 @@ router.get('/all', (req, res) => {
 })
 
 /**
- * @route UPDATE api/articles/update-views/:id
+ * @route PUT api/articles/update-views/:id
  * @desc Update views of article
  * @access Public
  */
@@ -75,4 +75,76 @@ router.put('/update-views/:id', (req, res) => {
         console.log(err)
     })
 })
+
+/**
+ * @route PUT api/articles/update
+ * @desc Update article
+ * @access Private (admin)
+ */
+router.put('/update', (req,res) => {
+    Article.findOneAndUpdate({ _id: req.body.id }, { $set: req.body })
+        .then(article => {
+            if (!article) {
+                return res.status(404).json({
+                    msg: "Article not found"
+                })
+            }
+            return res.status(200).json({
+                success: true,
+                msg: "Updated successfully!"
+            })
+        })
+        .catch(err => {
+            console.log(err)
+            return res.status(400).json({
+                msg: "Encountered an error. Unable to update! Please try again later."
+            })
+        })
+})
+
+/**
+ * @route DELETE api/articles/delete/:id
+ * @desc Delete article
+ * @access Private (admin)
+ */
+router.delete('/delete/:id', (req,res) => {
+    Article.findOneAndDelete({ _id: req.params.id })
+    .then(article => {
+        if (!article) {
+            return res.status(404).json({
+                msg: "Article not found!"
+            })
+        }
+        return res.status(200).json({
+            success: true,
+            msg: "Deleted successfully!"
+        })
+    })
+    .catch(err => {
+        console.log(err)
+        return res.status(400).json({
+            msg: "Unable to delete! Please try again later."
+        })
+    })
+})
+
+/**
+ * @route PUT api/articles/updateFeatured
+ * @desc Delete article
+ * @access Private (admin)
+ */
+router.put('/updateFeatured', (req,res) => {
+    Article.updateMany({}, { $set: { 'featured':false } }).then(() => {
+        return res.status(200).json({
+            success: true
+        })
+    })
+    .catch(err => {
+        console.log(err)
+        return res.status(400).json({
+            msg: "Unable to update."
+        })
+    })
+})
+
 module.exports = router;

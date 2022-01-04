@@ -8,7 +8,7 @@
         <p class="desc">{{ articleItem.content }}</p>
       </div>
 
-      <small class="is-size-7" v-if="articleItem.tags">Tags: 
+      <small class="is-size-7" v-if="articleItem.tags && articleItem.tags[0] != ''">Tags: 
         <span class="tag is-small" v-for="(tag, index) in articleItem.tags" :key="index">
           {{ tag }}
         </span>

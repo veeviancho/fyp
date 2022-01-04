@@ -5,11 +5,15 @@ const state = {
     articleItem: {},
 
     articleStatus: {
-        create: ''
+        create: '',
+        update: '',
+        remove: ''
     },
 
     articleError: {
-        create: ''
+        create: '',
+        update: '',
+        remove: ''
     }
 }
 
@@ -51,6 +55,34 @@ const actions = {
         catch (err) {
             commit('postArticle_error', err)
         }
+    },
+
+    // Update article
+    async updateArticle({ commit }, article) {
+        try {
+            commit('updateArticle_request')
+            let res = await axios.put('http://localhost:5000/api/articles/update', article)
+            if (res.data.success) {
+                commit('updateArticle_success')
+            }
+        }
+        catch (err) {
+            commit('updateArticle_error', err)
+        }
+    },
+
+    // Delete article
+    async removeArticle({ commit }, id) {
+        try {
+            commit('removeArticle_request')
+            let res = await axios.delete('http://localhost:5000/api/articles/delete/' + id)
+            if (res.data.success) {
+                commit('removeArticle_success')
+            }
+        }
+        catch (err) {
+            commit('removeArticle_error', err)
+        }
     }
 }
 
@@ -77,7 +109,29 @@ const mutations = {
         state.articleError.create = err.response.data.msg
     },
 
-    
+    // Update article
+    updateArticle_request(state) {
+        state.articleStatus.update = 'loading'
+    },
+    updateArticle_success(state) {
+        state.articleStatus.update = 'success'
+    },
+    updateArticle_error(state, err) {
+        state.articleStatus.update = 'error'
+        state.articleError.update = err.response.data.msg
+    },
+
+    // Remove article
+    removeArticle_request(state) {
+        state.articleStatus.remove = 'loading'
+    },
+    removeArticle_success(state) {
+        state.articleStatus.remove = 'success'
+    },
+    removeArticle_error(state, err) {
+        state.articleStatus.remove = 'error'
+        state.articleError.remove = err.response.data.msg
+    }
 }
 
 export default {

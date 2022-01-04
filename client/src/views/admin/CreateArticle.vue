@@ -41,7 +41,7 @@
                             <option>Green Electronics</option>
                             <option>Integrated Circuit Design</option>
                         </select>
-                    </div>
+                        </div>
                     </div>
                 </div>
             </div>

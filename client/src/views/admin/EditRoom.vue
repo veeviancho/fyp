@@ -49,7 +49,7 @@ export default {
     data() {
         return {
             title: this.title,
-            description: this.title,
+            description: this.description,
             show: [false, false],
         }
     },

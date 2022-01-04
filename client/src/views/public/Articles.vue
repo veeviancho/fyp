@@ -209,7 +209,7 @@ export default {
             let tags = []
             for (let i=0; i<this.articles.length; i++) {
                 for (let j=0; j<this.articles[i].tags.length; j++) {
-                    if (!tags.includes(this.articles[i].tags[j])) {
+                    if (!tags.includes(this.articles[i].tags[j]) && this.articles[i].tags[j] != '') {
                         tags.push(this.articles[i].tags[j])
                     }
                 } 
