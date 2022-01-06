@@ -5,6 +5,7 @@ const state = {
     pastWorkshop: [],
     workshopItem: {},
     userWorkshop: [],
+    pastUserWorkshop: [],
     popularWorkshop: {},
 
     workshopStatus: {
@@ -29,6 +30,7 @@ const getters = {
     pastWorkshop: state => state.pastWorkshop,
     workshopItem: state => state.workshopItem,
     userWorkshop: state => state.userWorkshop,
+    pastUserWorkshop: state => state.pastUserWorkshop,
     popularWorkshop: state => state.popularWorkshop,
     workshopStatus: state => state.workshopStatus,
     workshopError: state => state.workshopError
@@ -60,6 +62,7 @@ const actions = {
                 currentWorkshops.sort( (a,b) => {
                     return b.points - a.points
                 })
+                
                 for (let i=0; i<currentWorkshops.length; i++) {
                     if ((i>0) && (currentWorkshops[i].points < currentWorkshops[i-1].points)) {
                         ranking++
@@ -89,8 +92,12 @@ const actions = {
 
     // Get workshops associated with user
     async getUserWorkshop({ commit }, userId) {
+        // Current workshop
         const userWorkshop = state.workshop.filter(item => item.users.includes(userId))
-        commit('userWorkshop_success', userWorkshop)
+        // Past workshop
+        const pastUserWorkshop = state.pastWorkshop.filter(item => item.users.includes(userId))
+        // console.log(pastUserWorkshop)
+        commit('userWorkshop_success', [userWorkshop, pastUserWorkshop])
     },
 
     // Register User to Workshop (update workshop and user)
@@ -185,8 +192,9 @@ const mutations = {
     },
 
     // Get workshops for user
-    userWorkshop_success(state, workshop) {
+    userWorkshop_success(state, [workshop, pastWorkshop]) {
         state.userWorkshop = workshop
+        state.pastUserWorkshop = pastWorkshop
     },
 
     // Get popular workshop

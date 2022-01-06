@@ -7,7 +7,7 @@
     <div class="media-content mr-3">
       <div class="content">
         <h1 :class="[fullWorkshop ? 'title gray' : 'title white']">{{ workshopItem.title }}
-          <span :class="[fullWorkshop ? 'tag-full' : 'tag-not-full', 'tag is-small']">#{{ workshopItem.rank }}</span>
+          <span v-if="workshopItem.rank" :class="[fullWorkshop ? 'tag-full' : 'tag-not-full', 'tag is-small']">#{{ workshopItem.rank }}</span>
         </h1>
         <p class="desc">{{ workshopItem.description }}</p>
       </div>

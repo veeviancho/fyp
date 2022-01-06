@@ -41,11 +41,11 @@
             <div class="px-5 py-3">
                 Registered Workshops
                 <div class="my-5">
-                    <span class="title is-1 has-text-white">0</span> &nbsp; 
-                    <span class="subtitle is-5 has-text-white"><router-link :to="{ name: 'Past Workshops' }" class="yellow-box px-3 py-2">attended</router-link> workshops</span>
+                    <span class="title is-1 has-text-white">{{ pastUserWorkshop ? pastUserWorkshop.length : 0 }}</span> &nbsp; 
+                    <span class="subtitle is-5 has-text-white"><router-link :to="{ name: 'Past Workshops' }" class="yellow-box px-3 py-2">past</router-link> workshops</span>
                 </div>
                 <div class="my-5">
-                    <span class="title is-1 has-text-white">0</span> &nbsp; 
+                    <span class="title is-1 has-text-white">{{ userWorkshop ? userWorkshop.length : 0 }}</span> &nbsp; 
                     <span class="subtitle is-5 has-text-white"><router-link :to="{ name: 'Upcoming Workshops' }" class="yellow-box px-3 py-2">upcoming</router-link> workshops</span>
                 </div>
             </div>
@@ -69,11 +69,11 @@
         </div>
     </div>
     
-
-    <div class="section my-6">
+    <div class="section my-6" v-for="item in pastUserWorkshop" :key="item._id">
         <div class="column">
             <div class="columns">
                 <div class="column">
+
                     <span class="title is-4 category px-3 py-2">Technical Skills</span> &nbsp;
                     <span class="has-text-white description">You have attended <strong class="has-text-white">0</strong> technical skills workshops</span>
 
@@ -83,63 +83,11 @@
                             <td><b>Workshop #1</b></td>
                             <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt...</td>
                         </tr>
-                        <tr>
-                            <td>01/01/2021</td>
-                            <td><b>Workshop #2</b></td>
-                            <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt...</td>
-                        </tr>
-                        <tr>
-                            <td>01/01/2021</td>
-                            <td><b>Workshop #3</b></td>
-                            <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt...</td>
-                        </tr>
-                        <tr>
-                            <td>01/01/2021</td>
-                            <td><b>Workshop #4</b></td>
-                            <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt...</td>
-                        </tr>
                     </table>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="section mb-6">
-        <div class="column">
-            <div class="columns">
-                <div class="column">
-                    <span class="title is-4 category px-3 py-2">Soft Skills</span> &nbsp;
-                    <span class="has-text-white description">You have attended <strong class="has-text-white">0</strong> soft skills workshops</span>
-
-                    <table class="has-text-white mt-6">
-                        <tr>
-                            <td>01/01/2021</td>
-                            <td><b>Workshop #1</b></td>
-                            <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt...</td>
-                        </tr>
-                        <tr>
-                            <td>01/01/2021</td>
-                            <td><b>Workshop #2</b></td>
-                            <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt...</td>
-                        </tr>
-                        <tr>
-                            <td>01/01/2021</td>
-                            <td><b>Workshop #3</b></td>
-                            <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt...</td>
-                        </tr>
-                        <tr>
-                            <td>01/01/2021</td>
-                            <td><b>Workshop #4</b></td>
-                            <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt...</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
 </div>
 </body>
 </template>
@@ -158,10 +106,10 @@ export default {
         EditProfile
     },
     computed: {
-        ...mapGetters(['user'])
+        ...mapGetters(['user', 'userWorkshop', 'pastUserWorkshop']),
     },
     methods: {
-        ...mapActions(['getProfile']),
+        ...mapActions(['getProfile', 'getWorkshop', 'getUserWorkshop']),
         showModal() {
             this.isModalVisible = true;
         },
@@ -171,6 +119,9 @@ export default {
     },
     created() {
         this.getProfile();
+        this.getWorkshop().then( () => {
+            this.getUserWorkshop(localStorage.getItem('userId'))
+        })
     }
 }
 </script>

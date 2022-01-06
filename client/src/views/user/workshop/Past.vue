@@ -6,7 +6,7 @@
         </form>
         </section>
         <div class="content">
-            <div v-for="item in userWorkshop" :key="item.id">
+            <div v-for="item in pastUserWorkshop" :key="item.id">
                 <div><WorkshopEvent :workshopItem="item"/></div>
             </div>
         </div>
@@ -22,7 +22,7 @@ export default {
         WorkshopEvent
     },
     computed: {
-        ...mapGetters(['userWorkshop', 'user'])
+        ...mapGetters(['user', 'pastWorkshop', 'pastUserWorkshop'])
     },
     methods: {
         ...mapActions(['getWorkshop', 'getProfile', 'getUserWorkshop'])
@@ -49,5 +49,11 @@ export default {
 .content {
     width: 80%;
     margin: 3rem auto;
+}
+
+.hero {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: flex-start;
 }
 </style>
