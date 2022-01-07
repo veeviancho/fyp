@@ -69,19 +69,19 @@
         </div>
     </div>
     
-    <div class="section my-6" v-for="item in pastUserWorkshop" :key="item._id">
+    <div class="section my-6" v-for="(category, index) in workshopCategory" :key="index">
         <div class="column">
             <div class="columns">
                 <div class="column">
 
-                    <span class="title is-4 category px-3 py-2">Technical Skills</span> &nbsp;
-                    <span class="has-text-white description">You have attended <strong class="has-text-white">0</strong> technical skills workshops</span>
+                    <span class="title is-4 category px-3 py-2">{{ category }}</span> &nbsp;
+                    <span class="has-text-white description">You have attended <strong class="has-text-white">{{ pastUserWorkshop.filter(item => item.category === category).length }}</strong> {{ category }} workshops</span>
 
                     <table class="has-text-white mt-6">
-                        <tr>
-                            <td>01/01/2021</td>
-                            <td><b>Workshop #1</b></td>
-                            <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt...</td>
+                        <tr v-for="workshopItem in pastUserWorkshop.filter(item => item.category === category)" :key="workshopItem._id">
+                            <td>{{ workshopItem.date }}</td>
+                            <td><b>{{ workshopItem.title }}</b></td>
+                            <td>{{ workshopItem.description }}</td>
                         </tr>
                     </table>
                 </div>
@@ -99,7 +99,8 @@ import EditProfile from '@/components/student/user/EditProfile.vue'
 export default {
     data() {
         return {
-            isModalVisible: false
+            isModalVisible: false,
+            workshopCategory: [],
         }
     },
     components: {
@@ -115,12 +116,22 @@ export default {
         },
         closeModal() {
             this.isModalVisible = false;
+        },
+        getCategory() {
+            let temp = this.pastUserWorkshop
+            temp = temp.filter( (el, index, arr) => {
+                return el.category != '' &&  index === arr.findIndex(ele => (ele.category === el.category))
+            })
+            for (let i=0; i<temp.length; i++) {
+                this.workshopCategory.push(temp[i].category)
+            }
         }
     },
     created() {
         this.getProfile();
         this.getWorkshop().then( () => {
             this.getUserWorkshop(localStorage.getItem('userId'))
+            this.getCategory()
         })
     }
 }

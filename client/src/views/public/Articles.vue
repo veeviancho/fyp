@@ -198,7 +198,6 @@ export default {
                 return element.featured == true
             })
             
-            console.log(temp)
             if (temp.length != 0) {
                 return temp[0]
             } else {
