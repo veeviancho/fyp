@@ -51,9 +51,13 @@ app.use('/api/workshops', workshops);
 const rooms = require('./routes/api/rooms');
 app.use('/api/rooms', rooms);
 
-//Pulling in Rooms route
+//Pulling in Articles route
 const articles = require('./routes/api/articles');
 app.use('/api/articles', articles);
+
+//Pulling in Booking route
+const bookings = require('./routes/api/bookings');
+app.use('/api/bookings', bookings);
 //*********NOTSURE***************************************************************
 
 app.use(passport.initialize()); //passport middleware

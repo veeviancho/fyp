@@ -69,7 +69,8 @@
         </div>
     </div>
     
-    <div class="section my-6" v-for="(category, index) in workshopCategory" :key="index">
+    <div class="my-6">
+    <div class="section mb-6" v-for="(category, index) in workshopCategory" :key="index">
         <div class="column">
             <div class="columns">
                 <div class="column">
@@ -87,6 +88,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </div>
 </body>
