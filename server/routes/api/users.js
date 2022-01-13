@@ -538,6 +538,32 @@ router.delete('/delete/:id', (req, res) => {
         })
 })
 
+/**
+ * @route GET api/users/get/:username
+ * @desc Return user by username
+ * @access Private
+ */
+router.get('/get/:username', (req, res) => {
+    User.findOne({ username: req.params.username })
+        .then( user => {
+            if (!user) {
+                return res.status(404).json({
+                    msg: "User not found!"
+                })
+            }
+            return res.status(200).json({
+                user: user,
+                success: true
+            })
+        })
+        .catch( err => {
+            console.log(err) 
+            return res.status(400).json({
+                msg: "Unable to retrieve user. Please try again."
+            })
+        })
+})
+
 // /**
 //  * @route api/users/forgotpw
 //  * @desc Send code to user's email and Change Password

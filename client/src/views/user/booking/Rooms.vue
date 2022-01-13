@@ -30,7 +30,7 @@
         <h1 class="has-text-white">
             <span class="results">SHOWING RESULTS FOR:</span>
             <span class="subtitle has-text-white">
-                <b class="results">01/01/2021 Tuesday</b>
+                <b class="results">{{ filterBy.date }} Tuesday</b>
                 <b class="results">12:00PM - 1:00PM</b>
             </span>
         </h1>
@@ -102,10 +102,16 @@ export default {
         // }
     },
     methods: {
-        ...mapActions(['getAllRooms'])
+        ...mapActions(['getAllRooms']),
+        getToday() {
+            let temp = new Date()
+            let month = String(parseInt(temp.getMonth()) + 1).padStart(2, "0")
+            this.filterBy.date = temp.getFullYear() + '-' + month + '-' + temp.getDate()
+        }
     },
     created() {
         this.getAllRooms();
+        this.getToday();
     }
 }
 </script>

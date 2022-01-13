@@ -27,7 +27,7 @@
             <button class="button is-info" @click="editVisible=true; roomData=room">Edit</button>
             <EditRoom :room="roomData" v-show="editVisible && roomData==room" @close="editVisible = false"/>
         </td>
-        <td><button class="button btn">Bookings</button></td>
+        <td><router-link :to="'/admin/booking/' + room._id"><button class="button btn">Bookings</button></router-link></td>
         <td><button class="button is-danger" @click="remove(room)">Delete</button></td>
         </tr>
         </tbody>

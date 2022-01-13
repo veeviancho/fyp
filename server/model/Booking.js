@@ -8,33 +8,25 @@ const BookingSchema = new Schema({
     roomId: {
         type: Number
     },
+    date: {
+        type: Date
+    },
     start: {
-        dateTime: {
-            type: Date
-        }
+        type: Date
     },
     end: {
-        dateTime: {
-            type: Date
-        }
+        type: Date
     },
     closed: {
         meta: {
             type: Boolean
         },
         start: {
-            dateTime: {
-                type: Date
-            }
+            type: Date
         },
         end: {
-            dateTime: {
-                type: Date
-            }
+            type: Date
         }
-    },
-    workshopId: {
-        type: Number
     },
     purpose: {
         type: String

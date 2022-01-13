@@ -47,14 +47,14 @@ const actions = {
                 // get current workshops
                 let today = new Date()
                 const currentWorkshops = workshops.filter(item => {
-                    let workshopDate = new Date(item.date.replace('-',','))
-                    return workshopDate.getTime() >= today.getTime()
+                    let workshopDate = Date.parse(String(item.date) + "T" + String(item.endTime) + ":00")
+                    return workshopDate >= today.getTime()
                 })
 
                 // get past workshops
                 const pastWorkshops = workshops.filter(item => {
-                    let workshopDate = new Date(item.date.replace('-',','))
-                    return workshopDate.getTime() < today.getTime()
+                    let workshopDate = Date.parse(String(item.date) + "T" + String(item.endTime) + ":00")
+                    return workshopDate < today.getTime()
                 })
                 
                 // calculate ranking for current workshops
@@ -172,7 +172,6 @@ const actions = {
             commit('delete_error', err)
         }
     }
-
 }
 
 const mutations = { 

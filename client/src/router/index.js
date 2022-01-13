@@ -216,9 +216,10 @@ const routes = [
     }
   },
   {
-    path: '/admin/booking',
+    path: '/admin/booking/:id',
     name: 'Admin Booking',
     component: AdminBooking,
+    props: true,
     meta: {
       isAdmin: true
     }
