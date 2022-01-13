@@ -432,6 +432,7 @@ router.post('/resend/:email', (req, res) => {
             })
             token.save(err => {
                 if (err) {
+                    console.log(err)
                     return res.status(400).json({
                         msg: "Unable to send! Please try again."
                     })

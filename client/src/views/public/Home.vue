@@ -1,12 +1,12 @@
 <template>
 <body>
-  <nav class="box home-nav">
+  <!-- <nav class="box home-nav">
     <a href="#top">home</a>/
     <a href="#space-1">space 1</a>/
     <a href="#space-2">space 2</a>/
     <a href="#space-3">space 3</a>/
     <a href="#space-4">space 4</a>
-  </nav>
+  </nav> -->
 
   <section id="top">
     <h1>
