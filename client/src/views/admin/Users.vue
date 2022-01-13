@@ -15,10 +15,9 @@
             <col span="1" style="width: 10%;">
             <col span="1" style="width: 10%;">
             <col span="1" style="width: 21%;">
-            <col span="1" style="width: 17%;">
-            <col span="1" style="width: 17%;">
 
             <col span="1" style="width: 8%;">
+            <col span="1" style="width: 10%;">
             <col span="1" style="width: 12%;">
         </colgroup>
 
@@ -28,10 +27,9 @@
             <th>Name</th>
             <th>Username</th>
             <th>Email</th>
-            <th>Bookings</th>
-            <th>Workshops</th>
 
             <th>Edit</th>
+            <th>Manage</th>
             <th>Remove</th>
         </tr>
         </thead>
@@ -41,11 +39,14 @@
             <td>{{ user.name }}</td>
             <td>@{{ user.username }}</td>
             <td>{{ user.email }}</td>
-            <td>bookings</td>
-            <td>{{ user.workshops }}</td>
+
             <td>
                 <button class="button is-info" @click="editUser(user)">Edit</button>
                 <EditUser :userItem="modalData" v-show="editVisible && modalData == user" @close="closeEdit()"/>
+            </td>
+
+            <td>
+                <button class="button green">Bookings</button>
             </td>
             <td>
                 <button class="button is-danger" @click="removeUser(user)">Remove</button>
@@ -123,5 +124,9 @@ export default {
 table {
     width: 100%; 
     table-layout: fixed;
+}
+
+.green {
+    background-color: #329AA0;
 }
 </style>

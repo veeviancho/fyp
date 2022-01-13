@@ -63,7 +63,7 @@
                 <td>{{ todayRealTime.indexOf(item) + 1 }}</td>
                 <td>{{ item.startTime }} - {{ item.endTime }}</td>
                 <td>{{ item.venue }}</td>
-                <td><a>{{ item.title }}</a></td>
+                <td><router-link :to="'/workshop/' + item._id ">{{ item.title }}</router-link></td>
                 <td>{{ item.description }}</td>
                 <td>{{ item.category }}</td>
                 <td>{{ item.users.length }}/{{ item.maxUsers }}</td>
@@ -174,13 +174,13 @@ export default {
 <style lang="scss" scoped>
 a {
     font-weight: bold;
-    color: black;
+    color: #329AA0;
 }
 
 a:hover {
-    background-color: #FFDA7A;
-    color: black;
+    color: #5272A4;
     font-weight: bold;
+    text-decoration: underline;
 }
 
 .column {
