@@ -3,19 +3,22 @@ const Schema = mongoose.Schema;
 
 const BookingSchema = new Schema({
     userId: {
-        type: Number
+        type: String
     },
     roomId: {
-        type: Number
+        type: String
     },
     date: {
-        type: Date
+        // type: Date
+        type: String
     },
     start: {
-        type: Date
+        // type: Date
+        type: String
     },
     end: {
-        type: Date
+        // type: Date
+        type: String
     },
     closed: {
         meta: {

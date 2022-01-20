@@ -1,6 +1,6 @@
 <template>
 <body>
-    <div class="has-navbar-fixed-top px-6">
+    <div class="has-navbar-fixed-top px-6 hero is-fullheight">
 
     <div class="columns title has-text-white my-6">
         <div class="column">
@@ -34,7 +34,7 @@
                 <td>{{ realTime.indexOf(item) + 1 }}</td>
                 <td>{{ item.startTime }} - {{ item.endTime }}</td>
                 <td>{{ item.venue }}</td>
-                <td><a>{{ item.title }}</a></td>
+                <td><router-link :to="'/workshop/' + item._id ">{{ item.title }}</router-link></td>
                 <td>{{ item.description }}</td>
                 <td>{{ item.category }}</td>
             </tr>
