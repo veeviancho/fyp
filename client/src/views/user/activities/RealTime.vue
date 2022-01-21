@@ -2,6 +2,8 @@
 <body>
     <div class="has-navbar-fixed-top px-6 hero is-fullheight">
 
+    <div :class="[ (realTime == '' || todayRealTime == '') ? 'status' : '']">
+
     <div class="columns title has-text-white my-6">
         <div class="column">
             <span class="date">{{ todayDate }}</span>
@@ -28,6 +30,7 @@
             <th>Title</th>
             <th>Description</th>
             <th>Category</th>
+            <th>Registered</th>
         </thead>
         <tbody>
             <tr v-for="item in realTime" :key="item._id">
@@ -35,8 +38,9 @@
                 <td>{{ item.startTime }} - {{ item.endTime }}</td>
                 <td>{{ item.venue }}</td>
                 <td><router-link :to="'/workshop/' + item._id ">{{ item.title }}</router-link></td>
-                <td>{{ item.description }}</td>
+                <td><div class="desc">{{ item.description }}</div></td>
                 <td>{{ item.category }}</td>
+                <td>{{ item.users.length }}/{{ item.maxUsers }}</td>
             </tr>
         </tbody>
     </table>
@@ -64,7 +68,7 @@
                 <td>{{ item.startTime }} - {{ item.endTime }}</td>
                 <td>{{ item.venue }}</td>
                 <td><router-link :to="'/workshop/' + item._id ">{{ item.title }}</router-link></td>
-                <td>{{ item.description }}</td>
+                <td><div class="desc">{{ item.description }}</div></td>
                 <td>{{ item.category }}</td>
                 <td>{{ item.users.length }}/{{ item.maxUsers }}</td>
             </tr>
@@ -75,7 +79,8 @@
     <div class="my-6" v-else>
         <p class="subtitle has-text-white">There is no activity happening today.</p>
     </div>
-    
+
+    </div>
 
     </div>
 </body>
@@ -174,13 +179,12 @@ export default {
 <style lang="scss" scoped>
 a {
     font-weight: bold;
-    color: #329AA0;
+    color: white;
 }
 
 a:hover {
-    color: #5272A4;
+    color: #329AA0;
     font-weight: bold;
-    text-decoration: underline;
 }
 
 .column {
@@ -190,6 +194,16 @@ a:hover {
 
 table {
     width: 100%;
+    background-color: transparent;
+    color: white
+}
+
+th {
+    color: white !important;
+}
+
+tr:hover {
+    background-color: rgba(0,0,0,0.1) !important;
 }
 
 .date {
@@ -213,6 +227,12 @@ table {
 .title {
     font-weight: bold;
 }
+
+// .status {
+//     display: flex;
+//     flex-flow: column wrap;
+//     justify-content: flex-start;
+// }
 
 // .vacancy {
 //     color: green;

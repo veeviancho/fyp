@@ -61,14 +61,14 @@
 
         </div>
 
-        <Timetable/>
+        <iframe src="https://calendar.google.com/calendar/embed?src=eeelifelonglearning%40gmail.com&ctz=Asia%2FSingapore" style="border: 0" width="100%" height="600" frameborder="0" scrolling="no"></iframe>
+
     </div>
 </div>
 </body>
 </template>
 
 <script>
-import Timetable from '@/components/student/booking/Timetable.vue'
 import { mapGetters, mapActions } from  'vuex'
 
 export default {
@@ -81,9 +81,6 @@ export default {
                 endTime: '10:00'
             }
         }
-    },
-    components: {
-        Timetable
     },
     computed: {
         ...mapGetters(['rooms']),

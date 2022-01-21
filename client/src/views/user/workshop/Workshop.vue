@@ -168,13 +168,20 @@ export default {
             // Filtering
             for (let prop in this.filterBy) {
                 if (this.filterBy[prop] != '') {
+                    // date
+                    if (prop == 'date') {
+                        tempWorkshop = tempWorkshop.filter(element => {
+                            return this.filterBy.date == element.date
+                        })
+                    }
                     // time
-                    if (prop == 'time') {
+                    else if (prop == 'time') {
                         tempWorkshop = tempWorkshop.filter(element => {
                             return this.filterBy.time <= element.endTime && this.filterBy.time >= element.startTime
                         })
+                    } 
                     // full workshop
-                    } else if (prop == 'isFull') {
+                    else if (prop == 'isFull') {
                         tempWorkshop = tempWorkshop.filter(element => {
                             if (this.filterBy.isFull.length === 1) {
                                 if (this.filterBy.isFull == "yes") {
@@ -188,11 +195,13 @@ export default {
                         })
                     // others
                     } else {
-                        tempWorkshop = tempWorkshop.filter(element => {
-                            return this.filterBy[prop].some(el => {
-                                return element[prop].includes(el)
-                            })    
-                        })
+                        if (this.filterBy[prop] != '') {
+                            tempWorkshop = tempWorkshop.filter(element => {
+                                return this.filterBy[prop].some(el => {
+                                    return element[prop].includes(el)
+                                })    
+                            })
+                        }
                     }
                 }
             }
