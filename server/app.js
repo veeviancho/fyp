@@ -38,27 +38,33 @@ mongoose.connect(db, { useNewUrlParser: true })
     console.log(`Unable to connect to the database ${err}`)
 });
 
-//Pulling in Users route (for Profile)
+// Pulling in Users route (for Profile)
 const passport = require('passport');
 const users = require('./routes/api/users');
 
-//*********NOTSURE***************************************************************
-//Pulling in Workshop route
+//*********NEWSTUFF*********************************************************************************************
+
+// Pulling in Workshop route
 const workshops = require('./routes/api/workshops');
 app.use('/api/workshops', workshops);
 
-//Pulling in Rooms route
+// Pulling in Rooms route
 const rooms = require('./routes/api/rooms');
 app.use('/api/rooms', rooms);
 
-//Pulling in Articles route
+// Pulling in Articles route
 const articles = require('./routes/api/articles');
 app.use('/api/articles', articles);
 
-//Pulling in Booking route
+// Pulling in Booking route
 const bookings = require('./routes/api/bookings');
 app.use('/api/bookings', bookings);
-//*********NOTSURE***************************************************************
+
+// Pulling in About route
+const about = require('./routes/api/about');
+app.use('/api/about', about)
+
+//*********NEWSTUFF*********************************************************************************************
 
 app.use(passport.initialize()); //passport middleware
 require('./config/passport')(passport); //passport config

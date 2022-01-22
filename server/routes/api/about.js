@@ -1,0 +1,113 @@
+// Import express router
+const { response } = require('express');
+const express = require('express');
+const router = express.Router();
+
+// Load article model
+const About = require('../../model/About')
+
+/**
+ * @route GET api/about/read
+ * @desc Read about
+ * @access Public
+ */
+router.get('/read', (req, res) => {
+
+})
+
+/**
+ * @route GET api/about/contact/read
+ * @desc Read contact
+ * @access Private (admin)
+ */
+ router.get('/read', (req, res) => {
+
+})
+
+/**
+ * @route PUT api/about/update
+ * @desc Update about
+ * @access Private (admin)
+ */
+router.get('/update', (req, res) => {
+
+})
+
+/**
+ * @route POST api/about/create
+ * @desc Create a template for the About page
+ */
+router.post('/create', (req, res) => {
+    const newAbout = new About({
+        title: 'about',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Feugiat sed lectus vestibulum mattis ullamcorper velit sed ullamcorper. Orci nulla pellentesque dignissim enim sit amet venenatis urna cursus. Cursus turpis massa tincidunt dui ut ornare lectus sit amet. Lacus vel facilisis volutpat est velit egestas. Et netus et malesuada fames.',
+        about: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Feugiat sed lectus vestibulum mattis ullamcorper velit sed ullamcorper. Orci nulla pellentesque dignissim enim sit amet venenatis urna cursus. Cursus turpis massa tincidunt dui ut ornare lectus sit amet. Lacus vel facilisis volutpat est velit egestas. Et netus et malesuada fames.',
+        openingHours: {
+            'Mon-Fri': '8:30AM - 9:30PM',
+            'Sat': '8:30AM - 5PM',
+            'Sun': 'CLOSED'
+        },
+        address: '50 Nanyang Ave, 639798 Singapore',
+        getHere: {
+            'By Car': 'The university is flanked by the PIE to the south and Jalan Bahar to the east. There are two entrances when travelling via the PIE, take either the Jalan Bahar entrance (Exit 36) or the Pioneer North entrance (Exit 38).',
+            'By Bus': 'Service 179 & 199: Both services depart from Boon Lay Bus Interchange (next to Boon Lay MRT Station) to the University. The services ply from 0600-2400 hrs on weekdays and Saturdays, and from 0630-0020hrs on Sundays and Public Holidays.',
+            'By NTU Shuttle Bus Service': 'Campus Rider is a free shuttle bus service to and from Pioneer MRT station.'
+        },
+    });
+    newAbout
+        .save()
+        .then(about => {
+            return res.json({
+                about: about,
+                success: true
+            })
+        })
+        .catch(err => {
+            console.log(err)
+            return res.status(400).json({
+                msg: "Unable to post template. Please try again."
+            })
+        })
+})
+
+/**
+ * @route PUT api/about/create/contact
+ * @desc Create new contact
+ * @access Private
+ */
+router.post('create/contact', (req, res) => {
+    const newContact = new About({
+        title: 'contact',
+        contact: {
+            name: req.contact.name,
+            email: req.contact.email,
+            message: req.contact.message
+        }
+    })
+    newContact
+        .save()
+        .then(about => {
+            return res.json({
+                about: about,
+                success: true,
+                msg: "Message successfully sent!"
+            })
+        })
+        .catch(err => {
+            console.log(err)
+            return res.status(400).json({
+                msg: "Unable to send message at the moment. Please try again later."
+            })
+        })
+})
+
+/**
+ * @route DELETE api/about/delete/:id
+ * @desc Delete about
+ * @access Private (admin)
+ */
+router.delete('/delete/:id', (req, res) => {
+
+})
+
+module.exports = router;
