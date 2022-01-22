@@ -12,7 +12,21 @@ const About = require('../../model/About')
  * @access Public
  */
 router.get('/read', (req, res) => {
-
+    About.find({ title: 'about' })
+    .then(about => {
+        if (!about) {
+            return res.status(404).json({
+                msg: "Create about template first."
+            })
+        }
+        return res.status(201).json({
+            about: about,
+            success: true
+        })
+    })
+    .catch(err => {
+        console.log(err)
+    })
 })
 
 /**
