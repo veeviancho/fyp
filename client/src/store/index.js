@@ -5,6 +5,7 @@ import users from './modules/users'
 import rooms from './modules/rooms'
 import articles from './modules/articles'
 import bookings from './modules/bookings'
+import about from './modules/about'
 
 export default createStore({
   modules: {
@@ -13,6 +14,7 @@ export default createStore({
     users,
     rooms,
     articles,
-    bookings
+    bookings,
+    about
   }
 })

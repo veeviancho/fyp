@@ -8,7 +8,7 @@ const AboutSchema = new Schema({
     description: {
         type: String
     },
-    about: {
+    aboutDesc: {
         type: String
     },
     openingHours: {
@@ -29,6 +29,9 @@ const AboutSchema = new Schema({
         },
         message: {
             type: String
+        },
+        seen: {
+            type: Boolean
         }
     }
 })

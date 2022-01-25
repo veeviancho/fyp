@@ -15,7 +15,7 @@
         <router-link :to="{ name: 'Profile' }" class="student-name" v-if="user">{{ user.name }}</router-link>
       </transition>
     </h1>
-    <p>description</p>
+    <p>{{ about.description }}</p>
     <br>
     <router-link :to="{ name: 'About' }"><button class="button">Explore</button></router-link>
   </section>
@@ -39,12 +39,13 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
     name: 'Home',
     computed: {
-      ...mapGetters(['isLoggedIn', 'user', 'rooms'])
+      ...mapGetters(['isLoggedIn', 'user', 'rooms', 'about'])
     },
     methods: {
-      ...mapActions(['getProfile', 'getAllRooms'])
+      ...mapActions(['getProfile', 'getAllRooms', 'getAbout'])
     },
     created() {
+      this.getAbout();
       this.getAllRooms();
       if (this.isLoggedIn) {
         this.getProfile();

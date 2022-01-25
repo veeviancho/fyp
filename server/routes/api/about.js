@@ -34,8 +34,22 @@ router.get('/read', (req, res) => {
  * @desc Read contact
  * @access Private (admin)
  */
- router.get('/read', (req, res) => {
-
+router.get('/contact/read', (req, res) => {
+    About.find({ title: 'contact' })
+    .then(message => {
+        if (!message) {
+            return res.status(404).json({
+                msg: "No messages found."
+            })
+        }
+        return res.status(201).json({
+            message: message,
+            success: true
+        })
+    })
+    .catch(err => {
+        console.log(err)
+    })
 })
 
 /**
@@ -55,7 +69,7 @@ router.post('/create', (req, res) => {
     const newAbout = new About({
         title: 'about',
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Feugiat sed lectus vestibulum mattis ullamcorper velit sed ullamcorper. Orci nulla pellentesque dignissim enim sit amet venenatis urna cursus. Cursus turpis massa tincidunt dui ut ornare lectus sit amet. Lacus vel facilisis volutpat est velit egestas. Et netus et malesuada fames.',
-        about: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Feugiat sed lectus vestibulum mattis ullamcorper velit sed ullamcorper. Orci nulla pellentesque dignissim enim sit amet venenatis urna cursus. Cursus turpis massa tincidunt dui ut ornare lectus sit amet. Lacus vel facilisis volutpat est velit egestas. Et netus et malesuada fames.',
+        aboutDesc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Feugiat sed lectus vestibulum mattis ullamcorper velit sed ullamcorper. Orci nulla pellentesque dignissim enim sit amet venenatis urna cursus. Cursus turpis massa tincidunt dui ut ornare lectus sit amet. Lacus vel facilisis volutpat est velit egestas. Et netus et malesuada fames.',
         openingHours: {
             'Mon-Fri': '8:30AM - 9:30PM',
             'Sat': '8:30AM - 5PM',
@@ -89,22 +103,22 @@ router.post('/create', (req, res) => {
  * @desc Create new contact
  * @access Private
  */
-router.post('create/contact', (req, res) => {
+router.post('/create/contact', (req, res) => {
     const newContact = new About({
         title: 'contact',
         contact: {
-            name: req.contact.name,
-            email: req.contact.email,
-            message: req.contact.message
+            name: req.body.name,
+            email: req.body.email,
+            message: req.body.message,
+            seen: false
         }
     })
     newContact
         .save()
         .then(about => {
-            return res.json({
+            return res.status(201).json({
                 about: about,
-                success: true,
-                msg: "Message successfully sent!"
+                success: true
             })
         })
         .catch(err => {

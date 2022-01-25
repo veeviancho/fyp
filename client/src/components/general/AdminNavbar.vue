@@ -6,8 +6,12 @@
         <p class="menu-label">General</p>
         <ul class="menu-list">
             <li><router-link class="router" active-class="active" :to="{ name: 'Admin Home' }">Home</router-link></li>
-            <li><a>About</a></li>
+            <li><router-link class="router" active-class="active" :to="{ name: 'Admin About' }">About</router-link></li>
             <li><router-link class="router" active-class="active" :to="{ name: 'Admin Articles' }">Articles</router-link></li>
+        </ul>
+        <p class="menu-label">Contact Form</p>
+        <ul class="menu-list">
+            <li><router-link class="router" active-class="active" :to="{ name: 'Admin Messages' }">View Messages</router-link></li>
         </ul>
         <p class="menu-label">Workshops</p>
         <ul class="menu-list">
@@ -26,6 +30,7 @@
 .adminNav {
     background-color: rgb(245, 245, 245);
     min-height: 100vh;
+    height: 105%
 }
 
 .menu-label, .menu-list a  {

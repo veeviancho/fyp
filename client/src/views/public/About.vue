@@ -14,21 +14,13 @@
     <div class="column column-right is-6">
       <div class="">
       <h1 class="title has-text-white mx-5">About</h1>
-      <p class="has-text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet</p>
+      <p class="has-text-white" v-if="about">{{ about.aboutDesc }}</p>
 
       <h1 class="title has-text-white mt-5 mx-5">Opening Hours</h1>
       <table class="mb-4">
-        <tr>
-          <th>Mon-Fri</th>
-          <td>8:30AM - 9:30PM</td>
-        </tr>
-        <tr>
-          <th>Sat</th>
-          <td>8:30AM - 5PM</td>
-        </tr>
-        <tr>
-          <th>Sun</th>
-          <td>CLOSED</td>
+        <tr v-for="(value, key) in about.openingHours" :key="key">
+          <th>{{ key }}</th>
+          <td>{{ value }}</td>
         </tr>
       </table>
       <a href="#map"><button class="button is-fullwidth my-2">How to Get Here?</button></a>
@@ -44,31 +36,22 @@
 
     <div class="column column-left is-6">
       <h1 class="title has-text-white mx-5">Address</h1>
-      <p class="has-text-white">50 Nanyang Ave, 639798 Singapore</p>
+      <p class="has-text-white" v-if="about">{{ about.address }}</p>
       <iframe
         width="100%"
         height="500rem"
         style="margin: 2rem auto"
         loading="lazy"
         allowfullscreen
-        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAX-VzgMYlJNPXG8mYCqSE2zDUjbm1fg8c
-          &q=Nanyang+Technological+University,Singapore">
+        :src="address">
       </iframe>
     </div>
 
     <div class="column is-6">
       <h1 class="title has-text-white mx-5">How to Get Here?</h1>
-      <p class="has-text-white text-left">
-        <b>BY CAR</b> <br/>
-        The university is flanked by the PIE to the south and Jalan Bahar to the east. There are two entrances when travelling via the PIE, take either the Jalan Bahar entrance (Exit 36) or the Pioneer North entrance (Exit 38). 
-
+      <p class="has-text-white text-left" v-for="(value, key) in about.getHere" :key="key">
+        <b>{{ key }}</b> <br/>{{ value }}
         <br/><br/>
-        <b>BY BUS</b> <br/>
-        Service 179 & 199: Both services depart from Boon Lay Bus Interchange (next to Boon Lay MRT Station) to the University. The services ply from 0600-2400 hrs on weekdays and Saturdays, and from 0630-0020hrs on Sundays and Public Holidays.
-      
-        <br/><br/>
-        <b>BY NTU SHUTTLE BUS SERVICE</b> <br/>
-        Campus Rider is a free shuttle bus service to and from Pioneer MRT station.
       </p>
     </div>
 
@@ -81,13 +64,17 @@
   <div class="contact-title">
     <h1 class="title has-text-white mx-5">Contact Us</h1>
   </div>
-  <form>
+  <form @submit.prevent="submitContact">
     <div class="contact-info">
-      <input class="contact-name" type="text" placeholder="Name">
-      <input class="contact-email" type="email" placeholder="Email">
+      <input class="contact-name" type="text" placeholder="Name" v-model="name" required>
+      <input class="contact-email" type="email" placeholder="Email" v-model="email" required>
     </div>
     <br/>
-    <textarea class="contact-feedback" type="textarea" rows="10" placeholder="Message"></textarea>
+    <textarea class="contact-feedback" type="textarea" rows="10" placeholder="Message" v-model="message" required></textarea>
+
+    <p class="has-text-danger has-text-centered mb-3" v-if="aboutError.contact">{{ aboutError.contact }}</p>
+    <p class="has-text-success has-text-centered mb-3 white" v-if="successMsg">{{ successMsg }}</p>
+
     <button class="button is-fullwidth mt-5" type="submit">SEND</button>
   </form>
 
@@ -98,6 +85,54 @@
 </div>
 </body>
 </template>
+
+<script>
+import { mapGetters, mapActions } from 'vuex'
+
+export default {
+  data() {
+    return {
+      name: '',
+      email: '',
+      message: '',
+      successMsg: ''
+    }
+  },
+  computed: {
+    ...mapGetters(['about', 'aboutStatus', 'aboutError']),
+    address() {
+      let src = "https://www.google.com/maps/embed/v1/place?key=AIzaSyAX-VzgMYlJNPXG8mYCqSE2zDUjbm1fg8c&q="
+      let venue = this.about.address ? this.about.address : ''
+      venue = venue.replace(/\s/g, '+')
+      src += venue
+      return src
+    }
+  },
+  methods: {
+    ...mapActions(['getAbout', 'createContact']),
+    submitContact() {
+      let contact = {
+        name: this.name,
+        email: this.email,
+        message: this.message
+      }
+      this.createContact(contact)
+      .then(() => {
+        if (this.aboutStatus.contact === 'success') {
+          this.successMsg = "Message successfully sent!"
+          console.log("success")
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    }
+  },
+  created() {
+    this.getAbout()
+  }
+}
+</script>
 
 <style lang="scss" scoped>
 .column {

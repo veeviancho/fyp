@@ -36,6 +36,7 @@ import AdminPastWorkshop from '../views/admin/PastWorkshop.vue'
 import WorkshopUsers from '../views/admin/WorkshopUsers.vue'
 import PastWorkshopUsers from '../views/admin/PastWorkshopUsers.vue'
 import AdminUsers from '../views/admin/Users.vue'
+import AdminMessages from '../views/admin/Messages.vue'
 
 const routes = [
   // Public views
@@ -244,6 +245,14 @@ const routes = [
     path: '/admin/users',
     name: 'Admin Users',
     component: AdminUsers,
+    meta: {
+      isAdmin: true
+    }
+  },
+  {
+    path: '/admin/messages',
+    name: 'Admin Messages',
+    component: AdminMessages,
     meta: {
       isAdmin: true
     }
