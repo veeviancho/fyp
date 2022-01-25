@@ -119,6 +119,9 @@ export default {
       this.createContact(contact)
       .then(() => {
         if (this.aboutStatus.contact === 'success') {
+          this.name = ''
+          this.email = ''
+          this.message = ''
           this.successMsg = "Message successfully sent!"
           console.log("success")
         }

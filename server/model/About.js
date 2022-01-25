@@ -33,6 +33,10 @@ const AboutSchema = new Schema({
         seen: {
             type: Boolean
         }
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
     }
 })
 

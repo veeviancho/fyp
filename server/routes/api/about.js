@@ -57,8 +57,25 @@ router.get('/contact/read', (req, res) => {
  * @desc Update about
  * @access Private (admin)
  */
-router.get('/update', (req, res) => {
-
+router.put('/update', (req,res) => {
+    About.findOneAndUpdate({ title: "about" }, { $set: req.body })
+        .then(about => {
+            if (!about) {
+                return res.status(404).json({
+                    msg: "Create an entry first."
+                })
+            }
+            return res.status(200).json({
+                success: true,
+                msg: "Updated successfully!"
+            })
+        })
+        .catch(err => {
+            console.log(err)
+            return res.status(400).json({
+                msg: "Encountered an error. Unable to update! Please try again later."
+            })
+        })
 })
 
 /**
