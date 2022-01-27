@@ -46,4 +46,8 @@ export default {
 .button {
     color: black;
 }
+
+table {
+    width: 100%;
+}
 </style>

@@ -2,7 +2,11 @@
 <div class="admin-content">
     <div>
         <router-link :to="{ name: 'About' }"><button class="button mb-6">About</button></router-link>
+        <p class="has-text-danger mb-6" v-if="aboutError.update">{{ aboutError.update }}</p>
+        <EditAbout :aboutItem="about" v-show="editVisible" @close="editVisible = false"/>
     </div>
+
+    <!-- <p class="has-text-danger has-text-centered mb-3" v-if="aboutError.update">{{ aboutError.update }}</p> -->
     <table class="table is-hoverable">
         <thead>
         <tr id="head">
@@ -10,7 +14,6 @@
         <th>Title</th>
         <th>Description</th>
         <th>Edit</th>
-        <th>Delete</th>
         </tr>
         </thead>
 
@@ -20,16 +23,18 @@
         <td>1</td>
         <td>Description</td>
         <td>{{ about.description }}</td>
-        <td><button class="button">Edit</button></td>
-        <td><button class="button is-danger">Delete</button></td>
+        <td>
+            <button class="button is-info" @click="editVisible = true; this.about.number=1">Edit</button>
+        </td>
         </tr>
 
         <tr>
         <td>2</td>
         <td>About</td>
         <td>{{ about.aboutDesc }}</td>
-        <td><button class="button">Edit</button></td>
-        <td><button class="button is-danger">Delete</button></td>
+        <td>
+            <button class="button is-info" @click="editVisible = true; this.about.number=2">Edit</button>
+        </td>
         </tr>
 
         <tr>
@@ -40,16 +45,18 @@
                 <b>{{ key }}</b>: {{ value }}
             </p>
         </td>
-        <td><button class="button">Edit</button></td>
-        <td><button class="button is-danger">Delete</button></td>
+        <td>
+            <button class="button is-info" @click="editVisible = true; this.about.number=3">Edit</button>
+        </td>
         </tr>
 
         <tr>
         <td>4</td>
         <td>Address</td>
         <td>{{ about.address }}</td>
-        <td><button class="button">Edit</button></td>
-        <td><button class="button is-danger">Delete</button></td>
+        <td>
+            <button class="button is-info" @click="editVisible = true; this.about.number=4">Edit</button>
+        </td>
         </tr>
 
         <tr>
@@ -60,8 +67,9 @@
                 <b>{{ key }}</b>: {{ value }}
             </p>
         </td>
-        <td><button class="button">Edit</button></td>
-        <td><button class="button is-danger">Delete</button></td>
+        <td>
+            <button class="button is-info" @click="editVisible = true; this.about.number=5">Edit</button>
+        </td>
         </tr>
 
         </tbody>
@@ -71,11 +79,19 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import EditAbout from './EditAbout.vue'
 
 export default {
-    name: 'Table',
+    data() {
+        return {
+            editVisible: false,
+        }
+    },
+    components: {
+        EditAbout
+    },
     computed: {
-        ...mapGetters(['about'])
+        ...mapGetters(['about', 'aboutError'])
     },
     methods: {
         ...mapActions(['getAbout'])
@@ -87,19 +103,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.icon {
-    color: red;
-    height: 25px;
-    width: 100%;
-    vertical-align: middle;
-    text-align: center;
-}
-
-.icon:hover {
-    height: 30px;
-    cursor: pointer;
-}
-
 .button {
     color: black;
 }
@@ -118,7 +121,7 @@ export default {
 }
 
 table {
-    width: 100%; 
+    width: 100%;
     // table-layout: fixed;
 }
 </style>

@@ -14,7 +14,7 @@
                 <p v-if="!show[0]">{{ articleItem.title }}</p>
                 <input class="input is-warning" type="text" placeholder="Article title" v-if="show[0]" v-model="title">
             </div>
-        </div> 
+        </div>
 
         <div class="field">
             <label class="label">Content &nbsp;&nbsp;

@@ -5,11 +5,13 @@ const state = {
     messages: '',
 
     aboutStatus: {
-        contact: ''
+        contact: '',
+        update: ''
     },
 
     aboutError: {
-        contact: ''
+        contact: '',
+        update: ''
     }
 }
 
@@ -59,8 +61,21 @@ const actions = {
         catch (err) {
             console.log(err)
         }
-    }
+    },
 
+    // Update about
+    async updateAbout({ commit }, about) {
+        try {
+            commit('updateAbout_request')
+            let res = await axios.put('http://localhost:5000/api/about/update', about)
+            if (res.data.success) {
+                commit('updateAbout_success', res.data.about)
+            }
+        }
+        catch (err) {
+            commit('updateAbout_error', err.response.data.msg)
+        }
+    }
 }
 
 const mutations = {
@@ -84,6 +99,19 @@ const mutations = {
     // Get messages
     getMsg_success(state, msg) {
         state.messages = msg
+    },
+
+    // Update
+    updateAbout_request(state) {
+        state.aboutStatus.update = 'loading'
+    },
+    updateAbout_success(state, about) {
+        state.aboutStatus.update = 'success'
+        state.about = about
+    },
+    updateAbout_error(state, err) {
+        state.aboutStatus.update = 'error'
+        state.aboutError.update = err
     }
 }
 
