@@ -182,4 +182,23 @@ router.delete('/delete/:id', (req, res) => {
         })
 })
 
+/**
+ * @route PUT api/about/seenMsg/:id
+ * @desc Update whether a message has been read
+ * @access Private (admin)
+ */
+ router.put('/seenMsg/:id', (req, res) => {
+    About.findOne({ _id: req.params.id })
+    .then(about => {
+        about.contact.seen = true
+        about.save()
+        return res.status(200).json({
+            success: true
+        })
+    })
+    .catch(err => {
+        console.log(err)
+    })
+})
+
 module.exports = router;

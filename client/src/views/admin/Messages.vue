@@ -13,13 +13,13 @@
         </thead>
 
         <tbody>
-        <tr v-for="(value, key) in messages" :key="key">
+        <tr v-for="(value, key) in messages" :key="key" :class="[value.contact.seen ? 'read' : 'unread']">
             <td>{{ key + 1 }}</td>
             <td>{{ value.contact.name }}</td>
             <td>{{ value.contact.email }}</td>
             <td><div class="desc">{{ value.contact.message }}</div></td>
             <td>
-                <button class="button" @click="viewModal=true; modalData=value">View</button>
+                <button class="button" @click="viewModal=true; modalData=value; seenMsg(value._id)">View</button>
                 <ViewMsg :contactItem="modalData" v-show="viewModal && modalData==value" @close="viewModal=false"/>
             </td>
             <td>
@@ -39,7 +39,8 @@ import axios from 'axios'
 export default {
     data() {
         return {
-            viewModal: false
+            viewModal: false,
+            modalData: ''
         }
     },
     components: {
@@ -50,6 +51,12 @@ export default {
     },
     methods: {
         ...mapActions(['getContact', 'deleteMsg']),
+        seenMsg(id) {
+            let res = axios.put('http://localhost:5000/api/about/seenMsg/' + id)
+            if (res.data.success) {
+                this.getContact()
+            }
+        },
         async removeMsg(id) {
             let confirmDel = confirm("Are you sure you want to delete the message?")
             if (confirmDel) {
@@ -75,6 +82,15 @@ export default {
 </script>
 
 <style scoped>
+.unread {
+    color: black;
+}
+
+.read {
+    color: gray;
+    /* background-color: rgb(247, 247, 247); */
+}
+
 .button {
     color: black;
 }
