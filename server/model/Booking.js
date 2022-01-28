@@ -33,6 +33,10 @@ const BookingSchema = new Schema({
     },
     purpose: {
         type: String
+    },
+    createdAt: {
+        type: Date, 
+        default: Date.now, 
     }
 })
 

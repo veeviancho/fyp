@@ -15,6 +15,24 @@
             <div class="control"><textarea class="textarea is-warning" type="textarea" placeholder="Enter information about the room." v-model="description"></textarea></div>
         </div>
 
+        <div class="field">
+            <label class="label">Image</label>
+            <div class="control">
+                <!-- <div class="file mb-2">
+                <label class="file-label">
+                    <input class="file-input" type="file" name="resume">
+                    <span class="file-cta">
+                        <span class="file-icon"><fa icon="upload"/></span>
+                        <span class="file-label">Choose a file…</span>
+                    </span>
+                    <span class="file-name" v-if="filename">{{ filename }}</span>
+                </label>
+                </div>
+                ...or paste a link: -->
+                <input class="input is-warning" type="text" placeholder="Image link" v-model="imageLink">
+            </div>
+        </div>
+
         <!-- Error message -->
         <!-- <p class="has-text-danger has-text-centered mb-3" v-if="roomError.create">{{ roomError.create }}</p> -->
 
@@ -36,7 +54,9 @@ export default {
     data() {
         return {
             title: '',
-            description: ''
+            description: '',
+            imageLink: '',
+            filename: ''
         }
     },
     computed: {
@@ -50,7 +70,8 @@ export default {
         create() {
             let room = {
                 title: this.title,
-                description: this.description
+                description: this.description,
+                imageLink: this.imageLink
             }
             this.createRoom(room)
                 .then(() => {

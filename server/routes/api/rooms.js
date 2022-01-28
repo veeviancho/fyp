@@ -14,8 +14,7 @@ router.post('/create', (req, res) => {
     const newRoom = new Room({
         title: req.body.title,
         description: req.body.description,
-        // bookings
-        // past bookings
+        imageLink: req.body.imageLink
     });
     newRoom
         .save()

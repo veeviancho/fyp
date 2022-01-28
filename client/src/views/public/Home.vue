@@ -21,7 +21,7 @@
   </section>
 
   <div v-for="item in rooms" :key="item._id">
-  <section>
+  <section class="bgImg" :style="{  backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.7)), url(' + item.imageLink + ')' }">
     <h1>{{ item.title }}</h1>
     <p>{{ item.description }}<br>Book this room now.</p>
     <br>
@@ -55,6 +55,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.bgImg {
+  background-repeat: no-repeat;
+  background-attachment: center;
+  background-position: center;
+  background-size: cover;
+}
 
 // Home Navbar Style
 nav {
@@ -95,8 +102,6 @@ section {
   padding: 5rem 5rem;
 }
 
-
-
 h1 {
   font-size: 6vh;
   font-weight: bold;
@@ -125,8 +130,9 @@ h1 {
   opacity: 0;
 }
 
-
-
+#top {
+  background: linear-gradient(rgba(0, 0, 0, 0.75),rgba(0, 0, 0, 0.7)), url('https://static.dezeen.com/uploads/2017/06/dezeen-features-haworth-office-culture_dezeen_2364_col_12-852x522.jpg') no-repeat center center/cover;
+}
 
 p {
   font-size: 2.5vh;
@@ -142,28 +148,6 @@ button {
 button:hover {
   background-color: rgba(255,255,255,0.3);
   color: white;
-}
-
-// Background Images
-
-#top {
-  background: linear-gradient(rgba(0, 0, 0, 0.75),rgba(0, 0, 0, 0.7)), url('https://static.dezeen.com/uploads/2017/06/dezeen-features-haworth-office-culture_dezeen_2364_col_12-852x522.jpg') no-repeat center center/cover;
-}
-
-#space-1 {
-  background: linear-gradient(rgba(0, 0, 0, 0.75),rgba(0, 0, 0, 0.7)), url('https://www.demcointeriors.com/wp-content/uploads/2017/05/Richland-Library-Sandhills-Interior-Rendering-1024x569.jpg') no-repeat center center/cover;
-}
-
-#space-2 {
-  background: linear-gradient(rgba(0, 0, 0, 0.75),rgba(0, 0, 0, 0.7)), url('https://mydecorative.com/wp-content/uploads/2019/11/community-spaces.jpg') no-repeat center center/cover;
-}
-
-#space-3 {
-  background: linear-gradient(rgba(0, 0, 0, 0.75),rgba(0, 0, 0, 0.7)), url('https://designinc.com.au/cms_uploads/images/1003_fbe-2.jpg') no-repeat center center/cover;
-}
-
-#space-4 {
-  background: linear-gradient(rgba(0, 0, 0, 0.75),rgba(0, 0, 0, 0.7)), url('https://www.csiwallpanels.com/images/com_hikashop/upload/community.jpg') no-repeat center center/cover;
 }
 
 @media (max-width: 1023px) {

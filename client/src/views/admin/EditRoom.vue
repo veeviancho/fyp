@@ -6,6 +6,28 @@
     <form class="box" @submit.prevent="editRoom">
 
         <div class="field">
+            <label class="label">Image &nbsp;&nbsp;
+                <small class="edit-btn" v-if="!show[2]" @click="show[2]=true">Edit</small>
+                <small class="edit-btn" v-if="show[2]" @click="this.imageLink=''; show[2]=false">Cancel</small>
+            </label>
+            <div class="control">
+                <img class="image" v-if="!show[2]" :src="room.imageLink">
+                <!-- <div class="file mb-2">
+                <label class="file-label">
+                    <input class="file-input" type="file" name="resume">
+                    <span class="file-cta">
+                        <span class="file-icon"><fa icon="upload"/></span>
+                        <span class="file-label">Choose a file…</span>
+                    </span>
+                    <span class="file-name" v-if="filename">{{ filename }}</span>
+                </label>
+                </div>
+                ...or paste a link: -->
+                <input class="input is-warning" type="text" placeholder="Image link" v-if="show[2]" v-model="imageLink">
+            </div>
+        </div>
+
+        <div class="field">
             <label class="label">Title &nbsp;&nbsp;
                 <small class="edit-btn" v-if="!show[0]" @click="show[0]=true;">Edit</small>
                 <small class="edit-btn" v-if="show[0]" @click="this.title=''; show[0]=false">Cancel</small>
@@ -50,7 +72,8 @@ export default {
         return {
             title: this.title,
             description: this.description,
-            show: [false, false],
+            imageLink: this.imageLink,
+            show: [false, false, false],
         }
     },
     computed: {
@@ -60,6 +83,9 @@ export default {
     methods: {
         ...mapActions(['updateRoom']),
         close() {
+            this.show.forEach((element, index) => {
+                this.show[index] = false
+            })
             this.$emit('close')
         },
         showBtn() {
@@ -73,7 +99,8 @@ export default {
             const room = {
                 id: this.room._id,
                 title: this.title,
-                description: this.description
+                description: this.description,
+                imageLink: this.imageLink
             }
             this.updateRoom(room).then( () => {
                 if (this.roomStatus.update == "success") {
@@ -113,5 +140,9 @@ export default {
 
 .button {
     color: black;
+}
+
+.image {
+    width: 50%;
 }
 </style>
