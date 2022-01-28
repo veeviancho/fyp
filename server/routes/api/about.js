@@ -162,7 +162,24 @@ router.put('/update', (req,res) => {
  * @access Private (admin)
  */
 router.delete('/delete/:id', (req, res) => {
-
+    About.findOneAndDelete({ _id: req.params.id })
+        .then(message => {
+            if (!message) {
+                return res.status(404).json({
+                    msg: "Message not found!"
+                })
+            }
+            return res.status(200).json({
+                success: true,
+                msg: "Deleted successfully!"
+            })
+        })
+        .catch(err => {
+            console.log(err)
+            return res.status(400).json({
+                msg: "Unable to delete! Please try again later."
+            })
+        })
 })
 
 module.exports = router;
