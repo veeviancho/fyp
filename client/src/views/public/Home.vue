@@ -1,14 +1,13 @@
 <template>
 <body>
-  <!-- <nav class="box home-nav">
-    <a href="#top">home</a>/
-    <a href="#space-1">space 1</a>/
-    <a href="#space-2">space 2</a>/
-    <a href="#space-3">space 3</a>/
-    <a href="#space-4">space 4</a>
-  </nav> -->
+  <nav class="box home-nav">
+    <a href="#top">Top</a>
+    <span v-for="item in rooms" :key="item._id">
+      <a :href="'#' + item._id">{{ item.title }}</a>
+    </span>
+  </nav>
 
-  <section id="top">
+  <section id="top" class="bgImg" :style="{  backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.7)), url(' + about.imageLink + ')' }">
     <h1>
       Welcome
       <transition name="fade" v-if="isLoggedIn">
@@ -21,12 +20,12 @@
   </section>
 
   <div v-for="item in rooms" :key="item._id">
-  <section class="bgImg" :style="{  backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.7)), url(' + item.imageLink + ')' }">
+  <section :id="item._id" class="bgImg" :style="{  backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.7)), url(' + item.imageLink + ')' }">
     <h1>{{ item.title }}</h1>
-    <p>{{ item.description }}<br>Book this room now.</p>
+    <p>{{ item.description }}</p>
     <br>
     <router-link :to="{ name: 'Login' }"><button class="button" v-if="!isLoggedIn">Login</button></router-link>
-    <router-link :to="{ name: 'Rooms' }"><button class="button" v-if="isLoggedIn">Book Now</button></router-link>
+    <router-link :to="'/rooms/' + item._id"><button class="button" v-if="isLoggedIn">Book Now</button></router-link>
   </section>
   </div>
 
@@ -92,6 +91,13 @@ a {
 
 // Content Style
 
+body {
+  height: 100vh;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+}
+
 section {
   height: 100vh;
   display: flex;
@@ -100,6 +106,8 @@ section {
   align-items: center;
   color: white;
   padding: 5rem 5rem;
+
+  scroll-snap-align: start;
 }
 
 h1 {

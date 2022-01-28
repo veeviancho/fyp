@@ -40,6 +40,13 @@
             </div>
         </div>
 
+        <div class="field" v-show="aboutItem.number==6">
+            <label class="label">Image Link</label>
+            <div class="control">
+                <input class="input" type="text" placeholder="Paste image link" v-model="imageLink">
+            </div>
+        </div>
+
         <button type="submit" class="button is-outlined is-fullwidth">
             Update
         </button>
@@ -61,7 +68,8 @@ export default {
             aboutDesc: this.aboutDesc,
             openingHours: this.openingHours,
             address: this.address,
-            getHere: this.getHere
+            getHere: this.getHere,
+            imageLink: this.imageLink
         }
     },
     computed: {
@@ -97,7 +105,8 @@ export default {
                 aboutDesc: this.aboutDesc,
                 openingHours: this.openingHours,
                 address: this.address,
-                getHere: this.getHere
+                getHere: this.getHere,
+                imageLink: this.imageLink
             }
             this.updateAbout(about).then(() => {
                 if (this.aboutStatus.update == 'success') {

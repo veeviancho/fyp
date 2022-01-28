@@ -8,7 +8,7 @@
     <div class="column is-6">
       <img 
         style="width:100%;"
-        src="https://static.dezeen.com/uploads/2017/06/dezeen-features-haworth-office-culture_dezeen_2364_col_12-852x522.jpg">
+        :src="about.imageLink">
     </div>
 
     <div class="column column-right is-6">

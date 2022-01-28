@@ -72,6 +72,18 @@
         </td>
         </tr>
 
+        <tr>
+        <td>6</td>
+        <td>Main Image</td>
+        <td>
+            To be displayed at the top of the Home page and in the About page
+            <img class="image" :src="about.imageLink">
+        </td>
+        <td>
+            <button class="button is-info" @click="editVisible = true; this.about.number=6">Edit</button>
+        </td>
+        </tr>
+
         </tbody>
     </table>
 </div>
@@ -103,6 +115,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.image {
+    width: 50%;
+}
+
 .button {
     color: black;
 }

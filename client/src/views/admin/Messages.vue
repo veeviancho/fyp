@@ -18,7 +18,10 @@
             <td>{{ value.contact.name }}</td>
             <td>{{ value.contact.email }}</td>
             <td><div class="desc">{{ value.contact.message }}</div></td>
-            <td><button class="button">View</button></td>
+            <td>
+                <button class="button" @click="viewModal=true; modalData=value">View</button>
+                <ViewMsg :contactItem="modalData" v-show="viewModal && modalData==value" @close="viewModal=false"/>
+            </td>
             <td><button class="button is-danger">Delete</button></td>
         </tr>
         </tbody>
@@ -28,8 +31,17 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import ViewMsg from './ViewMessage.vue'
 
 export default {
+    data() {
+        return {
+            viewModal: false
+        }
+    },
+    components: {
+        ViewMsg
+    },
     computed: {
         ...mapGetters(['messages'])
     },

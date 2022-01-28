@@ -26,6 +26,7 @@ router.post('/create', (req, res) => {
             'By Bus': 'Service 179 & 199: Both services depart from Boon Lay Bus Interchange (next to Boon Lay MRT Station) to the University. The services ply from 0600-2400 hrs on weekdays and Saturdays, and from 0630-0020hrs on Sundays and Public Holidays.',
             'By NTU Shuttle Bus Service': 'Campus Rider is a free shuttle bus service to and from Pioneer MRT station.'
         },
+        imageLink: 'https://static.dezeen.com/uploads/2017/06/dezeen-features-haworth-office-culture_dezeen_2364_col_12-852x522.jpg'
     });
     newAbout
         .save()
@@ -126,16 +127,13 @@ router.get('/contact/read', (req, res) => {
  * @access Private (admin)
  */
 router.put('/update', (req,res) => {
-    let openingHours = req.body.openingHours
-    console.log(openingHours)
-
-
     let edits = {
         description: req.body.description,
         aboutDesc: req.body.aboutDesc,
         openingHours: req.body.openingHours,
         address: req.body.address,
-        getHere: req.body.getHere
+        getHere: req.body.getHere,
+        imageLink: req.body.imageLink
     }
     About.findOneAndUpdate({ title: "about" }, { $set: edits })
         .then(about => {

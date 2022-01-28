@@ -34,6 +34,9 @@ const AboutSchema = new Schema({
             type: Boolean
         }
     },
+    imageLink: {
+        type: String
+    },
     createdAt: {
         type: Date,
         default: Date.now
