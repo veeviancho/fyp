@@ -35,6 +35,40 @@ router.post('/create', (req, res) => {
 })
 
 /**
+ * @route PUT api/workshops/feedback
+ * @desc Add feedback to existing workshop
+ * @access Private
+ */
+router.put('/feedback/:workshopId/:userId', (req, res) => {
+    Workshop.findOne({ _id: req.params.workshopId })
+        .then(workshop => {
+            if (!workshop) {
+                return res.status(404).json({
+                    msg: "Workshop not found!"
+                })
+            }
+            // Check if user is registered to workshop
+
+            // Update workshop with feedback
+            workshop.feedback.push(req.body)
+            // Update workshop points
+            // workshop.ratings = req.body.points / workshop.feedback.length
+            workshop.save()
+
+            return res.status(200).json({
+                msg: "Updated with feedback successfully!",
+                success: true
+            })
+        })
+        .catch(err => {
+            console.log(err)
+            return res.status(400).json({
+                msg: "Encountered an error. Unable to update!"
+            })
+        })
+})
+
+/**
  * @route PUT api/workshops/update
  * @desc Update workshop information
  * @access Private (admin only)

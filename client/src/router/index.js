@@ -12,6 +12,7 @@ import Register from '../views/public/auth/Register.vue'
 import Workshop from '../views/user/workshop/Workshop.vue'
 import Details from '../views/user/workshop/WorkshopDetails.vue'
 import History from '../views/user/workshop/Past.vue'
+import HistoryDetails from '../views/user/workshop/PastWorkshopDetails.vue'
 import Upcoming from '../views/user/workshop/Upcoming.vue'
 
 import Room from '../views/user/booking/Rooms.vue'
@@ -110,6 +111,12 @@ const routes = [
     path: '/profile/attended-workshops',
     name: 'Past Workshops',
     component: History
+  },
+  {
+    path: '/profile/attended-workshops/:id',
+    name: 'Past Workshop Details',
+    component: HistoryDetails,
+    props: true
   },
   {
     path: '/profile/upcoming-workshops',

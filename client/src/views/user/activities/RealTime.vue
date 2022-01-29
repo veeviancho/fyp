@@ -21,7 +21,8 @@
     </div>
 
     <div class="my-6" v-if="realTime != ''">
-    <p class="subtitle has-text-white">Happening right now:</p>
+    <p class="subtitle has-text-centered has-text-white"><i>Happening now</i></p>
+    <div class="section">
     <table class="table is-hoverable">
         <thead>
             <th>No</th>
@@ -45,13 +46,15 @@
         </tbody>
     </table>
     </div>
+    </div>
 
-    <div class="my-6" v-else>
+    <div class="section my-6" v-else>
         <p class="subtitle has-text-white">There is no activity happening right now.</p>
     </div>
 
     <div class="my-6" v-if="todayRealTime != ''">
-    <p class="subtitle has-text-white">Happening today:</p>
+    <p class="subtitle has-text-white has-text-centered"><i>Today's Activities</i></p>
+    <div class="section">
     <table class="table is-hoverable">
         <thead>
             <th>No</th>
@@ -75,8 +78,9 @@
         </tbody>
     </table>
     </div>
+    </div>
 
-    <div class="my-6" v-else>
+    <div class="section my-6" v-else>
         <p class="subtitle has-text-white">There is no activity happening today.</p>
     </div>
 
@@ -226,6 +230,11 @@ tr:hover {
 
 .title {
     font-weight: bold;
+}
+
+.section {
+    background-color: #161C20;
+    margin: 0 0 2rem 0;
 }
 
 // .status {

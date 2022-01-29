@@ -52,6 +52,9 @@ const WorkshopSchema = new Schema({
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    feedback: {
+        type: Array
     }
 })
 

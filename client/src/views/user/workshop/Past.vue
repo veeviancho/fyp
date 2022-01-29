@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import WorkshopEvent from './WorkshopEvent.vue'
+import WorkshopEvent from './PastWorkshopEvent.vue'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
