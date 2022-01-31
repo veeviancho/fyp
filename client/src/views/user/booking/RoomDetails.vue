@@ -1,6 +1,7 @@
 <template>
     <div class="has-navbar-fixed-top has-text-white">
-        <div class="section" v-if="roomId">
+        <RoomImage :roomImg="roomId.imageLink" v-show="viewImage==true" @close="viewImage=false"/>
+        <div class="section" v-if="roomId" @click="viewImage=true">
             <div class="workshop-details">
                 <section class="image" :style="{  backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.7)), url(' + roomId.imageLink + ')' }">
                     <div class="roomDetails">
@@ -15,8 +16,17 @@
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import RoomImage from './ViewImage.vue'
 
 export default {
+    data() {
+        return {
+            viewImage: false
+        }
+    },
+    components: {
+        RoomImage
+    },
     computed: {
         ...mapGetters(['roomId'])
     },
@@ -48,6 +58,7 @@ export default {
 .section {
     background-color: #161C20;
     margin: 0 0 2rem 0;
+    cursor: pointer;
 }
 
 p {
