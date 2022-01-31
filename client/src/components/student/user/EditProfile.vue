@@ -96,7 +96,8 @@ export default {
       this.update(user)
       .then(res => {
         if (res.data.success) {
-          window.location.reload();
+          this.getProfile()
+          this.close()
         }
       })
       .catch(err => {

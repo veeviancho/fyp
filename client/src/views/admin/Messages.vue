@@ -20,7 +20,7 @@
             <td><div class="desc">{{ value.contact.message }}</div></td>
             <td>
                 <button class="button" @click="viewModal=true; modalData=value; seenMsg(value._id)">View</button>
-                <ViewMsg :contactItem="modalData" v-show="viewModal && modalData==value" @close="viewModal=false"/>
+                <ViewMsg :contactItem="modalData" v-show="viewModal && modalData==value" @close="closeView()"/>
             </td>
             <td>
                 <button class="button is-danger" @click="removeMsg(value._id)">Delete</button>
@@ -51,11 +51,8 @@ export default {
     },
     methods: {
         ...mapActions(['getContact', 'deleteMsg']),
-        seenMsg(id) {
-            let res = axios.put('http://localhost:5000/api/about/seenMsg/' + id)
-            if (res.data.success) {
-                this.getContact()
-            }
+        async seenMsg(id) {
+            await axios.put('http://localhost:5000/api/about/seenMsg/' + id)
         },
         async removeMsg(id) {
             let confirmDel = confirm("Are you sure you want to delete the message?")
@@ -73,6 +70,10 @@ export default {
                     console.log(err)
                 }
             }
+        },
+        closeView() {
+            this.viewModal = false
+            this.getContact()
         }
     },
     created() {
