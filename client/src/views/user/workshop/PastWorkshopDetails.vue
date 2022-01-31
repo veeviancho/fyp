@@ -131,7 +131,10 @@ export default {
                     }
                     let res = await axios.put("http://localhost:5000/api/workshops/feedback/" + workshopId + '/' + userId, body)
                     if (res.data.success) {
-                        window.location.reload();
+                        this.getWorkshop().then( () => {
+                            this.getPastWorkshopFromId(this.id)
+                        })
+                        // window.location.reload();
                     }
                 }
                 catch (err) {

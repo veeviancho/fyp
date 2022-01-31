@@ -42,7 +42,7 @@
                 <div class="card">
                 <div class="card-image">
                     <figure class="image is-4by3">
-                    <img src="https://styledegree.sg/wp-content/uploads/2020/04/10-Ingenious-Yet-Functional-HDB-Study-Room-Designs-StyleMag.jpg" alt="Placeholder image">
+                    <img :src="item.imageLink" alt="Placeholder image">
                     </figure>
                 </div>
                 <div class="card-content">
