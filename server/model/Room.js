@@ -12,6 +12,9 @@ const roomSchema = new Schema({
     imageLink: {
         type: String
     },
+    maxUsers: {
+        type: Number
+    },
     createdAt: {
         type: Date, 
         default: Date.now

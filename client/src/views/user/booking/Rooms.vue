@@ -2,7 +2,7 @@
 <body>
 <div class="hero is-fullheight">
     <section class="section is-small">
-        <form class="field has-navbar-fixed-top">
+        <form class="field has-navbar-fixed-top" @submit.prevent="showResults()">
             <div class="columns">
                 <div class="column mx-5">
                     <label class="has-text-white py-1">DATE</label>
@@ -21,18 +21,18 @@
                     </div>
                 </div>
             </div>
-            <button class="button ml-5 mb-2">Show Results</button>
-            <button class="button ml-5 mb-2">Show Currently Available Rooms</button>
+            <button class="button ml-5 mb-2" type="submit">Show Results</button>
+            <button class="button ml-5 mb-2">Show Current</button>
         </form>
     </section>
 
     <div style="margin: 3rem auto; max-width: 92%;">
         <h1 class="has-text-white">
-            <span class="results">SHOWING RESULTS FOR:</span>
-            <span class="subtitle has-text-white">
-                <b class="results">{{ filterBy.date }} Tuesday</b>
-                <b class="results">12:00PM - 1:00PM</b>
-            </span>
+            SHOWING RESULTS FOR: 
+            <b>
+                <span class="ml-3">{{ results.date }}</span>
+                <span class="ml-3">{{ results.startTime }}<span v-if="results.endTime">-{{ results.endTime }}</span></span>
+            </b>
         </h1>
 
         <div class="columns is-multiline my-5">
@@ -49,20 +49,17 @@
                     <div class="content">
                         <p class="subtitle has-text-weight-bold">
                             {{ item.title }} 
-                            <span class="tag is-primary is-light">Available</span>
-                            <!-- <span class="tag is-danger is-light">Occupied</span> -->
+                            <span class="tag is-primary is-light">10 / {{ item.maxUsers }} available</span>
+                            <!-- <span class="tag is-danger is-light">10 / 20</span>
+                            <span class="tag is-yellow">10 / 20</span> -->
                         </p>
-                        <p class="desc">{{ item.description }}</p> 
+                        <p class="desc">{{ item.description }}</p>
                     </div>
                 </div>
                 </div>
                 </router-link>
             </div>
-
         </div>
-
-        <!-- <iframe src="https://calendar.google.com/calendar/embed?src=eeelifelonglearning%40gmail.com&ctz=Asia%2FSingapore" style="border: 0" width="100%" height="600" frameborder="0" scrolling="no"></iframe> -->
-
     </div>
 </div>
 </body>
@@ -77,53 +74,66 @@ export default {
         return {
             filterBy: {
                 date: '',
-                startTime: '09:00',
-                endTime: '10:00'
+                startTime: '',
+                endTime: ''
+            },
+            results: {
+                date: '',
+                startTime: '',
+                endTime: ''
             }
         }
     },
     computed: {
-        ...mapGetters(['rooms']),
-        // dateNow() {
-        //     const today = new Date()
-        //     let dd = today.getDate()
-        //     // let dd = String(today.getDate()).padStart(2, '0');
-        //     let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-        //     let yyyy = today.getFullYear();
-
-        //     return mm + '/' + dd + '/' + yyyy;
-        // },
-        // timeNow() {
-        //     const today = new Date()
-        //     return today
-        // }
+        ...mapGetters(['rooms'])
     },
     methods: {
-        ...mapActions(['getAllRooms']),
+        ...mapActions(['getAllRooms', 'getBookings']),
         getToday() {
             let temp = new Date()
-            let month = String(parseInt(temp.getMonth()) + 1).padStart(2, "0")
-            this.filterBy.date = temp.getFullYear() + '-' + month + '-' + temp.getDate()
+      
+            let dayArr = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+
+            this.filterBy.startTime = temp.format('HH:00');
+            let endTime = temp.format('HH:00');
+            endTime = String(Number(endTime.slice(0,2)) + 1).padStart(2,'0') + endTime.slice(2,5)
+            if (endTime == '24:00') {
+                endTime = '00:00'
+            }
+            this.filterBy.endTime = endTime;
+            this.filterBy.date = temp.format('YYYY-MM-DD');
+
+            this.results.date = temp.format('DD-MM-YYYY') + ' ' + dayArr[temp.getDay()]
+            this.results.startTime = temp.format('HH:00')
+            this.results.endTime = endTime;
+        },
+        showResults() {
+            localStorage.setItem('date', this.filterBy.date);
+            localStorage.setItem('startTime', this.filterBy.startTime);
+            localStorage.setItem('endTime', this.filterBy.endTime);
         }
     },
     created() {
         this.getAllRooms();
         this.getToday();
+        this.showResults();
+        this.getBookings();
     }
 }
 </script>
 
 <style lang="scss" scoped>
+.is-yellow {
+    color: hsl(36, 100%, 26%);
+    background-color: hsl(48, 100%, 90%);
+}
+
 .card-content {
     min-height: 21vh;
 }
 
 .section {
     background-color: #161C20;
-}
-
-.results {
-    margin-right: 3vw;
 }
 
 @media (max-width: 600px) {

@@ -48,6 +48,17 @@
                 <textarea class="textarea is-warning" type="textarea" maxlength="500" placeholder="Enter information about the room." v-if="show[1]" v-model="description"></textarea>
             </div>
         </div>
+
+        <div class="field">
+            <label class="label">Maximum seats &nbsp;&nbsp;
+                <small class="edit-btn" v-if="!show[2]" @click="show[2]=true">Edit</small>
+                <small class="edit-btn" v-if="show[1]" @click="this.maxUsers=''; show[2]=false">Cancel</small>
+            </label>
+            <div class="control">
+                <p v-if="!show[2]">{{ room.maxUsers }}</p>
+                <input class="input is-warning" type="number" id="maxUsers" name="maxUsers" placeholder="Enter a number" v-model="maxUsers" v-if="show[2]" required>
+            </div>
+        </div>
     
         <!-- update message -->
         <p class="has-text-danger has-text-centered mb-3" v-if="roomError.update">{{ roomError.update }}</p>
@@ -73,7 +84,8 @@ export default {
             title: this.title,
             description: this.description,
             imageLink: this.imageLink,
-            show: [false, false, false],
+            maxUsers: this.maxUsers,
+            show: [false, false, false, false],
         }
     },
     computed: {
@@ -100,7 +112,8 @@ export default {
                 id: this.room._id,
                 title: this.title,
                 description: this.description,
-                imageLink: this.imageLink
+                imageLink: this.imageLink,
+                maxUsers: this.maxUsers
             }
             this.updateRoom(room).then( () => {
                 if (this.roomStatus.update == "success") {

@@ -33,6 +33,13 @@
             </div>
         </div>
 
+        <div class="field">
+            <label class="label">Maximum seats</label>
+            <div class="control">
+            <input class="input is-warning" type="number" id="maxUsers" name="maxUsers" min="0" placeholder="Enter a number" v-model="maxUsers" required>
+            </div>
+        </div>
+
         <!-- Error message -->
         <!-- <p class="has-text-danger has-text-centered mb-3" v-if="roomError.create">{{ roomError.create }}</p> -->
 
@@ -56,7 +63,8 @@ export default {
             title: '',
             description: '',
             imageLink: '',
-            filename: ''
+            // filename: '',
+            maxUsers: ''
         }
     },
     computed: {
@@ -71,7 +79,8 @@ export default {
             let room = {
                 title: this.title,
                 description: this.description,
-                imageLink: this.imageLink
+                imageLink: this.imageLink,
+                maxUsers: this.maxUsers
             }
             this.createRoom(room)
                 .then(() => {
