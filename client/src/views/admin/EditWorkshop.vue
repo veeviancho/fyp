@@ -60,7 +60,13 @@
                 </label>
                 <div class="control">
                     <p v-if="!show[3]">{{ workshopItem.venue }}</p>
-                    <input class="input is-warning" type="text" placeholder="Enter a room" v-if="show[3]" v-model="venue">
+                    <!-- <input class="input is-warning" type="text" placeholder="Enter a room" v-if="show[3]" v-model="venue"> -->
+
+                    <div class="select is-fullwidth is-warning" v-if="show[3]">
+                        <select v-model="venue" required>
+                            <option v-for="item in rooms" :key="item._id" :value="item.title">{{ item.title }}</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
@@ -192,14 +198,14 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['workshopError']),
+        ...mapGetters(['workshopError', 'rooms']),
         id: {
             get: function() { return this.workshopItem._id }
         }
     },
     props: ['workshopItem'],
     methods: {
-        ...mapActions(['updateWorkshop']),
+        ...mapActions(['updateWorkshop', 'getAllRooms']),
         close() {
             this.$emit('close')
         },
@@ -237,6 +243,9 @@ export default {
             })
 
         }
+    },
+    created() {
+        this.getAllRooms()
     }
 }
 </script>

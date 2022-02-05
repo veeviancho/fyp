@@ -32,7 +32,12 @@
             <div class="field">
                 <label class="label">Venue</label>
                 <div class="control">
-                <input class="input is-warning" type="text" placeholder="Enter a room" v-model="venue" required>
+                <!-- <input class="input is-warning" type="text" placeholder="Enter a room" v-model="venue" required> -->
+                <div class="select is-fullwidth is-warning">
+                    <select v-model="venue" required>
+                        <option v-for="item in rooms" :key="item._id" :value="item.title">{{ item.title }}</option>
+                    </select>
+                </div>
                 </div>
             </div>
         </div>
@@ -68,7 +73,6 @@
             <label class="label">Programme</label>
             <div class="select is-fullwidth is-warning">
             <select name="programme" v-model="programme">
-                <option disabled>Change Programme</option>
                 <option>Communications Engineering</option>
                 <option>Computer Control & Automation</option>
                 <option>Electronics</option>
@@ -125,10 +129,10 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['workshopError'])
+        ...mapGetters(['workshopError', 'rooms'])
     },
     methods: {
-        ...mapActions(['createWorkshop']),
+        ...mapActions(['createWorkshop', 'getAllRooms']),
         close() {
             this.$emit('close')
         },
@@ -155,6 +159,9 @@ export default {
                 console.log(err)
             })
         }
+    },
+    created() {
+        this.getAllRooms()
     }
 }
 </script>
