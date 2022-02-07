@@ -34,6 +34,14 @@ const BookingSchema = new Schema({
     createdAt: {
         type: Date, 
         default: Date.now, 
+    },
+    workshop: {
+        meta: {
+            type: Boolean
+        },
+        workshopId: {
+            type: String
+        }
     }
 })
 

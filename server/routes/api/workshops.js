@@ -6,6 +6,15 @@ const router = express.Router();
 const User = require('../../model/User');
 // Load workshop model
 const Workshop = require('../../model/Workshop')
+// Load booking model
+const Booking = require('../../model/Booking')
+// Load room model
+const Room = require('../../model/Room')
+
+// Import moment js
+const Moment = require('moment');
+const MomentRange = require('moment-range');
+const moment = MomentRange.extendMoment(Moment);
 
 /**
  * @route POST api/workshops/create
@@ -13,25 +22,54 @@ const Workshop = require('../../model/Workshop')
  * @access Private (admin only)
  */
 router.post('/create', (req, res) => {
-    const newWorkshop = new Workshop({
-        title: req.body.title,
-        description: req.body.description,
-        date: req.body.date,
-        startTime: req.body.startTime,
-        endTime: req.body.endTime,
-        venue: req.body.venue,
-        organiser: req.body.organiser,
-        programme: req.body.programme,
-        category: req.body.category,
-        maxUsers: req.body.maxUsers
-    });
-    newWorkshop
-        .save()
-        .then(workshop => res.json({
-            workshop: workshop,
-            success: true
-        }))
-        .catch(err => console.log(err));
+    // Get Room Id for venue
+    Room.findOne({ title: req.body.venue })
+    .then(room => {
+        const roomId = room._id
+        // Make sure room is available
+        Booking.find({ roomId: roomId })
+        .then(booking => {
+            const date1 = req.body.date + "T" + req.body.startTime + "+00:00" + "/" + req.body.date + "T" + req.body.endTime + "+00:00"
+            if (booking) {
+                for (let i=0; i<booking.length; i++) {
+                    var date2 = booking[i].date + "T" + booking[i].start + "+00:00" + "/" + booking[i].date + "T" + booking[i].end + "+00:00" 
+                    var range1  = moment.range(date1);
+                    var range2 = moment.range(date2);
+                    // Check for overlapping
+                    if (range1.overlaps(range2)) {
+                        return res.status(400).json({
+                            msg: "Unable to create workshop due to time conflict!",
+                            msg2: "A booking is found for this room. Date: " + booking[i].date + ", Start time: " + booking[i].start + ", End time: " + booking[i].end
+                        })
+                    }
+                }
+            }
+
+            const newWorkshop = new Workshop({
+                title: req.body.title,
+                description: req.body.description,
+                date: req.body.date,
+                startTime: req.body.startTime,
+                endTime: req.body.endTime,
+                venue: req.body.venue,
+                organiser: req.body.organiser,
+                programme: req.body.programme,
+                category: req.body.category,
+                maxUsers: req.body.maxUsers
+            });
+            newWorkshop
+                .save()
+                .then(workshop => {
+                    return res.json({
+                        workshop: workshop,
+                        success: true
+                    })
+                })
+                .catch(err => console.log(err));
+        })
+        .catch(err => console.log(err))
+    })
+    .catch(err => console.log(err))
 })
 
 /**

@@ -57,11 +57,11 @@
                 Booked Rooms
                  <div class="my-5">
                     <span class="title is-1 has-text-white">0</span> &nbsp; 
-                    <span class="subtitle is-5 has-text-white"><a class="green-box px-3 py-2">past</a> bookings</span>
+                    <span class="subtitle is-5 has-text-white"><router-link :to="{ name: 'User Past Bookings' }" class="green-box px-3 py-2">past</router-link> bookings</span>
                 </div>
                 <div class="my-5">
-                    <span class="title is-1 has-text-white">0</span> &nbsp; 
-                    <span class="subtitle is-5 has-text-white"><a class="green-box px-3 py-2">upcoming</a> bookings</span>
+                    <span class="title is-1 has-text-white">{{ userBookings.length }}</span> &nbsp; 
+                    <span class="subtitle is-5 has-text-white"><router-link :to="{ name: 'User Bookings' }" class="green-box px-3 py-2">upcoming</router-link> bookings</span>
                 </div>
             </div>
             </div>
@@ -109,10 +109,10 @@ export default {
         EditProfile
     },
     computed: {
-        ...mapGetters(['user', 'userWorkshop', 'pastUserWorkshop']),
+        ...mapGetters(['user', 'userWorkshop', 'pastUserWorkshop', 'userBookings']),
     },
     methods: {
-        ...mapActions(['getProfile', 'getWorkshop', 'getUserWorkshop']),
+        ...mapActions(['getProfile', 'getWorkshop', 'getUserWorkshop', 'getUserBookings']),
         showModal() {
             this.isModalVisible = true;
         },
@@ -133,6 +133,7 @@ export default {
         this.getProfile();
         this.getWorkshop().then( () => {
             this.getUserWorkshop(localStorage.getItem('userId'))
+            this.getUserBookings(localStorage.getItem('userId'))
             this.getCategory()
         })
     }

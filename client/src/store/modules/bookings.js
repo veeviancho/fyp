@@ -2,10 +2,10 @@ import axios from "axios"
 
 const state = {
     bookings: [],
+    userBookings: [],
 
     bookingStatus: {
-        create: '',
-        get: ''
+        create: ''
     },
     bookingError: {
         create: ''
@@ -14,6 +14,8 @@ const state = {
 
 const getters = {
     bookings: state => state.bookings,
+    userBookings: state => state.userBookings,
+
     bookingStatus: state => state.bookingStatus,
     bookingError: state => state.bookingError
 }
@@ -40,6 +42,14 @@ const actions = {
         if (res.data.success) {
             commit('getBookings_success', res.data.bookings)
         }
+    },
+
+    // Get bookings for a particular user
+    async getUserBookings({ commit }, userId) {
+        let res = await axios.get('http://localhost:5000/api/bookings/user/' + userId)
+        if (res.data.success) {
+            commit('getUserBookings_success', res.data.booking)
+        }
     }
 }
 
@@ -58,8 +68,12 @@ const mutations = {
 
     // Get bookings for a particular room
     getBookings_success(state, bookings) {
-        state.bookingStatus.get = 'success'
         state.bookings = bookings
+    },
+
+    // Get bookings for a particular user
+    getUserBookings_success(state, bookings) {
+        state.userBookings = bookings
     }
 
 }

@@ -39,8 +39,11 @@
                 <div class="column mx-5">
                     <label class="has-text-white py-1">PURPOSE</label>
                     <input class="input" type="text" placeholder="State purpose of visit (if any)" v-model="purpose">
+                    <p class="has-text-success white" v-if="successMsg">{{ successMsg }}</p>
+                    <!-- <p class="has-text-danger has-text-centered mb-3 white" v-if="workshopError.register[0] === this.id">{{ workshopError.register[1] }}</p> -->
                 </div>
             </div>
+
             <button class="button ml-5 mb-2" type="submit">Book</button>
             </form>
 
@@ -60,6 +63,7 @@ import 'vue-cal/dist/vuecal.css'
 export default {
     data() {
         return {
+            successMsg: '',
             viewImage: false,
             date: localStorage.getItem('date'),
             startTime: localStorage.getItem('startTime'),
@@ -98,7 +102,7 @@ export default {
                     localStorage.removeItem('date')
                     localStorage.removeItem('startTime')
                     localStorage.removeItem('endTime')
-                    console.log('successfully created!')
+                    this.successMsg = "Successfully booked!"
                 }
             })
         }

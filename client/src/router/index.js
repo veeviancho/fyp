@@ -17,7 +17,8 @@ import Upcoming from '../views/user/workshop/Upcoming.vue'
 
 import Room from '../views/user/booking/Rooms.vue'
 import RoomDetails from '../views/user/booking/RoomDetails.vue'
-import Manage from '../views/user/booking/Manage.vue'
+import UserPastBookings from '../views/user/booking/PastBookings.vue'
+import UserBookings from '../views/user/booking/UpcomingBookings.vue'
 
 import Activities from '../views/user/activities/RealTime.vue'
 // import Timetable from '../views/user/activities/Timetable.vue'
@@ -136,9 +137,14 @@ const routes = [
     props: true
   },
   {
-    path: '/booking/manage',
-    name: 'Manage Bookings',
-    component: Manage
+    path: '/profile/past-bookings',
+    name: 'User Past Bookings',
+    component: UserPastBookings,
+  },
+  {
+    path: '/profile/bookings',
+    name: 'User Bookings',
+    component: UserBookings
   },
   // Activities
   {

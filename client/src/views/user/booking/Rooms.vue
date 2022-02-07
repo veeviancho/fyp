@@ -6,7 +6,7 @@
             <div class="columns">
                 <div class="column mx-5">
                     <label class="has-text-white py-1">DATE</label>
-                    <input class="input" type="date" placeholder="Find Workshops" v-model="filterBy.date">
+                    <input class="input" type="date" :min=today placeholder="Find Workshops" v-model="filterBy.date">
                 </div>
                 <div class="column mx-5">
                     <div class="columns">
@@ -72,6 +72,7 @@ export default {
     name: 'Room',
     data() {
         return {
+            today: '',
             filterBy: {
                 date: '',
                 startTime: '',
@@ -85,7 +86,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['rooms'])
+        ...mapGetters(['rooms']),
     },
     methods: {
         ...mapActions(['getAllRooms', 'getBookings']),
@@ -94,17 +95,26 @@ export default {
       
             let dayArr = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
-            this.filterBy.startTime = temp.format('HH:00');
+            let startTime = temp.format('HH:00');
+            startTime = String(Number(startTime.slice(0,2)) + 1).padStart(2,'0') + startTime.slice(2,5)
+            if (startTime == '24:00') {
+                startTime = '00:00'
+            }
+
             let endTime = temp.format('HH:00');
-            endTime = String(Number(endTime.slice(0,2)) + 1).padStart(2,'0') + endTime.slice(2,5)
+            endTime = String(Number(endTime.slice(0,2)) + 2).padStart(2,'0') + endTime.slice(2,5)
             if (endTime == '24:00') {
                 endTime = '00:00'
             }
-            this.filterBy.endTime = endTime;
+
+            this.today = temp.format('YYYY-MM-DD');
+
             this.filterBy.date = temp.format('YYYY-MM-DD');
+            this.filterBy.startTime = startTime;
+            this.filterBy.endTime = endTime;
 
             this.results.date = temp.format('DD-MM-YYYY') + ' ' + dayArr[temp.getDay()]
-            this.results.startTime = temp.format('HH:00')
+            this.results.startTime = startTime;
             this.results.endTime = endTime;
         },
         showResults() {
