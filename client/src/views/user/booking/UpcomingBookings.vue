@@ -9,6 +9,9 @@
 
         <div class="content" v-if="userBookings">
 
+            <p class="has-text-danger mb-6" v-if="bookingError.remove">{{ bookingError.remove }}</p>
+            <p class="has-text-success mb-6" v-if="successMsg">{{ successMsg }}</p>
+
             <div v-for="item in sortedBookings" :key="item._id">
 
                 <article class="media" @mouseover="hover=true; buttonId=item._id" @mouseleave="hover=false; buttonId=''">
@@ -27,7 +30,7 @@
                         <!-- <strong class="has-text-white">No of booked seats:</strong> {{ item.date }} <br> -->
                         <small>*Please make sure to leave the venue <i>before</i> the end of your booked session.</small>
 
-                        <div><button v-if="hover && buttonId==item._id" @click="deleteBooking()" class="cancelBtn button mt-3 mb-5">Cancel Booking</button></div>
+                        <div><button v-if="hover && buttonId==item._id" @click="deleteBooking(item._id)" class="cancelBtn button mt-3 mb-5">Cancel Booking</button></div>
                     </div>
 
                 </article>
@@ -46,11 +49,12 @@ export default {
     data() {
         return {
             hover: false,
-            buttonId: ''
+            buttonId: '',
+            successMsg: ''
         }
     },
     computed: {
-        ...mapGetters(['user', 'userBookings', 'roomId']),
+        ...mapGetters(['user', 'userBookings', 'roomId', 'bookingStatus', 'bookingError']),
         sortedBookings() {
             let temp = this.userBookings
             temp = temp.sort( (a,b) => {
@@ -60,7 +64,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['getProfile', 'getUserBookings', 'getAllRooms', 'getRoomFromId']),
+        ...mapActions(['getProfile', 'getUserBookings', 'getAllRooms', 'getRoomFromId', 'removeBooking']),
         getRoomDetails() {
             for (let i=0; i<this.userBookings.length; i++) {
                 let roomId = this.userBookings[i].roomId
@@ -71,8 +75,18 @@ export default {
                 })
             }
         },
-        deleteBooking() {
-            // something
+        deleteBooking(bookingId) {
+            let confirmDelete = confirm("Are you sure you want to cancel your booking?")
+            if (confirmDelete) {
+                this.removeBooking(bookingId).then(() => {
+                    if (this.bookingStatus.remove == 'success') {
+                        this.successMsg = "Booking successfully removed."
+                        this.getUserBookings(localStorage.getItem('userId')).then(() => {
+                            this.getRoomDetails()
+                        })
+                    }
+                })
+            }
         }
     },
     created() {

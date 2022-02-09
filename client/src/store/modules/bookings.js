@@ -9,6 +9,7 @@ const state = {
         create: '',
         remove: ''
     },
+    
     bookingError: {
         create: '',
         remove: ''
@@ -76,7 +77,7 @@ const actions = {
     async removeBooking({ commit }, bookingId) {
         try {
             commit('removeBooking_request')
-            let res = await axios.delete('' + bookingId)
+            let res = await axios.delete('http://localhost:5000/api/bookings/delete/' + bookingId)
             if (res.data.success) {
                 commit('removeBooking_success')
             }
