@@ -18,15 +18,7 @@ const BookingSchema = new Schema({
         type: String
     },
     closed: {
-        meta: {
-            type: Boolean
-        },
-        start: {
-            type: Date
-        },
-        end: {
-            type: Date
-        }
+        type: Boolean
     },
     purpose: {
         type: String

@@ -30,6 +30,17 @@ export default {
 </script>
 
 <style lang="scss">
+.vuecal__event-title {
+  font-size: 1em;
+  font-weight: bold;
+  margin: 8px 2px 8px;
+}
+
+.vuecal__event-content {
+  font-style: italic;
+  margin: 8px 2px 8px;
+}
+
 .has-navbar-fixed-top {
   padding-top: 6rem;
   margin: auto;

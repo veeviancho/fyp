@@ -12,6 +12,7 @@
         <th>No</th>
         <th>Title</th>
         <th>Description</th>
+        <th>No of Seats</th>
         <th>Edit</th>
         <th>Manage</th>
         <th>Delete</th>
@@ -23,6 +24,7 @@
         <td>{{ rooms.indexOf(room) + 1 }}</td>
         <td>{{ room.title }}</td>
         <td><div class="desc">{{ room.description }}</div></td>
+        <td>{{ room.maxUsers }}</td>
         <td>
             <button class="button is-info" @click="editVisible=true; roomData=room">Edit</button>
             <EditRoom :room="roomData" v-show="editVisible && roomData==room" @close="editVisible = false"/>

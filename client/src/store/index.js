@@ -6,6 +6,7 @@ import rooms from './modules/rooms'
 import articles from './modules/articles'
 import bookings from './modules/bookings'
 import about from './modules/about'
+import calendar from './modules/calendar'
 
 export default createStore({
   modules: {
@@ -15,6 +16,7 @@ export default createStore({
     rooms,
     articles,
     bookings,
-    about
+    about,
+    calendar
   }
 })

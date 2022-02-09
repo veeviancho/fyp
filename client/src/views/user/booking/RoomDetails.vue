@@ -44,14 +44,30 @@
                 </div>
             </div>
 
-            <button class="button ml-5 mb-2" type="submit">Book</button>
+            <button class="button ml-5 mb-2" type="submit">Book A Seat</button>
+            <button class="button ml-5 mb-2" type="submit">Book The Room</button>
             </form>
 
         </div>
 
         <div class="section" v-if="roomId">
-            <vue-cal style="height: 700px" />
+            <vue-cal    
+                class="vuecal" 
+                style="height: 700px" 
+                :disable-views="['years', 'year']"
+                :time-step="30"
+                :events="roomWorkshopEvents"
+            />
+
+            <!-- <vue-cal
+                :min-date="minDate"
+                :max-date="maxDate"
+                :disable-days="closedDays"
+                :time-from="8 * 60" 
+                :time-to="24 * 60" 
+            /> -->
         </div>
+
     </div>
 </template>
 <script>
@@ -69,6 +85,18 @@ export default {
             startTime: localStorage.getItem('startTime'),
             endTime: localStorage.getItem('endTime'),
             purpose: '',
+        //     events: [
+        //     {
+        //     start: '2022-02-09 10:30',
+        //     end: '2022-02-09 13:30',
+        //     // You can also define event dates with Javascript Date objects:
+        //     // start: new Date(2018, 11 - 1, 16, 10, 30),
+        //     // end: new Date(2018, 11 - 1, 16, 11, 30),
+        //     title: '<div>Doctor appointment</div>',
+        //     content: '<i>hello</i>',
+        //     class: 'health'
+        //     },
+        // ]
         }
     },
     components: {
@@ -76,17 +104,34 @@ export default {
         VueCal
     },
     computed: {
-        ...mapGetters(['roomId', 'bookingStatus', 'bookingError']),
+        ...mapGetters(['roomId', 'bookingStatus', 'bookingError', 'roomWorkshopEvents', 'workshop']),
         results() {
             if (this.date && this.startTime && this.endTime) {
                 return this.date + " " + this.startTime + "-" + this.endTime
             }
             return ''
-        }
+        },
+
+        // minDate () {
+        //     return new Date()
+        // },
+        // maxDate () {
+        //     return new Date().addDays(14)
+        // },
+
+        // closedDays() {
+        //     return [
+        //             new Date().subtractDays(2).format(),
+        //             new Date().format(),
+        //             new Date().addDays(2).format()
+        //         ]
+        // }
+
+        
     },
     props: ['id'],
     methods: {
-        ...mapActions(['getAllRooms', 'getRoomFromId', 'createBooking']),
+        ...mapActions(['getAllRooms', 'getRoomFromId', 'createBooking', 'getWorkshop', 'getWorkshopForRoom']),
         makeBooking() {
             console.log('hey')
             let details = {
@@ -113,7 +158,11 @@ export default {
     },
     created() {
         this.getAllRooms().then(() => {
-            this.getRoomFromId(this.id)
+            this.getRoomFromId(this.id).then(() => {
+                this.getWorkshop().then(() => {
+                    this.getWorkshopForRoom([this.workshop, this.roomId])
+                })
+            })
         })
     }
 }
