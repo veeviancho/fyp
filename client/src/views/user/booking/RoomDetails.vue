@@ -103,6 +103,10 @@ export default {
                     localStorage.removeItem('startTime')
                     localStorage.removeItem('endTime')
                     this.successMsg = "Successfully booked!"
+                    this.date = ''
+                    this.startTime = ''
+                    this.endTime = ''
+                    this.purpose = ''
                 }
             })
         }

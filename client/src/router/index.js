@@ -21,7 +21,6 @@ import UserPastBookings from '../views/user/booking/PastBookings.vue'
 import UserBookings from '../views/user/booking/UpcomingBookings.vue'
 
 import Activities from '../views/user/activities/RealTime.vue'
-// import Timetable from '../views/user/activities/Timetable.vue'
 
 import Profile from '../views/user/profile/Profile.vue'
 
@@ -152,11 +151,6 @@ const routes = [
     name: 'Real-time Activities',
     component: Activities
   },
-  // {
-  //   path: '/timetable',
-  //   name: 'Timetable',
-  //   component: Timetable
-  // },
   // User
   {
     path: '/profile',

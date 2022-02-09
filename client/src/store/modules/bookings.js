@@ -3,18 +3,22 @@ import axios from "axios"
 const state = {
     bookings: [],
     userBookings: [],
+    pastUserBookings: [],
 
     bookingStatus: {
-        create: ''
+        create: '',
+        remove: ''
     },
     bookingError: {
-        create: ''
+        create: '',
+        remove: ''
     }
 }
 
 const getters = {
     bookings: state => state.bookings,
     userBookings: state => state.userBookings,
+    pastUserBookings: state => state.pastUserBookings,
 
     bookingStatus: state => state.bookingStatus,
     bookingError: state => state.bookingError
@@ -48,9 +52,40 @@ const actions = {
     async getUserBookings({ commit }, userId) {
         let res = await axios.get('http://localhost:5000/api/bookings/user/' + userId)
         if (res.data.success) {
-            commit('getUserBookings_success', res.data.booking)
+            let current = res.data.booking
+            let past = res.data.booking
+            let today = new Date()
+
+            // Current Bookings
+            current = current.filter(item => {
+                let bookingDate = Date.parse(String(item.date) + "T" + String(item.end) + ":00")
+                return bookingDate >= today.getTime()
+            })
+            commit('getUserBookings_success', current)
+
+            // Past Bookings
+            past = past.filter(item => {
+                let bookingDate = Date.parse(String(item.date) + "T" + String(item.end) + ":00")
+                return bookingDate < today.getTime()
+            })
+            commit('getPastUserBookings_success', past)
+        }
+    },
+
+    // Cancel booking
+    async removeBooking({ commit }, bookingId) {
+        try {
+            commit('removeBooking_request')
+            let res = await axios.delete('' + bookingId)
+            if (res.data.success) {
+                commit('removeBooking_success')
+            }
+        }
+        catch (err) {
+            commit('removeBooking_error', err.response.data.msg)
         }
     }
+
 }
 
 const mutations = {
@@ -74,6 +109,21 @@ const mutations = {
     // Get bookings for a particular user
     getUserBookings_success(state, bookings) {
         state.userBookings = bookings
+    },
+    getPastUserBookings_success(state, bookings) {
+        state.pastUserBookings = bookings
+    },
+
+    // Remove bookings
+    removeBooking_request(state) {
+        state.bookingStatus.remove = 'loading'
+    },
+    removeBooking_success(state) {
+        state.bookingStatus.remove = 'success'
+    },
+    removeBooking_error(state, err) {
+        state.bookingStatus.remove = 'error'
+        state.bookingError.remove = err
     }
 
 }

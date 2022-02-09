@@ -56,7 +56,7 @@
             <div class="px-5 py-3">
                 Booked Rooms
                  <div class="my-5">
-                    <span class="title is-1 has-text-white">0</span> &nbsp; 
+                    <span class="title is-1 has-text-white">{{ pastUserBookings.length }}</span> &nbsp; 
                     <span class="subtitle is-5 has-text-white"><router-link :to="{ name: 'User Past Bookings' }" class="green-box px-3 py-2">past</router-link> bookings</span>
                 </div>
                 <div class="my-5">
@@ -109,7 +109,7 @@ export default {
         EditProfile
     },
     computed: {
-        ...mapGetters(['user', 'userWorkshop', 'pastUserWorkshop', 'userBookings']),
+        ...mapGetters(['user', 'userWorkshop', 'pastUserWorkshop', 'userBookings', 'pastUserBookings']),
     },
     methods: {
         ...mapActions(['getProfile', 'getWorkshop', 'getUserWorkshop', 'getUserBookings']),

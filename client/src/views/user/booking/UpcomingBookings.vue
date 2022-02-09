@@ -11,7 +11,7 @@
 
             <div v-for="item in sortedBookings" :key="item._id">
 
-                <article class="media">
+                <article class="media" @mouseover="hover=true; buttonId=item._id" @mouseleave="hover=false; buttonId=''">
 
                     <figure class="media-left">
                         <p class="image is-128x128 is-square">
@@ -24,9 +24,10 @@
                         <strong class="has-text-white">Date:</strong> {{ item.date }} <br>
                         <strong class="has-text-white">Time:</strong> {{ item.start }} - {{ item.end }} <br>
                         <strong class="has-text-white">Purpose of Visit:</strong> {{ item.purpose ? item.purpose : "NIL" }} <br>
+                        <!-- <strong class="has-text-white">No of booked seats:</strong> {{ item.date }} <br> -->
                         <small>*Please make sure to leave the venue <i>before</i> the end of your booked session.</small>
 
-                        <div class="hide"><button class="button mt-3 mb-5">Cancel Booking</button></div>
+                        <div><button v-if="hover && buttonId==item._id" @click="deleteBooking()" class="cancelBtn button mt-3 mb-5">Cancel Booking</button></div>
                     </div>
 
                 </article>
@@ -42,6 +43,12 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
+    data() {
+        return {
+            hover: false,
+            buttonId: ''
+        }
+    },
     computed: {
         ...mapGetters(['user', 'userBookings', 'roomId']),
         sortedBookings() {
@@ -63,6 +70,9 @@ export default {
                     this.userBookings[i].roomTitle = this.roomId.title
                 })
             }
+        },
+        deleteBooking() {
+            // something
         }
     },
     created() {
@@ -75,17 +85,25 @@ export default {
 </script>
 
 <style scoped>
+
+.cancelBtn {
+   animation-name:block1;
+   animation-duration:1s;
+   animation-fill-mode:forwards;
+}
+
+@keyframes block1 {
+   0% {
+      top:-50px;
+   }
+   100% {
+      top:0;
+   }
+}
+
+
 .section {
     background-color: #161C20;
-}
-
-.hide {
-  display: none;
-}
-
-.media:hover + .hide {
-  display: block;
-  color: red;
 }
 
 .media {
