@@ -97,7 +97,7 @@ router.post('/create', (req, res) => {
                             success: true
                         }))
                         .catch(err => console.log(err));
-                        
+
                 })
                 .catch(err => console.log(err))
             })
@@ -113,7 +113,7 @@ router.post('/create', (req, res) => {
  * @desc Return bookings associated with room
  * @access Private
  */
-router.get('/:id', (req, res) => {
+router.get('/:roomId', (req, res) => {
     Booking.find({ roomId: req.params.roomId })
         .then(booking => {
             if (!booking) {

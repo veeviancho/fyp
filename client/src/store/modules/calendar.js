@@ -1,9 +1,10 @@
 const state = {
-    roomWorkshopEvents: []
+    roomWorkshopEvents: [],
+    roomBookingEvents: []
 }
 
 const getters = {
-    roomWorkshopEvents: state => state.roomWorkshopEvents
+    roomEvents: state => state.roomWorkshopEvents.concat(state.roomBookingEvents)
 }
 
 const actions = {
@@ -23,6 +24,24 @@ const actions = {
             })
         }
         commit('roomWorkshop_success', events)
+    },
+
+    // Get bookings for a room
+    getBookingForRoom({ commit }, [booking, roomId]) { 
+        const bookings = booking.filter(item => {
+            return item.roomId == roomId && item.bookRoom == true
+        })
+        let events = []
+        for (let i=0; i<bookings.length; i++) {
+            events.push({
+                start: bookings[i].date + ' ' + bookings[i].start,
+                end: bookings[i].date + ' ' + bookings[i].end,
+                title: 'User Booking',
+                // content: 'Full Room Booking',
+                class: 'Room Booking'
+            })
+        }
+        commit('roomBooking_success', events)
     }
 }
 
@@ -30,6 +49,11 @@ const mutations = {
     // Get workshop events for a room
     roomWorkshop_success(state, events) {
         state.roomWorkshopEvents = events
+    },
+
+    // Get booking events for a room
+    roomBooking_success(state, events) {
+        state.roomBookingEvents = events
     }
 }
 

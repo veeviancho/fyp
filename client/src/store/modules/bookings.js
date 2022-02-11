@@ -43,9 +43,9 @@ const actions = {
 
     // Get bookings for a particular room
     async getBookings({ commit }, roomId) {
-        let res = await axios.get('' + roomId)
+        let res = await axios.get('http://localhost:5000/api/bookings/' + roomId)
         if (res.data.success) {
-            commit('getBookings_success', res.data.bookings)
+            commit('getBookings_success', res.data.booking)
         }
     },
 

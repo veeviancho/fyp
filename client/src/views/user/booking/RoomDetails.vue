@@ -56,7 +56,7 @@
                 style="height: 700px" 
                 :disable-views="['years', 'year']"
                 :time-step="30"
-                :events="roomWorkshopEvents"
+                :events="roomEvents"
             />
 
             <!-- <vue-cal
@@ -92,7 +92,7 @@ export default {
         VueCal
     },
     computed: {
-        ...mapGetters(['roomId', 'bookingStatus', 'bookingError', 'roomWorkshopEvents', 'workshop']),
+        ...mapGetters(['roomId', 'bookingStatus', 'bookingError', 'roomEvents', 'workshop', 'bookings']),
         results() {
             if (this.date && this.startTime && this.endTime) {
                 return this.date + " " + this.startTime + "-" + this.endTime
@@ -101,8 +101,11 @@ export default {
         },
 
         calendarEvents() {
-            let temp = this.roomWorkshopEvents
-            return temp
+            // let arr1 = this.roomWorkshopEvents
+            // let arr2 = this.bookings.filter(item => item.bookRoom == true)
+
+            // return temp
+            return 'hello'
         }
 
         // minDate () {
@@ -123,7 +126,7 @@ export default {
     },
     props: ['id'],
     methods: {
-        ...mapActions(['getAllRooms', 'getRoomFromId', 'createBooking', 'getWorkshop', 'getWorkshopForRoom']),
+        ...mapActions(['getAllRooms', 'getRoomFromId', 'createBooking', 'getWorkshop', 'getWorkshopForRoom', 'getBookings', 'getBookingForRoom']),
         makeBooking(bookRoom) {
             if (this.date && this.startTime && this.endTime) {
                 let details = {
@@ -155,6 +158,9 @@ export default {
             this.getRoomFromId(this.id).then(() => {
                 this.getWorkshop().then(() => {
                     this.getWorkshopForRoom([this.workshop, this.roomId])
+                })
+                this.getBookings(this.id).then(() => {
+                    this.getBookingForRoom([this.bookings, this.id])
                 })
             })
         })
