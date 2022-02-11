@@ -93,9 +93,11 @@ const mutations = {
     // Create booking
     createBooking_request(state) {
         state.bookingStatus.create = 'loading'
+        state.bookingError.create = ''
     },
     createBooking_success(state) {
         state.bookingStatus.create = 'success'
+        state.bookingError.create = ''
     },
     createBooking_error(state, err) {
         state.bookingStatus.create = 'error'

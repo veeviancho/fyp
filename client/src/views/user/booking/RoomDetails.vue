@@ -16,8 +16,6 @@
             </div>
             <hr>
 
-            {{ roomWorkshopEvents }}
-
             <form class="field" @submit.prevent>
             <div class="columns">
                 <div class="column mx-5">
@@ -42,7 +40,7 @@
                     <label class="has-text-white py-1">PURPOSE</label>
                     <input class="input" type="text" placeholder="State purpose of visit (if any)" v-model="purpose">
                     <p class="has-text-success white" v-if="successMsg">{{ successMsg }}</p>
-                    <p class="has-text-danger has-text-centered mb-3 white" v-if="bookingError.create">{{ bookingError.create }}</p>
+                    <p class="has-text-danger white" v-if="bookingError.create && !successMsg">{{ bookingError.create }}</p>
                 </div>
             </div>
 
