@@ -158,24 +158,73 @@ router.put('/update', (req, res) => {
         }
     }
 
-    Workshop.findOneAndUpdate({ _id: req.body.id }, { $set: params })
-        .then(workshop => {
-            if (!workshop) {
-                return res.status(404).json({
-                    msg: "Workshop not found!"
-                })
+    // Check timing clash if date, start or end time are edited
+    Room.findOne({ title: req.body.venue })
+    .then(room => {
+        const roomId = room._id
+
+        // Make sure room is available ie no booking is found
+        Booking.find({ roomId: roomId })
+        .then(booking => {
+            if (booking) {
+                let data = {
+                    isBooking: true,
+                    arr: booking,
+                    date: req.body.date,
+                    start: req.body.startTime,
+                    end: req.body.endTime
+                }
+                // Check for overlapping
+                let clash = timing(data)
+                if (clash) {
+                    return res.status(400).json({
+                        msg: "Unable to create workshop due to time conflict! A booking is found during this time in the venue entered!"
+                    })
+                }
             }
-            return res.status(200).json({
-                msg: "Updated successfully!",
-                success: true
+
+            Workshop.find({ _id: { $ne: req.body.id }, venue: req.body.venue })
+            .then(workshop => {
+                if (workshop) {
+                    let data = {
+                        arr: workshop,
+                        date: req.body.date,
+                        start: req.body.startTime,
+                        end: req.body.endTime
+                    }
+                    let clash = timing(data)
+                    if (clash) {
+                        return res.status(400).json({
+                            msg: "Unable to create workshop due to time conflict! A workshop is found during this time in the venue entered!"
+                        })
+                    }
+                }
+
+                Workshop.findOneAndUpdate({ _id: req.body.id }, { $set: params })
+                .then(workshop => {
+                    if (!workshop) {
+                        return res.status(404).json({
+                            msg: "Workshop not found!"
+                        })
+                    }
+                    return res.status(200).json({
+                        msg: "Updated successfully!",
+                        success: true
+                    })
+                })
+                .catch(err => {
+                    console.log(err)
+                    return res.status(400).json({
+                        msg: "Encountered an error. Unable to update!"
+                    })
+                })
+
             })
+            .catch(err => console.log(err))
         })
-        .catch(err => {
-            console.log(err)
-            return res.status(400).json({
-                msg: "Encountered an error. Unable to update!"
-            })
-        })
+        .catch(err => console.log(err))
+    })
+    .catch(err => console.log(err))
 })
 
 /**
@@ -369,32 +418,5 @@ router.put('/deregister/:workshopId/:userId', (req, res) => {
         console.log(err)
     })
 })
-
-
-/**
- * @route GET api/workshops/:id
- * @desc Return one workshop
- * @access Private
- */
-// router.get('/:id', (req, res) => {
-//     Workshop.findOne({ _id: req.params.id })
-//         .then( workshop => {
-//             if (!workshop) {
-//                 return res.status(404).json({
-//                     msg: "Workshop not found!"
-//                 })
-//             }
-//             return res.status(200).json({
-//                 workshop: workshop,
-//                 success: true
-//             })
-//         })
-//         .catch( err => {
-//             console.log(err) 
-//             return res.status(400).json({
-//                 msg: "Unable to retrieve workshop. Please try again."
-//             })
-//         })
-// })
 
 module.exports = router;

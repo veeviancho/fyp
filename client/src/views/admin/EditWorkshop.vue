@@ -158,7 +158,7 @@
                 </label>
                 <div class="control">
                     <p v-if="!show[9]">{{ workshopItem.maxUsers }}</p>
-                    <input class="input is-warning" type="number" id="maxUsers" name="maxUsers" placeholder="Enter a number" v-if="show[9]" v-model="maxUsers">
+                    <input class="input is-warning" type="number" id="maxUsers" name="maxUsers" min=0 placeholder="Enter a number" v-if="show[9]" v-model="maxUsers">
                 </div>
             </div>
         </div>
@@ -221,16 +221,15 @@ export default {
                 id: this.id,
                 title: this.title,
                 description: this.description,
-                date: this.date,
-                startTime: this.startTime,
-                endTime: this.endTime,
-                venue: this.venue,
+                date: this.date ? this.date : this.workshopItem.date,
+                startTime: this.startTime ? this.startTime : this.workshopItem.startTime,
+                endTime: this.endTime ? this.endTime : this.workshopItem.endTime,
+                venue: this.venue ? this.venue : this.workshopItem.venue,
                 organiser: this.organiser,
                 programme: this.programme,
                 category: this.category,
                 maxUsers: this.maxUsers
             }
-            console.log(workshop)
             this.updateWorkshop(workshop)
             .then(res => {
                 if (res.data.success) {
