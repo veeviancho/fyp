@@ -2,6 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const BookingSchema = new Schema({
+    bookRoom: {
+        type: Boolean
+    },
     userId: {
         type: String
     },

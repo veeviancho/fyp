@@ -8,17 +8,17 @@ const getters = {
 
 const actions = {
     // Get events for a room
-    getWorkshopForRoom({ commit }, [workshop, roomId]) {
+    getWorkshopForRoom({ commit }, [workshop, room]) {
         const workshops = workshop.filter(item => {
-            return item.venue == roomId.title
+            return item.venue == room.title
         })
         let events = []
         for (let i=0; i<workshops.length; i++) {
             events.push({
-                start: workshop[i].date + ' ' + workshop[i].startTime,
-                end: workshop[i].date + ' ' + workshop[i].endTime,
-                title: workshop[i].title,
-                content: "Organiser: <br>" + workshop[i].organiser,
+                start: workshops[i].date + ' ' + workshops[i].startTime,
+                end: workshops[i].date + ' ' + workshops[i].endTime,
+                title: workshops[i].title,
+                content: "Organiser: <br>" + workshops[i].organiser,
                 class: 'workshop'
             })
         }

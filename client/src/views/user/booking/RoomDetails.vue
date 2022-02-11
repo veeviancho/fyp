@@ -16,21 +16,23 @@
             </div>
             <hr>
 
-            <form class="field" @submit.prevent="makeBooking">
+            {{ roomWorkshopEvents }}
+
+            <form class="field" @submit.prevent>
             <div class="columns">
                 <div class="column mx-5">
                     <label class="has-text-white py-1">DATE</label>
-                    <input class="input" type="date" placeholder="Find Workshops" v-model="date">
+                    <input class="input" type="date" placeholder="Find Workshops" v-model="date" required>
                 </div>
                 <div class="column mx-5">
                     <div class="columns">
                         <div class="column">
                             <label class="has-text-white py-1">START TIME</label>
-                            <input class="input" type="time" v-model="startTime">
+                            <input class="input" type="time" v-model="startTime" required>
                         </div>
                         <div class="column">
                             <label class="has-text-white py-1">END TIME</label>
-                            <input class="input" type="time" v-model="endTime">
+                            <input class="input" type="time" v-model="endTime" required>
                         </div>
                     </div>
                 </div>
@@ -40,12 +42,12 @@
                     <label class="has-text-white py-1">PURPOSE</label>
                     <input class="input" type="text" placeholder="State purpose of visit (if any)" v-model="purpose">
                     <p class="has-text-success white" v-if="successMsg">{{ successMsg }}</p>
-                    <!-- <p class="has-text-danger has-text-centered mb-3 white" v-if="workshopError.register[0] === this.id">{{ workshopError.register[1] }}</p> -->
+                    <p class="has-text-danger has-text-centered mb-3 white" v-if="bookingError.create">{{ bookingError.create }}</p>
                 </div>
             </div>
 
-            <button class="button ml-5 mb-2" type="submit">Book A Seat</button>
-            <button class="button ml-5 mb-2" type="submit">Book The Room</button>
+            <button class="button ml-5 mb-2" type="submit" @click="makeBooking(false)">Book A Seat</button>
+            <button class="button ml-5 mb-2" type="submit" @click="makeBooking(true)">Book The Room</button>
             </form>
 
         </div>
@@ -100,6 +102,11 @@ export default {
             return ''
         },
 
+        calendarEvents() {
+            let temp = this.roomWorkshopEvents
+            return temp
+        }
+
         // minDate () {
         //     return new Date()
         // },
@@ -115,32 +122,34 @@ export default {
         //         ]
         // }
 
-        
     },
     props: ['id'],
     methods: {
         ...mapActions(['getAllRooms', 'getRoomFromId', 'createBooking', 'getWorkshop', 'getWorkshopForRoom']),
-        makeBooking() {
-            let details = {
-                userId: localStorage.getItem('userId'),
-                roomId: this.id,
-                date: this.date,
-                start: this.startTime,
-                end: this.endTime, 
-                purpose: this.purpose
-            }
-            this.createBooking(details).then( () => {
-                if (this.bookingStatus.create == 'success') {
-                    localStorage.removeItem('date')
-                    localStorage.removeItem('startTime')
-                    localStorage.removeItem('endTime')
-                    this.successMsg = "Successfully booked for the date " + details.date + " from " + details.start + " to " + details.end
-                    this.date = ''
-                    this.startTime = ''
-                    this.endTime = ''
-                    this.purpose = ''
+        makeBooking(bookRoom) {
+            if (this.date && this.startTime && this.endTime) {
+                let details = {
+                    bookRoom: bookRoom ? true : false,
+                    userId: localStorage.getItem('userId'),
+                    roomId: this.id,
+                    date: this.date,
+                    start: this.startTime,
+                    end: this.endTime, 
+                    purpose: this.purpose
                 }
-            })
+                this.createBooking(details).then( () => {
+                    if (this.bookingStatus.create == 'success') {
+                        localStorage.removeItem('date')
+                        localStorage.removeItem('startTime')
+                        localStorage.removeItem('endTime')
+                        this.successMsg = "Successfully booked for the date " + details.date + " from " + details.start + " to " + details.end
+                        this.date = ''
+                        this.startTime = ''
+                        this.endTime = ''
+                        this.purpose = ''
+                    }
+                })
+            }
         }
     },
     created() {

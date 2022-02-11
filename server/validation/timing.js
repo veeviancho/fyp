@@ -15,7 +15,24 @@ module.exports = function validateTiming(data) {
                 return true
             }
         }
-    } else {
+    } 
+    
+    else if (data.isBookingSeat) {
+        let count = 0
+        for (let i=0; i<data.arr.length; i++) {
+            let date2 = data.arr[i].date + "T" + data.arr[i].start + "+00:00" + "/" + data.arr[i].date + "T" + data.arr[i].end + "+00:00" 
+            let range2 = moment.range(date2);
+            // Check for overlapping
+            if (range1.overlaps(range2)) {
+                count += 1
+            }
+            if (count == data.room.maxUsers) {
+                return true
+            }
+        }
+    } 
+    
+    else {
         for (let i=0; i<data.arr.length; i++) {
             let date2 = data.arr[i].date + "T" + data.arr[i].startTime + "+00:00" + "/" + data.arr[i].date + "T" + data.arr[i].endTime + "+00:00" 
             let range2 = moment.range(date2);
