@@ -12,9 +12,12 @@ const Booking = require('../../model/Booking')
 const Room = require('../../model/Room')
 
 // Import moment js
-const Moment = require('moment');
-const MomentRange = require('moment-range');
-const moment = MomentRange.extendMoment(Moment);
+// const Moment = require('moment');
+// const MomentRange = require('moment-range');
+// const moment = MomentRange.extendMoment(Moment);
+
+// Import timing validation check
+const timing = require('../../validation/timing')
 
 /**
  * @route POST api/workshops/create
@@ -26,46 +29,70 @@ router.post('/create', (req, res) => {
     Room.findOne({ title: req.body.venue })
     .then(room => {
         const roomId = room._id
+
         // Make sure room is available
         Booking.find({ roomId: roomId })
         .then(booking => {
-            const date1 = req.body.date + "T" + req.body.startTime + "+00:00" + "/" + req.body.date + "T" + req.body.endTime + "+00:00"
             if (booking) {
-                for (let i=0; i<booking.length; i++) {
-                    var date2 = booking[i].date + "T" + booking[i].start + "+00:00" + "/" + booking[i].date + "T" + booking[i].end + "+00:00" 
-                    var range1  = moment.range(date1);
-                    var range2 = moment.range(date2);
-                    // Check for overlapping
-                    if (range1.overlaps(range2)) {
-                        return res.status(400).json({
-                            msg: "Unable to create workshop due to time conflict!",
-                            msg2: "A booking is found for this room. Date: " + booking[i].date + ", Start time: " + booking[i].start + ", End time: " + booking[i].end
-                        })
-                    }
+                let data = {
+                    isBooking: true,
+                    arr: booking,
+                    date: req.body.date,
+                    start: req.body.startTime,
+                    end: req.body.endTime
+                }
+                // Check for overlapping
+                let clash = timing(data)
+                if (clash) {
+                    return res.status(400).json({
+                        msg: "Unable to create workshop due to time conflict! A booking is found during this time in the venue entered!"
+                    })
                 }
             }
 
-            const newWorkshop = new Workshop({
-                title: req.body.title,
-                description: req.body.description,
-                date: req.body.date,
-                startTime: req.body.startTime,
-                endTime: req.body.endTime,
-                venue: req.body.venue,
-                organiser: req.body.organiser,
-                programme: req.body.programme,
-                category: req.body.category,
-                maxUsers: req.body.maxUsers
-            });
-            newWorkshop
-                .save()
-                .then(workshop => {
-                    return res.json({
-                        workshop: workshop,
-                        success: true
+            Workshop.find({ venue: req.body.venue })
+            .then(workshop => {
+                if (workshop) {
+                    let data = {
+                        arr: workshop,
+                        date: req.body.date,
+                        start: req.body.startTime,
+                        end: req.body.endTime
+                    }
+                    let clash = timing(data)
+                    if (clash) {
+                        return res.status(400).json({
+                            msg: "Unable to create workshop due to time conflict! A workshop is found during this time in the venue entered!"
+                        })
+                    }
+                }
+
+                const newWorkshop = new Workshop({
+                    title: req.body.title,
+                    description: req.body.description,
+                    date: req.body.date,
+                    startTime: req.body.startTime,
+                    endTime: req.body.endTime,
+                    venue: req.body.venue,
+                    organiser: req.body.organiser,
+                    programme: req.body.programme,
+                    category: req.body.category,
+                    maxUsers: req.body.maxUsers
+                });
+                newWorkshop
+                    .save()
+                    .then(workshop => {
+                        return res.json({
+                            workshop: workshop,
+                            success: true
+                        })
                     })
-                })
-                .catch(err => console.log(err));
+                    .catch(err => console.log(err));
+
+            })
+            .catch(err => {
+                console.log(err)
+            })
         })
         .catch(err => console.log(err))
     })

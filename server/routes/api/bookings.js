@@ -44,11 +44,7 @@ router.post('/create', (req, res) => {
         date: req.body.date,
         start: req.body.start,
         end: req.body.end,
-        closed: {
-            meta: req.body.closed,
-            start: req.body.closedStart,
-            end: req.body.closedEnd
-        },
+        closed: req.body.closed,
         // workshopId: req.body.workshopId,
         purpose: req.body.purpose
     });

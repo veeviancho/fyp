@@ -84,19 +84,7 @@ export default {
             date: localStorage.getItem('date'),
             startTime: localStorage.getItem('startTime'),
             endTime: localStorage.getItem('endTime'),
-            purpose: '',
-        //     events: [
-        //     {
-        //     start: '2022-02-09 10:30',
-        //     end: '2022-02-09 13:30',
-        //     // You can also define event dates with Javascript Date objects:
-        //     // start: new Date(2018, 11 - 1, 16, 10, 30),
-        //     // end: new Date(2018, 11 - 1, 16, 11, 30),
-        //     title: '<div>Doctor appointment</div>',
-        //     content: '<i>hello</i>',
-        //     class: 'health'
-        //     },
-        // ]
+            purpose: ''
         }
     },
     components: {
@@ -133,7 +121,6 @@ export default {
     methods: {
         ...mapActions(['getAllRooms', 'getRoomFromId', 'createBooking', 'getWorkshop', 'getWorkshopForRoom']),
         makeBooking() {
-            console.log('hey')
             let details = {
                 userId: localStorage.getItem('userId'),
                 roomId: this.id,
@@ -147,7 +134,7 @@ export default {
                     localStorage.removeItem('date')
                     localStorage.removeItem('startTime')
                     localStorage.removeItem('endTime')
-                    this.successMsg = "Successfully booked!"
+                    this.successMsg = "Successfully booked for the date " + details.date + " from " + details.start + " to " + details.end
                     this.date = ''
                     this.startTime = ''
                     this.endTime = ''
