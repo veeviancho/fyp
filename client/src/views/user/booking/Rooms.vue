@@ -48,7 +48,7 @@
                 <div class="card-content">
                     <div class="content">
                         <p class="subtitle has-text-weight-bold">
-                            {{ item.title }} 
+                            {{ item.title }}
                             <span class="tag is-danger is-light" v-if="!item.bookRoom && item.bookWorkshop">Booked for workshop</span>
                             <span class="tag is-danger is-light" v-if="item.bookRoom || item.count === item.maxUsers">Fully booked</span>
                             <span class="tag is-primary is-light" v-if="!(item.bookRoom || item.count === item.maxUsers || item.bookWorkshop)">{{ item.count ? item.maxUsers - item.count : item.maxUsers }} / {{ item.maxUsers }} available</span>
@@ -161,6 +161,7 @@ export default {
                 let temp1 = bookings.filter(booking => {
                     return booking.roomId === item._id && booking.bookRoom
                 })
+
                 // console.log(temp1)
                 if (temp1.length >= 1) {
                     item.bookRoom = true

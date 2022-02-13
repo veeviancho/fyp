@@ -35,12 +35,22 @@ const actions = {
         })
         let events = []
         for (let i=0; i<bookings.length; i++) {
-            events.push({
-                start: bookings[i].date + ' ' + bookings[i].start,
-                end: bookings[i].date + ' ' + bookings[i].end,
-                title: 'User Full Room Booking',
-                class: 'Room Booking'
-            })
+            // If it is closed
+            if (bookings[i].closed) {
+                events.push({
+                    start: bookings[i].date + ' ' + bookings[i].start,
+                    end: bookings[i].date + ' ' + bookings[i].end,
+                    title: 'Closed',
+                    class: 'Room Booking'
+                })
+            } else {
+                events.push({
+                    start: bookings[i].date + ' ' + bookings[i].start,
+                    end: bookings[i].date + ' ' + bookings[i].end,
+                    title: 'User Full Room Booking',
+                    class: 'Room Booking'
+                })
+            }
         }
         commit('roomBooking_success', events)
     },

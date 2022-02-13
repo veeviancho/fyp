@@ -188,7 +188,8 @@ export default {
                     date: this.date,
                     start: this.startTime,
                     end: this.endTime, 
-                    purpose: this.purpose
+                    purpose: this.purpose,
+                    closed: false
                 }
                 this.createBooking(details).then( () => {
                     if (this.bookingStatus.create == 'success') {
