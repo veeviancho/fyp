@@ -3,7 +3,7 @@
     <router-link :to="{ name: 'Admin Home' }"><button class="button router">Back</button></router-link>
     &nbsp;
     <button class="button is-link mb-6" @click="this.createVisible = true"><fa icon="plus"/> &nbsp;Add New Booking</button>
-    <CreateBooking v-show="createVisible" @close="this.createVisible = false"/>
+    <CreateBooking :id="id" v-show="createVisible" @close="this.createVisible = false"/>
 
     <h1 class="title">List of Bookings for (Room)
         <!-- <router-link :to="'/rooms/' + workshopItem._id">

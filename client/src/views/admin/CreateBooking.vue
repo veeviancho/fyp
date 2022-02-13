@@ -8,6 +8,12 @@
             <div class="field">Booking room for <router-link class="link-workshop" :to="{ name: 'Admin Workshop' }">workshop</router-link> instead?</div>
 
             <div class="field">
+                <label class="checkbox">
+                    <input type="checkbox" v-model="closeRoom"> Close the room
+                </label>
+            </div>
+
+            <div class="field">
                 <label class="label">Date</label>
                 <div class="control"><input class="input is-warning" type="date" v-model="date" required></div>
             </div>
@@ -32,8 +38,10 @@
 
             <div class="field">
                 <label class="label">Username</label>
-                <div class="control"><input class="input is-warning" v-model="username" placeholder="Enter username of student if relevant" type="text" required></div>
+                <div class="control"><input class="input is-warning" v-model="username" placeholder="Enter username of student if relevant" type="text"></div>
             </div>
+
+            <p class="has-text-danger has-text-centered mb-3" v-if="bookingError.create">{{ bookingError.create }}</p>
 
             <button type="submit" class="button is-outlined is-fullwidth">
                 Add Booking
@@ -57,12 +65,14 @@ export default {
             start: '',
             end: '',
             purpose: '',
-            username: this.username
+            username: this.username,
+            closeRoom: false,
+            bookRoom: true
         }
     },
     props: ['id'],
     computed: {
-        ...mapGetters(['userByUsername'])
+        ...mapGetters(['userByUsername', 'bookingError'])
     },
     methods: {
         ...mapActions(['createBooking', 'findByUsername']),
@@ -70,20 +80,21 @@ export default {
             this.$emit('close')
         },
         create() {
-            this.findByUsername(this.username)
-            let user = this.userByUsername
+            let user = this.username ? this.findByUsername(this.username) : ''
             let booking = {
+                bookRoom: this.bookRoom,
                 date: this.date,
                 start: this.start,
                 end: this.end,
                 purpose: this.purpose,
-                userId: user._id,
-                roomId: this.id
+                userId: user ? user._id : '',
+                roomId: this.id,
+                closed: this.closeRoom
             }
             this.createBooking(booking)
             .then(res => {
                 if (res.data.success) {
-                    console.log('success')
+                    window.location.reload()
                 }
             })
             .catch(err => {

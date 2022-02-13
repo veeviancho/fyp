@@ -32,10 +32,11 @@ router.post('/create', (req, res) => {
                     start: req.body.start,
                     end: req.body.end
                 }
+
                 let clash = timing(data)
                 if (clash) {
                     return res.status(400).json({
-                        msg: "Unable to book. A user has reserved the room at the time entered. Please try another date/time."
+                        msg: "Unable to book. The room could be closed for booking or a user has already reserved the room at the time entered. Please try another date/time."
                     })
                 }
             }
