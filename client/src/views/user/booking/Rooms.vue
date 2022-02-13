@@ -22,7 +22,7 @@
                 </div>
             </div>
             <button class="button ml-5 mb-2" type="submit">Show Results</button>
-            <button class="button ml-5 mb-2">Show Current</button>
+            <button class="button ml-5 mb-2" @click="showCurrent()">Show Current</button>
         </form>
     </section>
 
@@ -49,9 +49,10 @@
                     <div class="content">
                         <p class="subtitle has-text-weight-bold">
                             {{ item.title }} 
-                            <span class="tag is-primary is-light">10 / {{ item.maxUsers }} available</span>
-                            <!-- <span class="tag is-danger is-light">10 / 20</span>
-                            <span class="tag is-yellow">10 / 20</span> -->
+                            <span class="tag is-danger is-light" v-if="!item.bookRoom && item.bookWorkshop">Booked for workshop</span>
+                            <span class="tag is-danger is-light" v-if="item.bookRoom || item.count === item.maxUsers">Fully booked</span>
+                            <span class="tag is-primary is-light" v-if="!(item.bookRoom || item.count === item.maxUsers || item.bookWorkshop)">{{ item.count ? item.maxUsers - item.count : item.maxUsers }} / {{ item.maxUsers }} available</span>
+                            <!-- <span class="tag is-yellow">10 / 20</span> -->
                         </p>
                         <p class="desc">{{ item.description }}</p>
                     </div>
@@ -67,6 +68,8 @@
 
 <script>
 import { mapGetters, mapActions } from  'vuex'
+import Moment from 'moment';
+import { extendMoment } from 'moment-range';
 
 export default {
     name: 'Room',
@@ -86,23 +89,23 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['rooms']),
+        ...mapGetters(['rooms', 'allBookings', 'workshop']),
     },
     methods: {
-        ...mapActions(['getAllRooms', 'getBookings']),
+        ...mapActions(['getAllRooms', 'getAllBookings', 'getWorkshop']),
         getToday() {
             let temp = new Date()
       
             let dayArr = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
             let startTime = temp.format('HH:00');
-            startTime = String(Number(startTime.slice(0,2)) + 1).padStart(2,'0') + startTime.slice(2,5)
+            startTime = String(Number(startTime.slice(0,2))).padStart(2,'0') + startTime.slice(2,5)
             if (startTime == '24:00') {
                 startTime = '00:00'
             }
 
             let endTime = temp.format('HH:00');
-            endTime = String(Number(endTime.slice(0,2)) + 2).padStart(2,'0') + endTime.slice(2,5)
+            endTime = String(Number(endTime.slice(0,2)) + 1).padStart(2,'0') + endTime.slice(2,5)
             if (endTime == '24:00') {
                 endTime = '00:00'
             }
@@ -117,20 +120,85 @@ export default {
             this.results.startTime = startTime;
             this.results.endTime = endTime;
         },
+        showCurrent() {
+            this.getToday()
+            this.showResults()
+        },
         showResults() {
+            this.results.date = this.filterBy.date
+            this.results.startTime = this.filterBy.startTime
+            this.results.endTime = this.filterBy.endTime
+
+            const moment = extendMoment(Moment);
+
             localStorage.setItem('date', this.filterBy.date);
             localStorage.setItem('startTime', this.filterBy.startTime);
             localStorage.setItem('endTime', this.filterBy.endTime);
+
+            let bookings = this.allBookings
+
+            bookings = bookings.filter(item => {
+                // Get bookings that clash with the timing entered
+                let date1 = item.date + "T" + item.start + "+00:00" + "/" + item.date + "T" + item.end + "+00:00"
+                let range1  = moment.range(date1);
+                let date2 = this.filterBy.date + "T" + this.filterBy.startTime + "+00:00" + "/" + this.filterBy.date + "T" + this.filterBy.endTime + "+00:00" 
+                let range2 = moment.range(date2);
+                return range1.overlaps(range2)
+            })
+
+            let workshops = this.workshop
+            workshops = workshops.filter(item => {
+                // Get bookings that clash with the timing entered
+                let date1 = item.date + "T" + item.startTime + "+00:00" + "/" + item.date + "T" + item.endTime + "+00:00"
+                let range1  = moment.range(date1);
+                let date2 = this.filterBy.date + "T" + this.filterBy.startTime + "+00:00" + "/" + this.filterBy.date + "T" + this.filterBy.endTime + "+00:00" 
+                let range2 = moment.range(date2);
+                return range1.overlaps(range2)
+            })
+            
+            this.rooms.forEach(item => {
+                // Room becomes unavailable if whole room is occupied (for room booking / workshop booking)
+                let temp1 = bookings.filter(booking => {
+                    return booking.roomId === item._id && booking.bookRoom
+                })
+                // console.log(temp1)
+                if (temp1.length >= 1) {
+                    item.bookRoom = true
+                } else {
+                    item.bookRoom = false
+                }
+
+                let temp2 = workshops.filter(workshop => workshop.venue === item.title)
+                if (temp2.length >= 1) {
+                    item.bookWorkshop = true
+                } else {
+                    item.bookWorkshop = false
+                }
+
+                // Count no of seat bookings for each room
+                let temp3 = bookings.filter(booking => booking.roomId === item._id && !booking.bookRoom)
+                // Add count to each item in rooms
+                item.count = temp3.length
+
+                // console.log(item)
+            })
         }
     },
     created() {
         this.getAllRooms();
         this.getToday();
-        this.showResults();
-        this.getBookings();
+        this.getWorkshop().then(() => {
+            this.getAllBookings().then(() => {
+                this.showResults();
+            })
+        })
     }
 }
 </script>
+
+
+
+
 
 <style lang="scss" scoped>
 .is-yellow {

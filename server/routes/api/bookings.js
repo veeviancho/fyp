@@ -77,6 +77,25 @@ router.post('/create', (req, res) => {
                                 msg: "Unable to book. The room is fully booked at the time entered."
                             })
                         }
+
+                        // Validation: Check that no existing seat bookings if a full room booking is made
+                        if (req.body.bookRoom) {
+                            let data = {
+                                isBooking: true,
+                                room: room,
+                                arr: booking,
+                                date: req.body.date,
+                                start: req.body.start,
+                                end: req.body.end
+                            }
+                            let clash = timing(data)
+                            if (clash) {
+                                return res.status(400).json({
+                                    msg: "Some seats in the room have been reserved. Full room booking cannot be made at the moment."
+                                })
+                            }
+                        }
+
                     }
 
                     // If validated, save new booking
@@ -97,13 +116,34 @@ router.post('/create', (req, res) => {
                             success: true
                         }))
                         .catch(err => console.log(err));
-
+            
                 })
                 .catch(err => console.log(err))
             })
             .catch(err => console.log(err))
         })
         .catch(err => console.log(err))
+    })
+    .catch(err => console.log(err))
+})
+
+/**
+ * @route GET api/bookings/all
+ * @desc Return all bookings
+ * @access Private
+ */
+router.get('/all', (req, res) => {
+    Booking.find({})
+    .then(booking => {
+        if (!booking) {
+            return res.status(404).json({
+                msg: "No bookings found."
+            })
+        }
+        return res.status(200).json({
+            bookings: booking,
+            success: true
+        })
     })
     .catch(err => console.log(err))
 })
@@ -129,7 +169,7 @@ router.get('/:roomId', (req, res) => {
         .catch( err => {
             console.log(err) 
             return res.status(400).json({
-                msg: "Unable to retrieve booking. Please try again."
+                msg: "Unable to retrieve booking."
             })
         })
 })

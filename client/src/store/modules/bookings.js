@@ -2,6 +2,7 @@ import axios from "axios"
 
 const state = {
     bookings: [],
+    allBookings: [],
     userBookings: [],
     pastUserBookings: [],
 
@@ -18,6 +19,7 @@ const state = {
 
 const getters = {
     bookings: state => state.bookings,
+    allBookings: state => state.allBookings,
     userBookings: state => state.userBookings,
     pastUserBookings: state => state.pastUserBookings,
 
@@ -38,6 +40,14 @@ const actions = {
         } catch (err) {
             console.log(err)
             commit('createBooking_error', err.response.data.msg)
+        }
+    },
+
+    // Get all bookings
+    async getAllBookings({ commit }) {
+        let res = await axios.get('http://localhost:5000/api/bookings/all')
+        if (res.data.success) {
+            commit('getAllBookings_success', res.data.bookings)
         }
     },
 
@@ -102,6 +112,10 @@ const mutations = {
     createBooking_error(state, err) {
         state.bookingStatus.create = 'error'
         state.bookingError.create = err
+    },
+
+    getAllBookings_success(state, bookings) {
+        state.allBookings = bookings
     },
 
     // Get bookings for a particular room

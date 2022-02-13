@@ -1,10 +1,11 @@
 const state = {
     roomWorkshopEvents: [],
-    roomBookingEvents: []
+    roomBookingEvents: [],
+    seatBookingEvents: []
 }
 
 const getters = {
-    roomEvents: state => state.roomWorkshopEvents.concat(state.roomBookingEvents)
+    roomEvents: state => state.roomWorkshopEvents.concat(state.roomBookingEvents).concat(state.seatBookingEvents)
 }
 
 const actions = {
@@ -28,6 +29,7 @@ const actions = {
 
     // Get bookings for a room
     getBookingForRoom({ commit }, [booking, roomId]) { 
+        // Full Room Bookings
         const bookings = booking.filter(item => {
             return item.roomId == roomId && item.bookRoom == true
         })
@@ -36,13 +38,12 @@ const actions = {
             events.push({
                 start: bookings[i].date + ' ' + bookings[i].start,
                 end: bookings[i].date + ' ' + bookings[i].end,
-                title: 'User Booking',
-                // content: 'Full Room Booking',
+                title: 'User Full Room Booking',
                 class: 'Room Booking'
             })
         }
         commit('roomBooking_success', events)
-    }
+    },
 }
 
 const mutations = {
@@ -54,6 +55,11 @@ const mutations = {
     // Get booking events for a room
     roomBooking_success(state, events) {
         state.roomBookingEvents = events
+    },
+
+    // Get seat booking events for a room
+    seatBooking_success(state, events) {
+        state.seatBookingEvents = events
     }
 }
 
