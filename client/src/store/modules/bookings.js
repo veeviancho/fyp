@@ -91,6 +91,7 @@ const actions = {
             if (res.data.success) {
                 commit('removeBooking_success')
             }
+            return res
         }
         catch (err) {
             commit('removeBooking_error', err.response.data.msg)
