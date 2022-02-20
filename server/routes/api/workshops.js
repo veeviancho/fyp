@@ -158,7 +158,7 @@ router.put('/update', (req, res) => {
         }
     }
 
-    // Check timing clash if date, start or end time are edited
+    // Check timing clash
     Room.findOne({ title: req.body.venue })
     .then(room => {
         const roomId = room._id

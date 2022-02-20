@@ -1,3 +1,5 @@
+// import axios from 'axios';
+
 const state = {
     roomWorkshopEvents: [],
     roomBookingEvents: [],
@@ -54,6 +56,27 @@ const actions = {
         }
         commit('roomBooking_success', events)
     },
+
+    // Get fully reserved seats for a room
+    // getFull({ commit }, [booking, room]) {
+    //     // Non Full Room Bookings
+    //     const bookings = booking.filter(item => {
+    //         return item.roomId == room._id && item.bookRoom == false
+    //     })
+       
+    //     bookings.forEach(item => {
+    //         // Get list of bookings that have clashed timing
+    //         let res = axios.get('http://localhost:5000/api/bookings/get/clashed')
+    //         if (res.data.bookings) {
+    //             let events = res.data.bookings
+    //             // If length of array = maximum no of users at a time
+    //             if (events.length == room.maxUsers) {
+    //                 // Get the shortest range and add into calendar
+
+    //             }
+    //         }
+    //     })
+    // }
 }
 
 const mutations = {

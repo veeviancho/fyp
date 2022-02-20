@@ -87,6 +87,7 @@ export default {
                         return element._id === item.userId
                     })
                     item.username = user.username
+                    // console.log(item)
                 }
             })
         },
