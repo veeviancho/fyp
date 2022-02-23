@@ -20,7 +20,7 @@
                         <button class="button is-small" style="margin: 0.5em 0" @click="showModal">Edit Profile</button>
                         <EditProfile v-show="isModalVisible" @close="closeModal"/>
                         &nbsp;
-                        <button class="button is-small" style="margin: 0.5em 0">Profile Report</button>
+                        <router-link :to="{ name: 'Profile Report' }"><button class="button is-small" style="margin: 0.5em 0">Profile Report</button></router-link>
                     </p>
                 </div>
             </div>

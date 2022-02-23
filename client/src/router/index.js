@@ -23,6 +23,7 @@ import UserBookings from '../views/user/booking/UpcomingBookings.vue'
 import Activities from '../views/user/activities/RealTime.vue'
 
 import Profile from '../views/user/profile/Profile.vue'
+import ProfileReport from '../views/user/profile/ProfileReport.vue'
 
 // Admin views
 import AdminHome from '../views/admin/Home.vue'
@@ -157,7 +158,15 @@ const routes = [
     name: 'Profile',
     component: Profile
   },
-  { 
+  {
+    path: '/profile-report',
+    name: 'Profile Report',
+    component: ProfileReport,
+    meta: {
+      isReport: true
+    }
+  },
+  {
     path: '/:pathMatch(.*)*', 
     meta: {
       notFound: true
