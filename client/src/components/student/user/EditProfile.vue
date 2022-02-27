@@ -6,6 +6,13 @@
     <form class="box" @submit.prevent="updateUser">
 
       <div class="field">
+        <label class="label">Image Link</label>
+        <div class="control">
+          <input class="input is-warning" type="text" v-model="imageLink" placeholder="Paste image link">
+        </div>
+      </div>
+
+      <div class="field">
         <label class="label">Name</label>
         <div class="control">
           <input class="input is-warning" type="text" id="name" name="name" v-model="name" placeholder="New name">
@@ -63,7 +70,8 @@ export default {
       name: this.name,
       programme: this.programme,
       username: this.username,
-      about: this.about
+      about: this.about,
+      imageLink: this.imageLink
     }
   },
   computed: {
@@ -90,7 +98,8 @@ export default {
         name: this.name,
         programme: this.programme,
         username: this.username,
-        about: this.about
+        about: this.about,
+        imageLink: this.imageLink
       }
       // console.log(user)
       this.update(user)

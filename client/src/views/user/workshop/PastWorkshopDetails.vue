@@ -51,9 +51,6 @@
             
             <div class="field">      
             <div class="media" v-for="item in allFeedback" :key="item._id">
-                <figure class="image is-64x64">
-                    <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
-                </figure>
                 <div class="media-content">
                     <span class="subtitle is-6 has-text-white"><b>{{ item.name }}</b></span>&nbsp;
                     <span class="subtitle is-6 has-text-grey-light">@{{ item.username }}</span>
@@ -198,7 +195,7 @@ p {
 .media {
     border: solid 1px rgb(73, 73, 73);
     border-radius: 0.3rem;
-    padding: 1rem 1.5rem;
+    padding: 1rem 1.5rem 1rem 0;
     margin: 1em 0;
 }
 </style>

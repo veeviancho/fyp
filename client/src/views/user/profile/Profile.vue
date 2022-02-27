@@ -6,10 +6,12 @@
         <div class="column">
             <div class="columns">
                 <div class="column is-2">
-                    <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
+                    <figure class="image">
+                        <img class="is-rounded img-fit" :src="user.imageLink ? user.imageLink : 'https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png'">
+                    </figure>
                 </div>
 
-                <div class="column">
+                <div class="column profile-info">
                     <p>
                         <span class="is-size-3"><b><span class="has-text-white">{{ user.name }}</span></b> <small>@{{ user.username }}</small></span>
                         <br>
@@ -26,7 +28,7 @@
             </div>
             <div class="columns">
                 <div class="column">
-                    <p><i>About Me:</i></p>
+                    <p class="pt-2"><i>About Me:</i></p>
                     <span class="has-text-white about">{{ user.about }}</span>
                 </div>
             </div>
@@ -199,6 +201,18 @@ body,
 
 td {
     padding: 0 2rem 0 0;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.img-fit {
+    object-fit: cover;
+    height: 10rem;
+    width: 10rem;
 }
 
 @media (max-width: 600px) {
