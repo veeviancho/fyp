@@ -171,6 +171,20 @@ const actions = {
         catch (err) {
             commit('delete_error', err)
         }
+    },
+
+    // Remove feedback
+    async removeFeedback({ commit }, [workshopId, userId]) {
+        try {
+            let res = await axios.put("http://localhost:5000/api/workshops/feedback/remove/" + workshopId + "/" + userId)
+            if (res.data.success) {
+                commit('update_success')
+            }
+            return res
+        }
+        catch (err) {
+            console.log(err)
+        }
     }
 }
 

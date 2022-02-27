@@ -1,12 +1,13 @@
 <template>
 <div class="admin-content" v-if="workshopItem">
-    <router-link :to="{ name: 'Admin Workshop' }"><button class="button router">Back</button></router-link>
+    <router-link :to="{ name: 'Admin Past Workshop' }"><button class="button router">Back</button></router-link>
 
-    <h1 class="title" @click="console()">List of Users registered for 
-        <router-link :to="'/workshop/' + workshopItem._id">
+    <h1 class="title" @click="console()">List of Users registered for {{ workshopItem.title }}
+        <!-- <router-link :to="'/workshop/' + workshopItem._id">
             <span class="workshop">{{ workshopItem.title }}</span>
-        </router-link>
+        </router-link> -->
     </h1>
+
     <p>Total number of participants: {{ users.length }}/{{ workshopItem.maxUsers }}</p>
     
     <table class="table is-hoverable">
@@ -18,9 +19,9 @@
             <th>Email Address</th>
             <th>Programme</th>
             <!-- <th>Workshops registered</th> -->
-            <th>Member since</th>
+            <th>Feedback</th>
 
-            <th>Remove</th>
+            <th>Remove Feedback</th>
         </tr>
     </thead>
     
@@ -31,10 +32,11 @@
         <td>@{{ user.username }}</td>
         <td>{{ user.email }}</td>
         <td>{{ user.programme }}</td>
-        <!-- <td v-for="(workshop, index) in user.workshops" :key="index">
-            {{ workshop }}
-        </td> -->
-        <td>{{ user.date.slice(0,10) }}</td>
+        <td>
+            <div v-for="(item,index) in workshopItem.feedback" :key="index">
+                {{ item.userId == user._id ? item.feedback + " (" + item.rating + " stars) " : "" }}
+            </div>
+        </td>
         <td>
             <button class="button is-danger" @click="removeUser(user._id)">Remove</button>
         </td>
@@ -59,11 +61,11 @@ export default {
         ...mapGetters(['workshopItem', 'userById'])
     },
     methods: {
-        ...mapActions(['getWorkshop', 'getPastWorkshopFromId', 'getAllUsers', 'getUserFromId', 'deregisterFromWorkshop']),
+        ...mapActions(['getWorkshop', 'getPastWorkshopFromId', 'getAllUsers', 'getUserFromId', 'removeFeedback']),
         removeUser(userId) {
-            let confirmRemove = confirm("Remove user from workshop?")
+            let confirmRemove = confirm("Remove feedback from user?")
             if (confirmRemove) {
-                this.deregisterFromWorkshop([this.id, userId]).then(res => {
+                this.removeFeedback([this.id, userId]).then(res => {
                     if (res.data.success) {
                         window.location.reload();
                     }

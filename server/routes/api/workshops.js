@@ -17,7 +17,8 @@ const Room = require('../../model/Room')
 // const moment = MomentRange.extendMoment(Moment);
 
 // Import timing validation check
-const timing = require('../../validation/timing')
+const timing = require('../../validation/timing');
+const { response } = require('express');
 
 /**
  * @route POST api/workshops/create
@@ -418,5 +419,36 @@ router.put('/deregister/:workshopId/:userId', (req, res) => {
         console.log(err)
     })
 })
+
+/**
+ * @route PUT api/workshops/feedback/remove
+ * @desc Update workshop by removing feedback
+ * @access Private (admin only)
+ */
+router.put('/feedback/remove/:workshopId/:userId', (req, res) => {
+
+    Workshop.findOne({ _id: req.params.workshopId })
+    
+    .then(workshop => {
+
+        console.log(workshop)
+
+
+        workshop.feedback = workshop.feedback.filter(item => {
+            return item.userId !== req.params.userId
+        })
+        console.log(workshop.feedback)
+        workshop.save();
+
+        return res.status(200).json({
+            success: true
+        })
+    })
+
+    .catch(err => {
+        console.log(err)
+    })
+})
+
 
 module.exports = router;
