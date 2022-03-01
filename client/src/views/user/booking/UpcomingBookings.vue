@@ -28,7 +28,11 @@
                         <strong class="has-text-white">Time:</strong> {{ item.start }} - {{ item.end }} <br>
                         <strong class="has-text-white">Purpose of Visit:</strong> {{ item.purpose ? item.purpose : "NIL" }} <br>
                         <!-- <strong class="has-text-white">No of booked seats:</strong> {{ item.date }} <br> -->
-                        <small>*Please make sure to leave the venue <i>before</i> the end of your booked session.</small>
+                        <small>
+                            <span v-if="item.bookRoom">Full Room Booking</span>
+                            <span v-else>Seat Booking</span>
+                            | Please make sure to leave the venue <i>before</i> the end of your booked session.
+                        </small>
 
                         <div><button v-if="hover && buttonId==item._id" @click="deleteBooking(item._id)" class="cancelBtn button mt-3 mb-5">Cancel Booking</button></div>
                     </div>

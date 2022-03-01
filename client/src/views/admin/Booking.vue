@@ -75,8 +75,9 @@ export default {
         ...mapActions(['getBookings', 'getAllUsers', 'getAllRooms', 'getRoomFromId', 'removeBooking']),
         getToday() {
             let temp = new Date()
-            let month = String(parseInt(temp.getMonth()) + 1).padStart(2, "0")
-            this.dateValue = temp.getFullYear() + '-' + month + '-' + temp.getDate()
+            // let month = String(parseInt(temp.getMonth()) + 1).padStart(2, "0")
+            this.dateValue = temp.format('YYYY-MM-DD');
+            // this.dateValue = temp.getFullYear() + '-' + month + '-' + temp.getDate()
         },
         getUsername() {
             let temp = this.bookings
@@ -108,9 +109,10 @@ export default {
         this.getAllRooms().then(() => {
             this.getRoomFromId(this.id)
         })
-        this.getBookings(this.id)
-        this.getAllUsers().then(() => {
-            this.getUsername()
+        this.getBookings(this.id).then(() => {
+            this.getAllUsers().then(() => {
+                this.getUsername()
+            })
         })
     }
 }

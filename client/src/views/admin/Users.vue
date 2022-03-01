@@ -29,7 +29,7 @@
             <th>Email</th>
 
             <th>Edit</th>
-            <th>Manage</th>
+            <th>View</th>
             <th>Remove</th>
         </tr>
         </thead>
@@ -46,7 +46,16 @@
             </td>
 
             <td>
-                <button class="button green">Bookings</button>
+                <button class="button green" @click="bookingUser(user)">Bookings</button>
+                <EditBooking 
+                    :userItem="modalData" 
+                    :workshop="userWorkshop" 
+                    :pastWorkshop="pastUserWorkshop" 
+                    :booking="userBookings"
+                    :pastBooking="pastUserBookings"
+                    v-show="bookingVisible && modalData == user" 
+                    @close="bookingVisible=false"
+                />
             </td>
             <td>
                 <button class="button is-danger" @click="removeUser(user)">Remove</button>
@@ -62,27 +71,30 @@
 import { mapGetters, mapActions } from 'vuex'
 import EditUser from './EditUser.vue'
 import CreateUser from './CreateUser.vue'
+import EditBooking from './UserBooking.vue'
 
 export default {
     data() {
         return {
             createVisible: false,
             editVisible: false,
-            modalData: {}
+            modalData: {},
+            bookingVisible: false
         }
     },
     components: {
         CreateUser,
-        EditUser
+        EditUser,
+        EditBooking
     },
     computed: {
-        ...mapGetters(['usersList']),
+        ...mapGetters(['usersList', 'userWorkshop', 'pastUserWorkshop', 'userBookings', 'pastUserBookings', 'roomId']),
         users: function() {
             return this.usersList.filter(user => !user.isAdmin)
         }
     },
     methods: {
-        ...mapActions(['getAllUsers', 'deleteUser']),
+        ...mapActions(['getAllUsers', 'deleteUser', 'getWorkshop', 'getUserWorkshop', 'getUserBookings', 'getAllRooms', 'getRoomFromId']),
         openCreate() {
             this.createVisible = true
         },
@@ -92,6 +104,29 @@ export default {
         editUser(data) {
             this.modalData = data
             this.editVisible = true
+        },
+        bookingUser(user) {
+            this.modalData = user
+            this.bookingVisible = true
+            this.getWorkshop().then(() => {
+                this.getUserWorkshop(user._id)
+            })
+            this.getUserBookings(user._id).then(() => {
+                this.pastUserBookings.forEach(item => {
+                    this.getAllRooms().then(() => {
+                        this.getRoomFromId(item.roomId).then(() => {
+                            item.title = this.roomId.title
+                        })
+                    })
+                })
+                this.userBookings.forEach(item => {
+                    this.getAllRooms().then(() => {
+                        this.getRoomFromId(item.roomId).then(() => {
+                            item.title = this.roomId.title
+                        })
+                    })
+                })
+            })
         },
         closeEdit() {
             this.editVisible = false
