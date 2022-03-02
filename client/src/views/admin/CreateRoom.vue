@@ -18,18 +18,18 @@
         <div class="field">
             <label class="label">Image</label>
             <div class="control">
-                <!-- <div class="file mb-2">
+                <div class="file mb-2">
                 <label class="file-label">
-                    <input class="file-input" type="file" name="resume">
+                    <input class="file-input" type="file" accept=".jpg,.jpeg,.png" @change="onFileSelected">
                     <span class="file-cta">
                         <span class="file-icon"><fa icon="upload"/></span>
-                        <span class="file-label">Choose a file…</span>
+                        <span class="file-label">Upload image</span>
                     </span>
-                    <span class="file-name" v-if="filename">{{ filename }}</span>
+                    <span class="file-name" v-if="selectedFile">{{ selectedFile.name }}</span>
                 </label>
                 </div>
-                ...or paste a link: -->
-                <input class="input is-warning" type="text" placeholder="Image link" v-model="imageLink">
+                <!-- ...or paste a link: -->
+                <!-- <input class="input is-warning" type="text" placeholder="Image link" v-model="imageLink"> -->
             </div>
         </div>
 
@@ -62,9 +62,10 @@ export default {
         return {
             title: '',
             description: '',
-            imageLink: '',
-            // filename: '',
-            maxUsers: ''
+            // imageLink: '',
+            maxUsers: '',
+
+            selectedFile: null,
         }
     },
     computed: {
@@ -76,13 +77,22 @@ export default {
             this.$emit('close')
         },
         create() {
-            let room = {
-                title: this.title,
-                description: this.description,
-                imageLink: this.imageLink,
-                maxUsers: this.maxUsers
-            }
-            this.createRoom(room)
+            // let room = {
+            //     title: this.title,
+            //     description: this.description,
+            //     imageLink: this.imageLink,
+            //     maxUsers: this.maxUsers
+            // }
+
+            const formData = new FormData();
+            formData.append('title', this.title);
+            formData.append('description', this.description);
+            formData.append('imageLink', this.selectedFile);
+            formData.append('maxUsers', this.maxUsers);
+
+            console.log(formData)
+
+            this.createRoom(formData)
                 .then(() => {
                     if (this.roomStatus.create == "success") {
                         window.location.reload()
@@ -92,6 +102,9 @@ export default {
                 .catch(err => {
                     console.log(err)
                 })
+        },
+        onFileSelected(event) {
+            this.selectedFile = event.target.files[0]
         }
     }
 }

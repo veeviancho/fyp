@@ -7,23 +7,25 @@
 
         <div class="field">
             <label class="label">Image &nbsp;&nbsp;
-                <small class="edit-btn" v-if="!show[2]" @click="show[2]=true">Edit</small>
-                <small class="edit-btn" v-if="show[2]" @click="this.imageLink=''; show[2]=false">Cancel</small>
+                <small class="edit-btn" v-if="!show[3]" @click="show[3]=true">Edit</small>
+                <small class="edit-btn" v-if="show[3]" @click="this.imageLink=''; show[3]=false">Cancel</small>
             </label>
             <div class="control">
-                <img class="image" v-if="!show[2]" :src="room.imageLink">
-                <!-- <div class="file mb-2">
-                <label class="file-label">
-                    <input class="file-input" type="file" name="resume">
-                    <span class="file-cta">
-                        <span class="file-icon"><fa icon="upload"/></span>
-                        <span class="file-label">Choose a file…</span>
-                    </span>
-                    <span class="file-name" v-if="filename">{{ filename }}</span>
-                </label>
+                <img class="image" v-if="!show[3]" :src="room.imageLink">
+                <div class="columns" v-if="show[3]">
+                    <div class="column">
+                        <div class="file mb-2">
+                            <label class="file-label">
+                                <input class="file-input" type="file" accept=".jpg,.jpeg,.png" @change="onFileSelected">
+                                <span class="file-cta">
+                                    <span class="file-icon"><fa icon="upload"/></span>
+                                    <span class="file-label">Upload Image</span>
+                                </span>
+                                <span class="file-name" v-if="selectedFile">{{ selectedFile.name }}</span>
+                            </label>
+                        </div>
+                    </div>
                 </div>
-                ...or paste a link: -->
-                <input class="input is-warning" type="text" placeholder="Image link" v-if="show[2]" v-model="imageLink">
             </div>
         </div>
 
@@ -52,7 +54,7 @@
         <div class="field">
             <label class="label">Maximum seats &nbsp;&nbsp;
                 <small class="edit-btn" v-if="!show[2]" @click="show[2]=true">Edit</small>
-                <small class="edit-btn" v-if="show[1]" @click="this.maxUsers=''; show[2]=false">Cancel</small>
+                <small class="edit-btn" v-if="show[2]" @click="this.maxUsers=''; show[2]=false">Cancel</small>
             </label>
             <div class="control">
                 <p v-if="!show[2]">{{ room.maxUsers }}</p>
@@ -86,6 +88,7 @@ export default {
             imageLink: this.imageLink,
             maxUsers: this.maxUsers,
             show: [false, false, false, false],
+            selectedFile: null
         }
     },
     computed: {
@@ -117,13 +120,15 @@ export default {
             }
             this.updateRoom(room).then( () => {
                 if (this.roomStatus.update == "success") {
-                    // console.log("success")
                     window.location.reload();
                 }
             })
             .catch(err => {
                 console.log(err)
             })
+        },
+        onFileSelected(event) {
+            this.selectedFile = event.target.files[0]
         }
     }
 }
