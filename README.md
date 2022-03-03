@@ -12,3 +12,6 @@ To start the server (port 5000)
 ```
 npm start
 ```
+
+### Home Page Preview
+/client/public/uploads/preview.png
