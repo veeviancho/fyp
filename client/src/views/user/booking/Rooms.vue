@@ -35,14 +35,13 @@
             </b>
         </h1>
 
-        <div class="columns is-multiline my-5">
-
+        <div class="columns results is-multiline my-5">
             <div class="column is-one-quarter" v-for="item in rooms" :key="item._id">
                 <router-link :to="'/rooms/' + item._id">
                 <div class="card">
                 <div class="card-image">
                     <figure class="image is-4by3">
-                    <img :src="item.imageLink" alt="Placeholder image">
+                    <img :src="getImgURL(item.imageLink)" alt="Room Image">
                     </figure>
                 </div>
                 <div class="card-content">
@@ -183,6 +182,9 @@ export default {
 
                 // console.log(item)
             })
+        },
+        getImgURL(pic) {
+            return require('@/../public/uploads/' + pic)
         }
     },
     created() {
@@ -213,6 +215,10 @@ export default {
 
 .section {
     background-color: #161C20;
+}
+
+.results {
+    min-width: 90vw;
 }
 
 @media (max-width: 600px) {
