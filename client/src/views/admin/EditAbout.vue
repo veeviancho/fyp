@@ -43,7 +43,7 @@
         <div class="field" v-show="aboutItem.number==6">
             <label class="label">Image Link</label>
             <div class="control">
-                <input class="input" type="text" placeholder="Paste image link" v-model="imageLink">
+                <input class="input" type="text" placeholder="Paste image address" v-model="imageLink">
             </div>
         </div>
 

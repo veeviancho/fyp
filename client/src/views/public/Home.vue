@@ -20,12 +20,17 @@
   </section>
 
   <div v-for="item in rooms" :key="item._id">
-  <section :id="item._id" class="bgImg" :style="{  backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.7)), url(' + item.imageLink + ')' }">
+  <!-- <section :id="item._id" class="bgImg" :style="{  backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.7)), url(' + item.imageLink + ')' }"> -->
+  <section 
+    :id="item._id" class="bgImg" 
+    :style="{  backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.7)), url(' + getImgURL(item.imageLink) + ')' }"
+  >
     <h1>{{ item.title }}</h1>
     <p>{{ item.description }}</p>
     <br>
     <router-link :to="{ name: 'Login' }"><button class="button" v-if="!isLoggedIn">Login</button></router-link>
     <router-link :to="'/rooms/' + item._id"><button class="button" v-if="isLoggedIn">Book Now</button></router-link>
+
   </section>
   </div>
 
@@ -41,7 +46,10 @@ export default {
       ...mapGetters(['isLoggedIn', 'user', 'rooms', 'about'])
     },
     methods: {
-      ...mapActions(['getProfile', 'getAllRooms', 'getAbout'])
+      ...mapActions(['getProfile', 'getAllRooms', 'getAbout']),
+      getImgURL(pic) {
+        return require('@/../public/uploads/' + pic)
+      }
     },
     created() {
       this.getAbout();

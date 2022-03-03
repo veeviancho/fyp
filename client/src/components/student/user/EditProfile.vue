@@ -8,7 +8,7 @@
       <div class="field">
         <label class="label">Image Link</label>
         <div class="control">
-          <input class="input is-warning" type="text" v-model="imageLink" placeholder="Paste image link">
+          <input class="input is-warning" type="text" v-model="imageLink" placeholder="Paste image address">
         </div>
       </div>
 
