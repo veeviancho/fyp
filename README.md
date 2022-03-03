@@ -14,4 +14,4 @@ npm start
 ```
 
 ### Home Page Preview
-/client/public/uploads/preview.png
+![Home Page Preview](/client/public/uploads/preview.png)
