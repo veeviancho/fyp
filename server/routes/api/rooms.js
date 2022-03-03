@@ -11,7 +11,7 @@ const path = require('path');
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
-      cb(null, path.join(__dirname, '/uploads/'));
+      cb(null, path.join(__dirname, '../../../client/public/uploads/'));
     },
     filename: function(req, file, cb) {
       cb(null, new Date().toISOString().replace(/:/g, '-') + ' - ' + file.originalname);
@@ -29,9 +29,6 @@ const fileFilter = (req, file, cb) => {
 
 const upload = multer({
     storage: storage,
-    // limits: {
-    //     fileSize: 1024 * 1024 * 5
-    // },
     fileFilter: fileFilter
 });
 
@@ -84,8 +81,22 @@ router.get('/all', (req, res) => {
  * @desc Update workshop information
  * @access Private (admin only)
  */
-router.put('/update', (req, res) => {
-    Room.findOneAndUpdate({ _id: req.body.id }, { $set: req.body })
+router.put('/update', upload.single('imageLink'), (req, res) => {
+    let params = {
+        title: req.body.title,
+        description: req.body.description,
+        imageLink: req.file ? req.file.filename : null,
+        maxUsers: req.body.maxUsers
+    }
+
+    for (let prop in params) {
+        if (!params[prop] || params[prop] == 'undefined') {
+            delete params[prop]
+            // console.log(params)
+        }
+    }
+    
+    Room.findOneAndUpdate({ _id: req.body.id }, { $set: params })
         .then(room => {
             if (!room) {
                 return res.status(404).json({

@@ -90,7 +90,7 @@ export default {
             formData.append('imageLink', this.selectedFile);
             formData.append('maxUsers', this.maxUsers);
 
-            console.log(formData)
+            // console.log(formData)
 
             this.createRoom(formData)
                 .then(() => {

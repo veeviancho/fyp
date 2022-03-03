@@ -10,8 +10,9 @@
                 <small class="edit-btn" v-if="!show[3]" @click="show[3]=true">Edit</small>
                 <small class="edit-btn" v-if="show[3]" @click="this.imageLink=''; show[3]=false">Cancel</small>
             </label>
-            <div class="control">
-                <img class="image" v-if="!show[3]" :src="room.imageLink">
+            <div class="control" v-if="room.imageLink">
+                <img class="image" v-if="!show[3]" :src="getImgURL(room.imageLink)">
+             
                 <div class="columns" v-if="show[3]">
                     <div class="column">
                         <div class="file mb-2">
@@ -111,14 +112,24 @@ export default {
             }
         },
         editRoom() {
-            const room = {
-                id: this.room._id,
-                title: this.title,
-                description: this.description,
-                imageLink: this.imageLink,
-                maxUsers: this.maxUsers
-            }
-            this.updateRoom(room).then( () => {
+
+            // const room = {
+            //     id: this.room._id,
+            //     title: this.title,
+            //     description: this.description,
+            //     imageLink: this.imageLink,
+            //     maxUsers: this.maxUsers
+            // }
+
+            const formData = new FormData();
+
+            formData.append('id', this.room._id);
+            formData.append('title', this.title);
+            formData.append('description', this.description);
+            formData.append('imageLink', this.selectedFile);
+            formData.append('maxUsers', this.maxUsers);
+
+            this.updateRoom(formData).then( () => {
                 if (this.roomStatus.update == "success") {
                     window.location.reload();
                 }
@@ -129,6 +140,9 @@ export default {
         },
         onFileSelected(event) {
             this.selectedFile = event.target.files[0]
+        },
+        getImgURL(pic) {
+            return require('@/../public/uploads/' + pic)
         }
     }
 }
