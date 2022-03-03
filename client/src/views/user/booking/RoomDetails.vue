@@ -1,9 +1,9 @@
 <template>
     <div class="has-navbar-fixed-top has-text-white">
-        <RoomImage :roomImg="roomId.imageLink" v-show="viewImage==true" @close="viewImage=false"/>
+        <RoomImage :roomImg="getImgURL(roomId.imageLink)" v-show="viewImage==true" @close="viewImage=false"/>
         <div class="section" v-if="roomId">
             <div class="workshop-details">
-                <section class="image" @click="viewImage=true" :style="{  backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.7)), url(' + roomId.imageLink + ')' }">
+                <section class="image" @click="viewImage=true" :style="{  backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.7)), url(' + getImgURL(roomId.imageLink) + ')' }">
                     <div class="roomDetails">
                         <h1 class="title has-text-white">{{ roomId.title }}</h1>
                         <p>{{ roomId.description }}</p>
@@ -211,6 +211,9 @@ export default {
         },
         errorMsgDisplay() {
             this.bookingError.create = ''
+        },
+        getImgURL(pic) {
+            return require('@/../public/uploads/' + pic)
         }
     },
     created() {
