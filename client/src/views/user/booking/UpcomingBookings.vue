@@ -18,7 +18,7 @@
 
                     <figure class="media-left">
                         <p class="image is-128x128 is-square">
-                            <img :src="item.roomImage">
+                            <img v-if="item.roomImage" :src="getImgURL(item.roomImage)">
                         </p>
                     </figure>
 
@@ -91,6 +91,9 @@ export default {
                     }
                 })
             }
+        },
+        getImgURL(pic) {
+            return require('@/../public/uploads/' + pic)
         }
     },
     created() {

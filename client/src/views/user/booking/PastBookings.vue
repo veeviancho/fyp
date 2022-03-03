@@ -16,7 +16,7 @@
 
                     <figure class="media-left">
                         <p class="image is-128x128 is-square">
-                            <img :src="item.roomImage">
+                            <img v-if="item.roomImage" :src="getImgURL(item.roomImage)">
                         </p>
                     </figure>
 
@@ -68,6 +68,10 @@ export default {
                     this.pastUserBookings[i].roomTitle = this.roomId.title
                 })
             }
+        },
+        getImgURL(pic) {
+            // console.log(pic)
+            return require('@/../public/uploads/' + pic)
         }
     },
     created() {
