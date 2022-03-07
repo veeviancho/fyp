@@ -10,11 +10,16 @@
         <div class="field">
           <label class="label">Email</label>
           <div class="control">
-            <input class="input" type="email" id="email" name="email" v-model="email" placeholder="johndoe@e.ntu.edu.sg">
+            <input class="input" type="email" v-model="email" placeholder="johndoe@e.ntu.edu.sg">
           </div>
         </div>
-        <p class="has-text-danger has-text-centered mb-3"></p>
-        <button type="submit" class="button is-outlined is-fullwidth" @click="showNext()">Send Code to Email</button>
+        <p class="has-text-danger has-text-centered mb-3" v-if="resetError.findEmail">{{ resetError.findEmail }}</p>
+        <!-- <button type="submit" class="button is-outlined is-fullwidth" @click="showNext()">Send Code to Email</button> -->
+        <button 
+          type="submit" 
+          v-bind:class="[resetStatus.findEmail === 'loading' ? 'is-loading': '', 'button is-outlined is-fullwidth']"
+          @click="showNext()"
+        >Send Code to Email</button>
       </form>
     </div>
 
@@ -31,26 +36,30 @@
       <div class="field">
         <label class="label">Enter Code</label>
         <div class="control">
-          <input class="input" type="text" id="code" name="code" placeholder="Code">
+          <input class="input" type="text" placeholder="Code" v-model="code">
         </div>
       </div>
-      <button type="submit" class="button is-outlined is-fullwidth" @click="showNext()">Proceed</button>
+      <button 
+        type="submit" 
+        v-bind:class="[resetStatus.verifyCode === 'loading' ? 'is-loading': '', 'button is-outlined is-fullwidth']"
+        @click="showNext()"
+      >Proceed</button>
       </form>
     </div>
 
     <!-- Step 3: Reset Password -->
     <div class="box" v-show="show3">
-      <form @submit.prevent="updateUser">
+      <form @submit.prevent="updatePassword">
       <div class="field">
         <label class="label">New Password</label>
         <div class="control">
-          <input class="input" type="password" id="password" name="password" placeholder="New Password">
+          <input class="input" type="password" v-model="password" placeholder="New Password">
         </div>
       </div> 
       <div class="field">
         <label class="label">Confirm Password</label>
         <div class="control">
-          <input class="input" type="password" id="password2" name="password2" placeholder="Confirm Password">
+          <input class="input" type="password" v-model="password2" placeholder="Confirm Password">
         </div>
       </div> 
       <button type="submit" class="button is-outlined is-fullwidth">Update</button>
@@ -63,17 +72,27 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
   name: 'Forgot Password',
   data() {
     return {
       email: '',
+      code: '',
+      userId: '',
+      password: '',
+      password2: '',
       show1: true,
       show2: false,
       show3: false
     }
   },
+  computed: {
+    ...mapGetters(['resetError', 'resetStatus'])
+  },
   methods: {
+    ...mapActions(['findEmail', 'verifyCode', 'resetPW']),
     close() {
       this.$emit('close');
       this.show1 = true;
@@ -81,14 +100,43 @@ export default {
       this.show3 = false;
     },
     showNext() {
+      // Step 1
       if (this.show1 === true) {
-        this.show1 = false;
-        this.show2 = true;
-        console.log(this.email);
-      } else if (this.show2 === true) {
-        this.show2 = false;
-        this.show3 = true;
+        if (this.email) {
+          this.findEmail(this.email).then(res => {
+            if (res.data.success) {
+              this.show1 = false;
+              this.show2 = true;
+              this.userId = res.data.user._id
+            }
+          })
+        } else {
+          alert("Please enter your email.")
+        }
       }
+      // Step 2
+      else if (this.show2 === true) {
+        // console.log(this.code)
+        // console.log(this.userId)
+        this.verifyCode([this.code, this.userId]).then(res => {
+          if (res.data.success) {
+            this.show2 = false;
+            this.show3 = true;
+          }
+        })
+      }
+    },
+    updatePassword() {
+      // console.log(this.userId)
+      let data = {
+        password: this.password,
+        password2: this.password2
+      }
+      this.resetPW([this.userId, data]).then(res => {
+        if (res.data.success) {
+          window.location.reload()
+        }
+      })
     }
   }
 }

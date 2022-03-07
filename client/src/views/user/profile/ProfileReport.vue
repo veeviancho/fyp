@@ -47,7 +47,7 @@
                                 <span class="title is-4 category py-2">{{ category }}</span> &nbsp;
                                 <span class="description">Student has attended <strong>{{ pastUserWorkshop.filter(item => item.category === category).length }}</strong> {{ category }} workshop(s)</span>
 
-                                <table class="mt-6">
+                                <table class="mt-5">
                                     <tr v-for="workshopItem in pastUserWorkshop.filter(item => item.category === category)" :key="workshopItem._id">
                                         <td>{{ workshopItem.date }}</td>
                                         <td><b>{{ workshopItem.title }}</b></td>
@@ -59,8 +59,6 @@
                     </div>
                     </div>
                 </div>
-
-
             </div>
    
             <!-- <button class="button is-fullwidth mt-4" @click="makePDF">Download as PDF</button> -->
@@ -94,6 +92,7 @@ export default {
             window.html2canvas = html2canvas;
             const pageWidth = 900;
             const pageHeight = 1273;
+
             const doc = new jsPDF({
                 orientation: "p",
                 unit: "px",
@@ -101,6 +100,7 @@ export default {
                 format: [pageWidth, pageHeight],
                 compressPdf: true
             });
+
             doc.html(document.querySelector('#report'), {
                 callback: function(pdf) {
                     pdf.save("ProfileReport.pdf")
@@ -147,4 +147,7 @@ export default {
     text-align: right;
 }
 
+tr {
+    border-top: 1px solid lightgray;
+}
 </style>

@@ -462,6 +462,7 @@ router.post('/resend/:email', (req, res) => {
 
                 transporter.sendMail(mailOptions, (err) => {
                     if (err) {
+                        console.log(err)
                         return res.status(400).json({
                             msg: "Unable to send! Please try again."
                         })
@@ -565,24 +566,153 @@ router.get('/get/:username', (req, res) => {
         })
 })
 
-// /**
-//  * @route api/users/forgotpw
-//  * @desc Send code to user's email and Change Password
-//  * @access Public
-//  */
+/**
+ * @route api/users/findEmail/:email
+ * @desc Send code to user's email
+ * @access Public
+ */
+router.get('/findEmail/:email', (req, res) => {
+    const email = req.params.email;
+    User.findOne({ email })
+    .then(user => {
+        if (!user) {
+            return res.status(404).json({
+                msg: "Email not found. Please register for an account."
+            })
+        } else {
+            const token = new Token({
+                _userId: user._id,
+                token: crypto.randomBytes(3).toString('hex').toUpperCase()
+            })
+            token.save(err => {
+                if (err) {
+                    console.log(err)
+                    return res.status(400).json({
+                        msg: "Unable to send! Please try again."
+                    })
+                }
 
-// router.put('/forgotpw', (req, res) => {
+                // Send email
+                let transporter = nodemailer.createTransport({
+                    service: 'Gmail',
+                    auth: {
+                        type: 'OAuth2',
+                        user: process.env.MAIL_USERNAME,
+                        pass: process.env.MAIL_PASSWORD,
+                        clientId: process.env.OAUTH_CLIENTID,
+                        clientSecret: process.env.OAUTH_CLIENT_SECRET,
+                        refreshToken: process.env.OAUTH_REFRESH_TOKEN,
+                        accessToken: process.env.OAUTH_ACCESS_TOKEN
+                    }
+                })
 
-//     const email = req.body.email;
+                const code = token.token;
 
-//     User.findOne({ email }).then(user => {
-//         if (!user) {
-//             return res.status(404).json({
-//                 msg4: "Email not found."
-//             })
-//         }
-//     })
-// })
+                let mailOptions = {
+                    from: 'EEE Lifelong Learning Space' + '<' + process.env.MAIL_USERNAME + '>',
+                    to: user.email,
+                    subject: "Reset Password Code", // Subject line
+                    text: 'Hello ' + user.name + ',\n\n' + 'You are receiving this email because you have recently requested for a password reset in the EEE Lifelong Learning Space web platform.' + '\n\n' + 'Please enter the code below to reset your password:\n' + code + '\n\nThank you!\n',
+                };
+
+                transporter.sendMail(mailOptions, (err) => {
+                    if (err) {
+                        console.log(err)
+                        return res.status(400).json({
+                            msg: "Error encountered. Please try again later."
+                        })
+                    } 
+                    return res.status(200).json({
+                        success: true,
+                        user: user
+                    })
+                })
+            })
+        }
+    })
+    .catch(err => {
+        console.log(err)
+    })
+})
+
+/**
+ * @route api/users/verifyCode/:code/:userId
+ * @desc Verify code
+ * @access Private
+ */
+router.get('/verifyCode/:code/:userId', (req, res) => {
+    // console.log(req.params.code)
+    Token.findOne({ token: req.params.code })
+    .then(token => {
+        if (!token) {
+            console.log('Token not found');
+        } else {
+            if (token._userId != req.params.userId) {
+                return res.status(400).json({
+                    msg: "Invalid code entered."
+                })
+            }
+            return res.status(200).json({
+                success: true,
+                token: token
+            })
+        }
+    })
+    .catch(err => console.log(err))
+})
+
+/**
+ * @route api/users/resetPW/:userId
+ * @desc Reset Password
+ * @access Private
+ */
+
+router.put('/resetPw/:userId', (req, res) => {
+    User.findOne({ _id: req.params.userId })
+        .then(user => {
+            if (!user) {
+                console.log('No user found')
+            } else {
+                let password = req.body.password
+                let password2 = req.body.password2
+
+                if (password !== password2) {
+                    return res.status(400).json({
+                        msg: "Passwords do not match."
+                    })
+                }
+
+                check = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})/
+                if (!(check.test(password))) {
+                    return res.status(400).json ({
+                        msg: "Weak password.",
+                        info: [
+                            { msg: "At least one uppercase letter." },
+                            { msg: "At least one lowercase letter." },
+                            { msg: "At least one number." },
+                            { msg: "At least 6 characters." }
+                        ]
+                    })
+                }
+                
+                bcrypt.genSalt(10, (err, salt) => {
+                    if (err) throw err
+                    bcrypt.hash(password, salt, (err, hash) => {
+                        if (err) throw err;
+                        user.password = hash;
+                        user.save()
+                        .then(() => {
+                            return res.status(200).json({
+                                success: true
+                            })
+                        })
+                        .catch(err => console.log(err))
+                    })
+                })
+            }
+        })
+        .catch(err => console.log(err))
+    })
 
 //Export router to be used elsewhere
 module.exports = router;

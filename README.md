@@ -4,12 +4,14 @@ Web-based Platform for Effective Management of Lifelong Learning Space in EEE
 ### Client
 To start the client (port 8080)
 ```
+cd client
 npm run serve
 ```
 
 ### Server
 To start the server (port 5000)
 ```
+cd server
 npm start
 ```
 
