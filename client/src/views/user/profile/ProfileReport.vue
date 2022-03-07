@@ -17,7 +17,7 @@
 
             <button class="button is-fullwidth mb-5" @click="makePDF">Download as PDF</button>
          
-            <div id="report">
+            <div id="report" ref="report">
                 <div class="columns">
                     <div class="column">
                         <small>EEE Lifelong Learning Space</small>
@@ -51,7 +51,7 @@
                                     <tr v-for="workshopItem in pastUserWorkshop.filter(item => item.category === category)" :key="workshopItem._id">
                                         <td>{{ workshopItem.date }}</td>
                                         <td><b>{{ workshopItem.title }}</b></td>
-                                        <td class="has-text-grey">{{ workshopItem.description }}</td>
+                                        <td class="has-text-grey"><div class="fixed">{{ workshopItem.description }}</div></td>
                                     </tr>
                                 </table>
                             </div>
@@ -60,7 +60,7 @@
                     </div>
                 </div>
             </div>
-   
+            
             <!-- <button class="button is-fullwidth mt-4" @click="makePDF">Download as PDF</button> -->
 
         </div>
@@ -76,7 +76,7 @@ export default {
     data() {
         return {
             workshopCategory: [],
-            selectedCategory: []
+            selectedCategory: [],
         }
     },
     computed: {
@@ -91,14 +91,15 @@ export default {
         makePDF() {
             window.html2canvas = html2canvas;
             const pageWidth = 900;
-            const pageHeight = 1273;
+            // const pageHeight = 1273;
+            const pageHeight = this.$refs.report.clientHeight > 1273 ? this.$refs.report.clientHeight : 1273;
 
             const doc = new jsPDF({
                 orientation: "p",
                 unit: "px",
                 hotfixes: ["px_scaling"],
                 format: [pageWidth, pageHeight],
-                compressPdf: true
+                compressPdf: true,
             });
 
             doc.html(document.querySelector('#report'), {
@@ -150,4 +151,17 @@ export default {
 tr {
     border-top: 1px solid lightgray;
 }
+
+#pageBreak {
+    height: 200px;
+}
+
+/* .fixed {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+          line-clamp: 5; 
+  -webkit-box-orient: vertical;
+} */
 </style>
