@@ -111,7 +111,8 @@ export default {
         todayDate() {
             let temp = new Date()
             let month = String(parseInt(temp.getMonth()) + 1).padStart(2, "0")
-            return temp.getDate() + '/' + month + '/' + temp.getFullYear()
+            let date = String(parseInt(temp.getDate())).padStart(2, "0")
+            return date + '/' + month + '/' + temp.getFullYear()
         },
         todayDay() {
             let temp = new Date()
@@ -146,26 +147,30 @@ export default {
         getTodayRealTime() {
             let today = new Date()
             let workshopsToday = this.workshop
+          
             workshopsToday = workshopsToday.filter(item => {
                 let dateWorkshop = Date.parse(item.date)
-                let dateToday = Date.parse(today.getFullYear() + '-' + String(Number(today.getMonth())+1).padStart(2, '0') + '-' + today.getDate())
+                let dateToday = Date.parse(today.getFullYear() + '-' + String(Number(today.getMonth())+1).padStart(2, '0') + '-' + String(Number(today.getDate())).padStart(2, '0'))
                 return dateWorkshop == dateToday
             })
+        
             workshopsToday = workshopsToday.sort( (a,b) => {
                 return (Date.parse(String(a.date) + "T" + String(a.startTime) + ":00")) - (Date.parse(String(b.date) + "T" + String(b.startTime) + ":00"))
             })
+            // console.log(workshopsToday)
             this.todayRealTime = workshopsToday
         },
         getRealTime() {
             let today = new Date()
             let workshopsNow = this.todayRealTime
+
             workshopsNow = workshopsNow.filter(item => {
                 let timeNow = today.getTime()
                 let start = Date.parse(String(item.date) + "T" + String(item.startTime) + ":00")
                 let end = Date.parse(String(item.date) + "T" + String(item.endTime) + ":00")
                 return start < timeNow && end > timeNow
             })
-            console.log(workshopsNow)
+            
             this.realTime = workshopsNow
         }
     },
