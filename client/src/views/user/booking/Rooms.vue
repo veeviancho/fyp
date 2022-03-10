@@ -51,7 +51,6 @@
                             <span class="tag is-danger is-light" v-if="!item.bookRoom && item.bookWorkshop">Booked for workshop</span>
                             <span class="tag is-danger is-light" v-if="item.bookRoom || item.count === item.maxUsers">Fully booked</span>
                             <span class="tag is-primary is-light" v-if="!(item.bookRoom || item.count === item.maxUsers || item.bookWorkshop)">{{ item.count ? item.maxUsers - item.count : item.maxUsers }} / {{ item.maxUsers }} available</span>
-                            <!-- <span class="tag is-yellow">10 / 20</span> -->
                         </p>
                         <p class="desc">{{ item.description }}</p>
                     </div>

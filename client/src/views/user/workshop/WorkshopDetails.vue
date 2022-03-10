@@ -22,11 +22,11 @@
                     <p class="column"><b>Category: </b>{{ workshopItem.category }}</p>
                 </div>
 
-                <div class="columns">
-                    <p class="column" v-if="workshopItem.createdAt"><b>Posted on: </b>{{ workshopItem.createdAt.slice(0, 10) }}</p>
-                    <p class="column" v-if="workshopItem.users"><b>Registered Users: </b>{{ workshopItem.users.length }}/{{ workshopItem.maxUsers }}</p>
-                    <p class="column" v-if="!workshopItem.users"><b>Registered Users: </b>0/{{ workshopItem.maxUsers }}</p>
-                </div>
+                <!-- <div class="columns"> -->
+                    <!-- <p class="column" v-if="workshopItem.createdAt"><b>Posted on: </b>{{ workshopItem.createdAt.slice(0, 10) }}</p> -->
+                    <!-- <p class="column" v-if="workshopItem.users"><b>Registered Users: </b>{{ workshopItem.users.length }}/{{ workshopItem.maxUsers }}</p> -->
+                    <!-- <p class="column" v-if="!workshopItem.users"><b>Registered Users: </b>0/{{ workshopItem.maxUsers }}</p> -->
+                <!-- </div> -->
 
                 <p class="has-text-success has-text-centered mb-3 white" v-if="success_msg">{{ success_msg }}</p>
                 <p class="has-text-danger has-text-centered mb-3 white" v-if="workshopError.register[0] === this.id">{{ workshopError.register[1] }}</p>

@@ -31,7 +31,6 @@
             <th>Title</th>
             <th>Description</th>
             <th>Category</th>
-            <th>Registered</th>
         </thead>
         <tbody>
             <tr v-for="item in realTime" :key="item._id">
@@ -41,7 +40,6 @@
                 <td><router-link :to="'/workshop/' + item._id ">{{ item.title }}</router-link></td>
                 <td><div class="desc">{{ item.description }}</div></td>
                 <td>{{ item.category }}</td>
-                <td>{{ item.users.length }}/{{ item.maxUsers }}</td>
             </tr>
         </tbody>
     </table>
@@ -63,7 +61,6 @@
             <th>Title</th>
             <th>Description</th>
             <th>Category</th>
-            <th>Registered</th>
         </thead>
         <tbody>
             <tr v-for="item in todayRealTime" :key="item._id">
@@ -73,7 +70,6 @@
                 <td><router-link :to="'/workshop/' + item._id ">{{ item.title }}</router-link></td>
                 <td><div class="desc">{{ item.description }}</div></td>
                 <td>{{ item.category }}</td>
-                <td>{{ item.users.length }}/{{ item.maxUsers }}</td>
             </tr>
         </tbody>
     </table>
