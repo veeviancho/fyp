@@ -109,22 +109,7 @@ export default {
                 return this.date + " " + this.startTime + "-" + this.endTime
             }
             return ''
-        },
-        // takenSeats() {
-        //     
-        //     let bookings = this.bookings.filter(item => {
-        //         // Get bookings that clash with the timing entered
-        //         let date1 = item.date + "T" + item.start + "+00:00" + "/" + item.date + "T" + item.end + "+00:00"
-        //         let range1  = moment.range(date1);
-        //         let date2 = this.date + "T" + this.startTime + "+00:00" + "/" + this.date + "T" + this.endTime + "+00:00" 
-        //         let range2 = moment.range(date2);
-        //         return range1.overlaps(range2)
-        //     })
-
-        //     let temp = bookings.filter(booking => booking.roomId === this.id && !booking.bookRoom)
-        //     // Add count to each item in rooms
-        //     return temp.length
-        // }
+        }
     },
     props: ['id'],
     methods: {
@@ -143,6 +128,11 @@ export default {
                 let date2 = this.date + "T" + this.startTime + "+00:00" + "/" + this.date + "T" + this.endTime + "+00:00" 
                 let range2 = moment.range(date2);
                 return range1.overlaps(range2)
+            })
+
+            // Get workshops for room
+            workshops = workshops.filter(item => {
+                return item.venue == this.roomId.title
             })
 
             // Get workshops that clash with the timing entered
