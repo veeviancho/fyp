@@ -39,6 +39,7 @@ import WorkshopUsers from '../views/admin/WorkshopUsers.vue'
 import PastWorkshopUsers from '../views/admin/PastWorkshopUsers.vue'
 import AdminUsers from '../views/admin/Users.vue'
 import AdminMessages from '../views/admin/Messages.vue'
+import AdminWorkshopAttendance from '../views/admin/WorkshopAttendance.vue'
 
 const routes = [
   // Public views
@@ -227,6 +228,15 @@ const routes = [
     path: '/admin/past-workshop/:id',
     name: 'Past Workshop Users',
     component: PastWorkshopUsers,
+    props: true,
+    meta: {
+      isAdmin: true
+    }
+  },
+  {
+    path: '/admin/workshop/list/:id',
+    name: 'Admin Workshop Attendance',
+    component: AdminWorkshopAttendance,
     props: true,
     meta: {
       isAdmin: true
