@@ -147,6 +147,14 @@ export default {
             let fullRoom = bookings.filter(booking => booking.bookRoom === true)
             let seatsRoom = bookings.filter(booking => booking.bookRoom === false)
 
+// ************************************************************************************************************************************************
+
+            if (this.successMsg && seatsRoom.length <= room.maxUsers) {
+                this.successMsg += " | " + "Booked seat number: " + seatsRoom.length
+            }
+
+// ************************************************************************************************************************************************
+
             // Full Room Booking
             if (fullRoom.length > 0) {
                 this.status = 'Room is fully booked'
@@ -186,12 +194,12 @@ export default {
                         localStorage.removeItem('date')
                         localStorage.removeItem('startTime')
                         localStorage.removeItem('endTime')
-                        this.successMsg = "Successfully booked for the date " + details.date + " from " + details.start + " to " + details.end
                         this.purpose = ''
                         this.getBookings(this.id).then(() => {
                             this.getBookingForRoom([this.bookings, this.id])
                             this.getSeatData()
                         })
+                        this.successMsg = "Successfully booked for the date " + details.date + " from " + details.start + " to " + details.end
                     } else {
                         this.successMsg = ''
                         setTimeout(this.errorMsgDisplay, 5000)
