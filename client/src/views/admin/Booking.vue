@@ -2,7 +2,7 @@
 <div class="admin-content">
     <router-link :to="{ name: 'Admin Home' }"><button class="button router">Back</button></router-link>
     &nbsp;
-    <button class="button is-link mb-6" @click="this.createVisible = true"><fa icon="plus"/> &nbsp;Add New Booking</button>
+    <button class="button is-link mb-6" @click="this.createVisible = true"><fa icon="plus"/> &nbsp;Close the Room</button>
     <CreateBooking :id="id" v-show="createVisible" @close="this.createVisible = false"/>
 
     <h1 class="title">List of Bookings for

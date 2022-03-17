@@ -108,8 +108,10 @@ router.post('/create', (req, res) => {
                         start: req.body.start,
                         end: req.body.end,
                         closed: req.body.closed,
-                        purpose: req.body.purpose
+                        purpose: req.body.purpose,
+                        seatNo: req.body.seatNo
                     });
+                 
                     newBooking
                         .save()
                         .then(booking => res.json({

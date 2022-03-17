@@ -26,6 +26,9 @@ const BookingSchema = new Schema({
     purpose: {
         type: String
     },
+    seatNo: {
+        type: Number
+    },
     createdAt: {
         type: Date, 
         default: Date.now, 

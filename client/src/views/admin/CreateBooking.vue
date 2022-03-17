@@ -7,11 +7,11 @@
 
             <div class="field">Booking room for <router-link class="link-workshop" :to="{ name: 'Admin Workshop' }">workshop</router-link> instead?</div>
 
-            <div class="field">
+            <!-- <div class="field">
                 <label class="checkbox">
                     <input type="checkbox" v-model="closeRoom"> Close the room
                 </label>
-            </div>
+            </div> -->
 
             <div class="field">
                 <label class="label">Date</label>
@@ -31,20 +31,22 @@
                 </div>
             </div>
 
-            <div class="field">
+            <br>
+
+            <!-- <div class="field">
                 <label class="label">Purpose</label>
                 <div class="control"><textarea class="textarea is-warning" v-model="purpose" placeholder="State purpose of booking of room" type="textarea"></textarea></div>
-            </div>
-
+            </div> -->
+<!-- 
             <div class="field">
                 <label class="label">Username</label>
                 <div class="control"><input class="input is-warning" v-model="username" placeholder="Enter username of student if relevant" type="text"></div>
-            </div>
+            </div> -->
 
             <p class="has-text-danger has-text-centered mb-3" v-if="bookingError.create">{{ bookingError.create }}</p>
 
             <button type="submit" class="button is-outlined is-fullwidth">
-                Add Booking
+                Close the Room
             </button>
 
         </form>
@@ -66,7 +68,7 @@ export default {
             end: '',
             purpose: '',
             username: this.username,
-            closeRoom: false,
+            closeRoom: true,
             bookRoom: true
         }
     },

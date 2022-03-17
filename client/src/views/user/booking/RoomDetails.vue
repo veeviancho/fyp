@@ -95,7 +95,8 @@ export default {
             startTime: localStorage.getItem('startTime'),
             endTime: localStorage.getItem('endTime'),
             purpose: '',
-            status: ''
+            status: '',
+            seatNo: ''
         }
     },
     components: {
@@ -147,6 +148,8 @@ export default {
             let fullRoom = bookings.filter(booking => booking.bookRoom === true)
             let seatsRoom = bookings.filter(booking => booking.bookRoom === false)
 
+            this.seatNo = seatsRoom.length + 1
+
 // ************************************************************************************************************************************************
 
             if (this.successMsg && seatsRoom.length <= room.maxUsers) {
@@ -187,8 +190,12 @@ export default {
                     start: this.startTime,
                     end: this.endTime, 
                     purpose: this.purpose,
-                    closed: false
+                    closed: false,
+                    seatNo: this.seatNo
                 }
+
+                console.log("deatils" + details.seatNo)
+
                 this.createBooking(details).then( () => {
                     if (this.bookingStatus.create == 'success') {
                         localStorage.removeItem('date')
