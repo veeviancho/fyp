@@ -11,7 +11,7 @@
         </div>
 
         <div class="column">
-        <span class="date ml-6" v-if="hours">
+        <span class="date" v-if="hours">
             <span v-if="hours"><b>{{ hours }}</b></span> :
             <span v-if="minutes"><b>{{ minutes }}</b></span> :
             <span v-if="seconds"><b>{{ seconds }}</b></span>&nbsp;
@@ -200,7 +200,11 @@ a:hover {
 table {
     width: 100%;
     background-color: transparent;
-    color: white
+    color: white;
+}
+
+.section {
+    overflow-x: auto;
 }
 
 th {
@@ -236,6 +240,22 @@ tr:hover {
 .section {
     background-color: #161C20;
     margin: 0 0 2rem 0;
+}
+
+@media (max-width: 770px) {
+  .ml-6 {
+      margin: 0;
+  }
+  .title {
+      font-size: 5vw;
+  }
+  .date {
+    padding: 1rem 1rem;
+    margin-right: 0.5rem;
+  }
+  .px-6 {
+    padding: 0 !important;
+  }
 }
 
 // .status {

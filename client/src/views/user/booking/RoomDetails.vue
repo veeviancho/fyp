@@ -8,17 +8,8 @@
                         <h1 class="title has-text-white">{{ roomId.title }}</h1>
                         <p>{{ roomId.description }}</p>
                         <div class="availability">
-                            <!-- <span>Available seats: <b>{{ takenSeats ? roomId.maxUsers - takenSeats : roomId.maxUsers }}/ {{ roomId.maxUsers }}</b></span> -->
                             {{ status }}
                         </div>
-
-                        <!-- <span class="tag is-danger is-light" v-if="!item.bookRoom && item.bookWorkshop">Booked for workshop</span>
-                            <span class="tag is-danger is-light" v-if="item.bookRoom || item.count === item.maxUsers">Fully booked</span>
-                            <span class="tag is-primary is-light" v-if="!(item.bookRoom || item.count === item.maxUsers || item.bookWorkshop)">{{ item.count ? item.maxUsers - item.count : item.maxUsers }} / {{ item.maxUsers }} available</span> -->
-                    
-
-
-
                         {{ results }}
                     </div>
                 </section>
@@ -269,5 +260,16 @@ p {
 .has-navbar-fixed-top {
     width: 70%;
     padding: 10% 0;
+}
+
+@media (max-width: 1000px) {
+  .has-navbar-fixed-top {
+      width: 90%
+  }
+  .availability {
+      margin: 0;
+      width: 100%
+  }
+  
 }
 </style>

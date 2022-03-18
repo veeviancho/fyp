@@ -29,7 +29,7 @@
 
   <div class="sideNav" v-show="menuVisible">
     <button class="modal-close is-large" aria-label="close" @click="closeMenu()"></button>
-    <div class="mt-6"><router-link :to="{ name: 'Home' }" active-class="active" class="navbar-item py-5 px-5">HOME</router-link></div>
+    <div class="mt-4"><router-link :to="{ name: 'Home' }" active-class="active" class="navbar-item py-5 px-5">HOME</router-link></div>
     <router-link :to="{ name: 'About' }" active-class="active" class="navbar-item py-5 px-5">ABOUT</router-link>
     <router-link :to="{ name: 'Articles' }" active-class="active" class="navbar-item py-5 px-5">ARTICLES</router-link>
     <router-link :to="{ name: 'Login' }" class="navbar-item pr-5" v-if="!isLoggedIn && this.$route.name!='Login'"><button class="button">LOGIN</button></router-link>

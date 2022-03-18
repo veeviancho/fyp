@@ -151,4 +151,10 @@ p {
     margin: 0 0 2rem 0;
 }
 
+@media (max-width: 600px) {
+  .has-navbar-fixed-top {
+      width: 90%
+  }
+}
+
 </style>
