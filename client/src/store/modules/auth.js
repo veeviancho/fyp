@@ -37,6 +37,10 @@ const actions = {
                 localStorage.setItem('token', token);
                 // Store user ID in local storage
                 localStorage.setItem('userId', user._id)
+                // If admin
+                if (user.username === "admin") {
+                    localStorage.setItem('admin', true)
+                }
                 // Set the axios defaults
                 axios.defaults.headers.common['Authorization'] = token;
                 commit('login_success', token, user);
@@ -53,6 +57,7 @@ const actions = {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         localStorage.removeItem('userId');
+        localStorage.removeItem('admin');
         delete axios.defaults.headers.common['Authorization'];
         return;
     },

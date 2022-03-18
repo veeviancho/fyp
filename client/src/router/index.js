@@ -297,6 +297,8 @@ router.beforeEach((to, from, next) => {
   const isPublic = to.matched.some(record => record.meta.public)
   const onlyLoggedOut = to.matched.some(record => record.meta.onlyLoggedOut)
   const notFound = to.matched.some(record => record.meta.notFound)
+  const isAdmin = localStorage.getItem('admin')
+  const admin = to.matched.some(record => record.meta.isAdmin)
 
   //if not logged in and is not a public page, redirect to Login page
   //if not logged in and not found, redirect to login page
@@ -305,6 +307,9 @@ router.beforeEach((to, from, next) => {
   //if logged in and wants to access login/register/etc pages, redirect to profile page
   //if logged in and wants to access a page that doesn't exist, redirect to profile page
   else if ((token && onlyLoggedOut) || (token && notFound)) next ({ name : 'Profile'});
+
+  //if not admin and wants to access admin pages
+  else if (!isAdmin && admin) next ({ name : 'Profile'});
   
   //else continue to the route user intended to access
   else next();
