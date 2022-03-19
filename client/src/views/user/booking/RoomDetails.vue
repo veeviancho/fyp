@@ -143,7 +143,7 @@ export default {
 
 // ************************************************************************************************************************************************
 
-            if (this.successMsg && seatsRoom.length <= room.maxUsers) {
+            if (this.successMsg && seatsRoom.length <= room.maxUsers && seatsRoom.length !== 0) {
                 this.successMsg += " | " + "Booked seat number: " + seatsRoom.length
             }
 

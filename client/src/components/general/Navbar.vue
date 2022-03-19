@@ -22,7 +22,8 @@
       <router-link :to="{ name: 'Workshops' }" active-class="active" class="navbar-item py-5 px-4" v-if="isLoggedIn">WORKSHOPS</router-link>
       <router-link :to="{ name: 'Rooms' }" active-class="active" class="navbar-item py-5 px-4" v-if="isLoggedIn">BOOK A ROOM</router-link>
       <router-link :to="{ name: 'Real-time Activities' }" active-class="active" class="navbar-item py-5 px-4" v-if="isLoggedIn">REAL-TIME</router-link>
-      <router-link :to="{ name: 'Profile' }" active-class="active" class="navbar-item py-5 px-4" v-if="isLoggedIn">PROFILE</router-link>
+      <router-link :to="{ name: 'Admin Home' }" active-class="active" class="navbar-item py-5 px-4" v-if="isLoggedIn && isAdmin">ADMIN</router-link>
+      <router-link :to="{ name: 'Profile' }" active-class="active" class="navbar-item py-5 px-4" v-if="isLoggedIn && !isAdmin">PROFILE</router-link>
       <a class="navbar-item py-5 px-4" @click="logoutUser" v-if="isLoggedIn"><fa icon="power-off"/></a>
     </nav>
   </div>
@@ -36,7 +37,8 @@
     <router-link :to="{ name: 'Workshops' }" active-class="active" class="navbar-item py-5 px-4" v-if="isLoggedIn">WORKSHOPS</router-link>
     <router-link :to="{ name: 'Rooms' }" active-class="active" class="navbar-item py-5 px-4" v-if="isLoggedIn">BOOK A ROOM</router-link>
     <router-link :to="{ name: 'Real-time Activities' }" active-class="active" class="navbar-item py-5 px-4" v-if="isLoggedIn">REAL-TIME</router-link>
-    <router-link :to="{ name: 'Profile' }" active-class="active" class="navbar-item py-5 px-4" v-if="isLoggedIn">PROFILE</router-link>
+    <router-link :to="{ name: 'Admin Home' }" active-class="active" class="navbar-item py-5 px-4" v-if="isLoggedIn && isAdmin">ADMIN</router-link>
+    <router-link :to="{ name: 'Profile' }" active-class="active" class="navbar-item py-5 px-4" v-if="isLoggedIn && !isAdmin">PROFILE</router-link>
     <a class="navbar-item py-5 px-4" @click="logoutUser" v-if="isLoggedIn">LOGOUT</a>
   </div>
 
@@ -52,7 +54,8 @@ export default {
   name: 'Navbar',
   data() {
     return {
-      menuVisible: false
+      menuVisible: false,
+      isAdmin: localStorage.getItem('admin')
     }
   },
   computed: {
@@ -62,6 +65,8 @@ export default {
     ...mapActions(['logout']),
     logoutUser() {
         this.logout();
+        this.isAdmin = false;
+        localStorage.removeItem('admin')
         this.$router.push('/login');
     },
     openMenu() {
@@ -70,7 +75,13 @@ export default {
     closeMenu() {
       this.menuVisible = false
     }
-  }
+  },
+  created() {
+    if (localStorage.getItem('admin') === true) {
+      this.isAdmin = true
+    }
+    console.log(this.isAdmin)
+  },
 }
 </script>
 

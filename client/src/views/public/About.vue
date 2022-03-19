@@ -62,7 +62,7 @@
 
   <div class="contact-form">
   <div class="contact-title">
-    <h1 class="title has-text-white mx-5">Contact Us</h1>
+    <h1 class="title has-text-white">Contact Us</h1>
   </div>
   <form @submit.prevent="submitContact">
     <div class="contact-info">
@@ -233,6 +233,12 @@ th, td {
   }
   .title {
     font-size: 4.5vw;
+  } 
+}
+
+@media (min-width: 768px) and (max-width: 1000px) {
+  .contact-title {
+    margin: 0 0 2.5em;
   }
 }
 </style>

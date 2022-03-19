@@ -1,6 +1,6 @@
 <template>
 <div class="adminNav">
-    <h1 class="title pl-5 pt-5">EEE Lifelong Learning Space</h1>
+    <router-link :to="{ name: 'Home' }"><h1 class="title pl-5 pt-5">EEE Lifelong Learning Space</h1></router-link>
     <h2 class="subtitle pl-5 pt-2">Admin Panel</h2>
     <aside class="menu">
         <p class="menu-label">General</p>
