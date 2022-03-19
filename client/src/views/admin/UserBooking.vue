@@ -23,7 +23,7 @@
                 <table>
                         <tr v-for="item in workshop" :key="item._id">
                             <td>{{ item.date }}</td>
-                            <td>{{ item.start }}-{{ item.end}}</td>
+                            <td>{{ item.startTime }}-{{ item.endTime }}</td>
                             <td><router-link class="has-text-info" :to="'/workshop/' + item._id">{{ item.title }}</router-link></td>
                         </tr>
                 </table>
