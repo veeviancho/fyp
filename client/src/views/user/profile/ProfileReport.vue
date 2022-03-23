@@ -39,7 +39,7 @@
                 </div>
 
                 <div>
-                    <div class="table mb-6" v-for="(category, index) in selectedCategory" :key="index">
+                    <div class="table mb-5" v-for="(category, index) in selectedCategory" :key="index">
                     <div class="column">
                         <div class="columns">
                             <div class="column">
@@ -48,11 +48,19 @@
                                 <span class="description">Student has attended <strong>{{ pastUserWorkshop.filter(item => item.category === category).length }}</strong> {{ category }} workshop(s)</span>
 
                                 <table class="mt-5">
+
+                                    <colgroup>
+                                        <col span="1" style="width: 15%;">
+                                        <col span="1" style="width: 20%;">
+                                        <col span="1" style="width: 65%;">
+                                    </colgroup>
+
                                     <tr v-for="workshopItem in pastUserWorkshop.filter(item => item.category === category)" :key="workshopItem._id">
                                         <td>{{ workshopItem.date }}</td>
                                         <td><b>{{ workshopItem.title }}</b></td>
                                         <td class="has-text-grey"><div class="fixed">{{ workshopItem.description }}</div></td>
                                     </tr>
+
                                 </table>
                             </div>
                         </div>
