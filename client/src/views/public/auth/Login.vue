@@ -83,9 +83,11 @@ export default {
         // Then whatever the respond that is sent back, we will use it here
         .then(res => {
           if (res.data.success) {
-            // If success, user will be directed to the home page
-            // console.log(this.error.login)
-            this.$router.push('/')
+            if (res.data.user.username === "admin") {
+              this.$router.push('/admin')
+            } else {
+              this.$router.push('/')
+            }
           }
         })
         .catch(err => {

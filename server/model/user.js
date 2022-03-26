@@ -30,9 +30,6 @@ const UserSchema = new Schema({
         type: Date,
         default: Date.now
     },
-    workshops: {
-        type: Array,
-    },
     isVerified: {
         type: Boolean,
         default: false
@@ -43,7 +40,10 @@ const UserSchema = new Schema({
     },
     imageLink: {
         type: String
-    }
+    },
+    workshops: {
+        type: Array,
+    },
 });
 
 //Export this object UserSchema

@@ -38,16 +38,9 @@ const WorkshopSchema = new Schema({
         type: String,
         default: "All"
     },
-    points: {
-        type: Number,
-        default: 0
-    },
     maxUsers: {
         type: Number,
         required: true
-    },
-    users: {
-        type: Array
     },
     createdAt: {
         type: Date,
@@ -55,7 +48,14 @@ const WorkshopSchema = new Schema({
     },
     feedback: {
         type: Array
-    }
+    },
+    points: {
+        type: Number,
+        default: 0
+    },
+    users: {
+        type: Array
+    },
 })
 
 module.exports = Workshop = mongoose.model("workshops", WorkshopSchema)

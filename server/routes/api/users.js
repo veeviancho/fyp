@@ -151,6 +151,7 @@ router.post('/register', (req, res) => {
                         .then(user => {
 
                             // Email verification
+                            
                             const token = new Token({
                                 _userId: newUser._id,
                                 token: crypto.randomBytes(16).toString('hex')
