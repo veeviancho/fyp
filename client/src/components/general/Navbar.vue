@@ -80,7 +80,7 @@ export default {
     if (localStorage.getItem('admin') === true) {
       this.isAdmin = true
     }
-    console.log(this.isAdmin)
+    // console.log(this.isAdmin)
   },
 }
 </script>
