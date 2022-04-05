@@ -93,7 +93,7 @@ export default {
             }
         },
         getImgURL(pic) {
-            return require('@/../public/uploads/' + pic)
+            return require('@/../../uploads/' + pic)
         }
     },
     created() {

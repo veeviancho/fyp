@@ -142,7 +142,7 @@ export default {
             this.selectedFile = event.target.files[0]
         },
         getImgURL(pic) {
-            return require('@/../public/uploads/' + pic)
+            return require('@/../../uploads/' + pic)
         }
     }
 }

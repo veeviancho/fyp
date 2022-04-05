@@ -71,7 +71,7 @@ export default {
         },
         getImgURL(pic) {
             // console.log(pic)
-            return require('@/../public/uploads/' + pic)
+            return require('@/../../uploads/' + pic)
         }
     },
     created() {

@@ -48,7 +48,7 @@ export default {
     methods: {
       ...mapActions(['getProfile', 'getAllRooms', 'getAbout']),
       getImgURL(pic) {
-        return require('@/../public/uploads/' + pic)
+        return require('@/../../uploads/' + pic)
       }
     },
     created() {
@@ -169,6 +169,9 @@ button:hover {
 @media (max-width: 1023px) {
   .home-nav {
     display: none;
+  }
+  p {
+    font-size: 2vh;
   }
 }
 
