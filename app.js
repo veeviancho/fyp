@@ -70,6 +70,12 @@ app.use(passport.initialize()); //passport middleware
 require('./config/passport')(passport); //passport config
 app.use('/api/users', users);
 
+const path = require('path');
+app.use(express.static(path.join(__dirname, "./dist")))
+app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, './dist', 'index.html'))
+})
+
 //Server running on environment (eg Heroku) variable port, or port 5000 if nothing
 const port = process.env.PORT || 5000
 app.listen(port, () => {
