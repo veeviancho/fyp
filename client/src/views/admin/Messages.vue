@@ -52,13 +52,13 @@ export default {
     methods: {
         ...mapActions(['getContact', 'deleteMsg']),
         async seenMsg(id) {
-            await axios.put('http://localhost:5000/api/about/seenMsg/' + id)
+            await axios.put('/api/about/seenMsg/' + id)
         },
         async removeMsg(id) {
             let confirmDel = confirm("Are you sure you want to delete the message?")
             if (confirmDel) {
                 try {
-                    let res = await axios.delete('http://localhost:5000/api/about/delete/' + id)
+                    let res = await axios.delete('/api/about/delete/' + id)
                     if (res.data.success) {
                         alert("Message successfully deleted!")
                         this.getContact()

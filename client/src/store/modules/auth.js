@@ -28,7 +28,7 @@ const actions = {
     async login({ commit }, user) {
         commit('login_request'); //commit are for the mutations
         try {
-            let res = await axios.post('http://localhost:5000/api/users/login', user) //awaiting response from the server
+            let res = await axios.post('/api/users/login', user) //awaiting response from the server
             if (res.data.success) {
                 // Getting token and user data from server
                 const token = res.data.token;
@@ -66,7 +66,7 @@ const actions = {
     async register({ commit }, user) {
         try {
             commit('register_request');
-            let res = await axios.post('http://localhost:5000/api/users/register', user);
+            let res = await axios.post('/api/users/register', user);
             if (res.data.success) {
                 commit('register_success');
             }
@@ -79,7 +79,7 @@ const actions = {
     // Get User Profile
     async getProfile({ commit }) {
         commit('profile_request');
-        let res = await axios.get('http://localhost:5000/api/users/profile');
+        let res = await axios.get('/api/users/profile');
         commit('profile_success', res.data.user);
         return res;
     },
@@ -88,7 +88,7 @@ const actions = {
     async update({ commit }, user) {
         try {
             commit('update_request');
-            let res = await axios.put('http://localhost:5000/api/users/update/' + user.id, user);
+            let res = await axios.put('/api/users/update/' + user.id, user);
             if (res.data.success) {
                 commit('update_success', res.data.user);
             }
@@ -102,7 +102,7 @@ const actions = {
     async resendLink( { commit }, email) {
         try {
             commit('resend_request')
-            let res = await axios.post('http://localhost:5000/api/users/resend/' + email);
+            let res = await axios.post('/api/users/resend/' + email);
             if (res.data.success) {
                 commit('resend_success');
             }

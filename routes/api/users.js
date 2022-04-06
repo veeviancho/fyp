@@ -409,10 +409,10 @@ router.get('/confirmation/:email/:token', (req, res) => {
         }
     })
 
-    res.redirect('http://localhost:8080/login');
+    res.redirect('/login');
     return;
 
-    // return res.redirect("http://localhost:8080/login")
+    // return res.redirect("/login")
 })
 
 /**

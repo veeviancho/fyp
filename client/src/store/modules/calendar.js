@@ -66,7 +66,7 @@ const actions = {
        
     //     bookings.forEach(item => {
     //         // Get list of bookings that have clashed timing
-    //         let res = axios.get('http://localhost:5000/api/bookings/get/clashed')
+    //         let res = axios.get('/api/bookings/get/clashed')
     //         if (res.data.bookings) {
     //             let events = res.data.bookings
     //             // If length of array = maximum no of users at a time

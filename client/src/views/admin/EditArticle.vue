@@ -185,7 +185,7 @@ export default {
             // Update featured article (change all to false)
             if (article.featured == 'true') {
                 try {
-                    axios.put('http://localhost:5000/api/articles/updateFeatured')
+                    axios.put('/api/articles/updateFeatured')
                 }
                 catch (err) {
                     console.log(err)

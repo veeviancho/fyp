@@ -28,7 +28,7 @@ const actions = {
     // Get all articles
     async getArticles({ commit }) {
         try {
-            let res = await axios.get('http://localhost:5000/api/articles/all')
+            let res = await axios.get('/api/articles/all')
             if (res.data.success) {
                 commit('getArticles_success', res.data.article)
             }
@@ -47,7 +47,7 @@ const actions = {
     async postArticle({ commit }, article) {
         try {
             commit('postArticle_request')
-            let res = await axios.post('http://localhost:5000/api/articles/create', article)
+            let res = await axios.post('/api/articles/create', article)
             if (res.data.success) {
                 commit('postArticle_success')
             }
@@ -61,7 +61,7 @@ const actions = {
     async updateArticle({ commit }, article) {
         try {
             commit('updateArticle_request')
-            let res = await axios.put('http://localhost:5000/api/articles/update', article)
+            let res = await axios.put('/api/articles/update', article)
             if (res.data.success) {
                 commit('updateArticle_success')
             }
@@ -75,7 +75,7 @@ const actions = {
     async removeArticle({ commit }, id) {
         try {
             commit('removeArticle_request')
-            let res = await axios.delete('http://localhost:5000/api/articles/delete/' + id)
+            let res = await axios.delete('/api/articles/delete/' + id)
             if (res.data.success) {
                 commit('removeArticle_success')
             }

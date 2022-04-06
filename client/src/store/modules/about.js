@@ -26,7 +26,7 @@ const actions = {
     // Get about information
     async getAbout({ commit }) {
         try {
-            let res = await axios.get('http://localhost:5000/api/about/read')
+            let res = await axios.get('/api/about/read')
             if (res.data.success) {
                 commit('getAbout_success', res.data.about[0])
             }
@@ -40,7 +40,7 @@ const actions = {
     async createContact({ commit }, contact) {
         try {
             commit('createContact_request')
-            let res = await axios.post('http://localhost:5000/api/about/create/contact', contact)
+            let res = await axios.post('/api/about/create/contact', contact)
             if (res.data.success) {
                 commit('createContact_success')
             }
@@ -53,7 +53,7 @@ const actions = {
     // Get messages
     async getContact({ commit }) {
         try {
-            let res = await axios.get('http://localhost:5000/api/about/contact/read')
+            let res = await axios.get('/api/about/contact/read')
             if (res.data.success) {
                 commit('getMsg_success', res.data.message)
             }
@@ -67,7 +67,7 @@ const actions = {
     async updateAbout({ commit }, about) {
         try {
             commit('updateAbout_request')
-            let res = await axios.put('http://localhost:5000/api/about/update', about)
+            let res = await axios.put('/api/about/update', about)
             if (res.data.success) {
                 commit('updateAbout_success', res.data.about)
             }

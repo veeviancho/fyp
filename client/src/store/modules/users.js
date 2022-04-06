@@ -29,7 +29,7 @@ const actions = {
     // Get all users
     async getAllUsers({ commit }) {
         try {
-            let res = await axios.get("http://localhost:5000/api/users/all")
+            let res = await axios.get("/api/users/all")
             if (res.data.success) {
                 commit("getUsers_success", res.data.users)
             }
@@ -48,7 +48,7 @@ const actions = {
     // Get user from username
     async findByUsername({ commit }, username) {
         try {
-            let res = await axios.get("http://localhost:5000/api/users/get/" + username)
+            let res = await axios.get("/api/users/get/" + username)
             if (res.data.success) {
                 commit("findByUsername_success", res.data.user)
             }
@@ -62,7 +62,7 @@ const actions = {
     // Delete user
     async deleteUser({ commit }, id) {
         try {
-            let res = await axios.delete("http://localhost:5000/api/users/delete/" + id)
+            let res = await axios.delete("/api/users/delete/" + id)
             if (res.data.success) {
                 commit('deleteUser_success')
             }
@@ -77,7 +77,7 @@ const actions = {
     async findEmail({ commit }, email) {
         try {
             commit('findEmail_request')
-            let res = await axios.get("http://localhost:5000/api/users/findEmail/" + email)
+            let res = await axios.get("/api/users/findEmail/" + email)
             if (res.data.success) {
                 commit('findEmail_success')
             }
@@ -92,7 +92,7 @@ const actions = {
     async verifyCode({ commit }, [code, userId]) {
         try {
             commit('verifyCode_request')
-            let res = await axios.get("http://localhost:5000/api/users/verifyCode/" + code + '/' + userId)
+            let res = await axios.get("/api/users/verifyCode/" + code + '/' + userId)
             if (res.data.success) {
                 commit('verifyCode_success')
             }
@@ -106,7 +106,7 @@ const actions = {
 
     async resetPW({ commit }, [userId, data]) {
         try {
-            let res = await axios.put("http://localhost:5000/api/users/resetPw/" + userId, data)
+            let res = await axios.put("/api/users/resetPw/" + userId, data)
             console.log(userId)
             if (res.data.success) {
                 commit('resetPW_success')

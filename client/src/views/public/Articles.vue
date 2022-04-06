@@ -222,7 +222,7 @@ export default {
     methods: {
         ...mapActions(['getArticles']),
         updateViews(id) {
-            axios.put('http://localhost:5000/api/articles/update-views/' + id)
+            axios.put('/api/articles/update-views/' + id)
         }
     },
     created() {
