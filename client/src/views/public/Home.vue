@@ -48,7 +48,7 @@ export default {
     methods: {
       ...mapActions(['getProfile', 'getAllRooms', 'getAbout']),
       getImgURL(pic) {
-        return require('@/../../uploads/' + pic)
+        return require('/uploads/' + pic)
       }
     },
     created() {
