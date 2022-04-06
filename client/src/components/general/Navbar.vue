@@ -12,7 +12,7 @@
 
   <div class="navbar-menu">
     <nav class="navbar-start">
-      <h1 class="navbar-item title px-5 py-5">EEE Lifelong Learning Space</h1>
+      <h1 class="navbar-item title px-5 py-5">Lifelong Learning @ EEE</h1>
     </nav>
     <nav class="navbar-end">
       <router-link :to="{ name: 'Home' }" active-class="active" class="navbar-item py-5 px-5">HOME</router-link>
