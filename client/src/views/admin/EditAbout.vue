@@ -41,10 +41,15 @@
         </div>
 
         <div class="field" v-show="aboutItem.number==6">
-            <label class="label">Image Link</label>
+            <label class="label">Image</label>
             <div class="control">
-                <input class="input" type="text" placeholder="Paste image address" v-model="imageLink">
+                <!-- <input class="input" type="text" placeholder="Paste image address" v-model="imageLink"> -->
+                <span class="file-cta" @click="onFileSelected">
+                    <span class="file-icon"><fa icon="upload"/></span>
+                    <span class="file-label">Upload image</span>
+                </span>
             </div>
+            <div class="my-3" v-if="thumbnailLink"><img :src="thumbnailLink"></div>
         </div>
 
         <button type="submit" class="button is-outlined is-fullwidth">
@@ -69,7 +74,8 @@ export default {
             openingHours: this.openingHours,
             address: this.address,
             getHere: this.getHere,
-            imageLink: this.imageLink
+            imageLink: this.imageLink,
+            thumbnailLink: ''
         }
     },
     computed: {
@@ -80,6 +86,18 @@ export default {
         ...mapActions(['updateAbout']),
         close() {
             this.$emit('close')
+        },
+        onFileSelected() {
+            window.cloudinary.openUploadWidget({ 
+                cloud_name: 'eeelifelonglearning',
+                upload_preset: 'ml_default'
+            }, (error, result) => {
+                if (!error && result && result.event === "success") {
+                    console.log('Done uploading..: ', result.info);
+                    this.thumbnailLink = result.info.thumbnail_url
+                    this.imageLink = result.info.url
+                }
+            }).open();
         },
         editAbout() {
             if (this.openingHours) {

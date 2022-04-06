@@ -41,7 +41,7 @@
                 <div class="card">
                 <div class="card-image">
                     <figure class="image is-4by3">
-                    <img :src="getImgURL(item.imageLink)" alt="Room Image">
+                    <img :src="item.imageLink" alt="Room Image">
                     </figure>
                 </div>
                 <div class="card-content">
@@ -181,9 +181,6 @@ export default {
 
                 // console.log(item)
             })
-        },
-        getImgURL(pic) {
-            return require('@/../../uploads/' + pic)
         }
     },
     created() {

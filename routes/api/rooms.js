@@ -5,43 +5,16 @@ const router = express.Router();
 // Import rooms model
 const Room = require('../../model/Room');
 
-// Import multer for file upload
-const multer = require('multer');
-const path = require('path');
-
-const storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-      cb(null, path.join(__dirname, '../../../uploads/'));
-    },
-    filename: function(req, file, cb) {
-      cb(null, new Date().toISOString().replace(/:/g, '-') + '-' + file.originalname);
-    }
-});
-  
-const fileFilter = (req, file, cb) => {
-    // reject a file
-    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
-        cb(null, true);
-    } else {
-        cb(null, false);
-    }
-};
-
-const upload = multer({
-    storage: storage,
-    fileFilter: fileFilter
-});
-
 /**
  * @route POST api/rooms/create
  * @desc Create new room
  * @access Private (admin only)
  */
-router.post('/create', upload.single('imageLink'), (req, res) => {
+router.post('/create', (req, res) => {
     const newRoom = new Room({
         title: req.body.title,
         description: req.body.description,
-        imageLink: req.file.filename,
+        imageLink: req.body.imageLink,
         maxUsers: req.body.maxUsers
     });
     newRoom
@@ -81,11 +54,11 @@ router.get('/all', (req, res) => {
  * @desc Update workshop information
  * @access Private (admin only)
  */
-router.put('/update', upload.single('imageLink'), (req, res) => {
+router.put('/update', (req, res) => {
     let params = {
         title: req.body.title,
         description: req.body.description,
-        imageLink: req.file ? req.file.filename : null,
+        imageLink: req.body.imageLink,
         maxUsers: req.body.maxUsers
     }
 

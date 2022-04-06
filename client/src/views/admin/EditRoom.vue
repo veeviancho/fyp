@@ -11,20 +11,21 @@
                 <small class="edit-btn" v-if="show[3]" @click="this.imageLink=''; show[3]=false">Cancel</small>
             </label>
             <div class="control" v-if="room.imageLink">
-                <img class="image" v-if="!show[3]" :src="getImgURL(room.imageLink)">
+                <img class="image" v-if="!show[3]" :src="room.imageLink">
              
                 <div class="columns" v-if="show[3]">
                     <div class="column">
                         <div class="file mb-2">
                             <label class="file-label">
-                                <input class="file-input" type="file" accept=".jpg,.jpeg,.png" @change="onFileSelected">
-                                <span class="file-cta">
-                                    <span class="file-icon"><fa icon="upload"/></span>
-                                    <span class="file-label">Upload Image</span>
-                                </span>
-                                <span class="file-name" v-if="selectedFile">{{ selectedFile.name }}</span>
+                                <div class="control">
+                                    <span class="file-cta" @click="onFileSelected">
+                                        <span class="file-icon"><fa icon="upload"/></span>
+                                        <span class="file-label">Upload image</span>
+                                    </span>
+                                </div>
                             </label>
                         </div>
+                        <div class="my-3" v-if="thumbnailLink"><img :src="thumbnailLink"></div>
                     </div>
                 </div>
             </div>
@@ -89,7 +90,8 @@ export default {
             imageLink: this.imageLink,
             maxUsers: this.maxUsers,
             show: [false, false, false, false],
-            selectedFile: null
+            selectedFile: null,
+            thumbnailLink: ''
         }
     },
     computed: {
@@ -113,23 +115,23 @@ export default {
         },
         editRoom() {
 
-            // const room = {
-            //     id: this.room._id,
-            //     title: this.title,
-            //     description: this.description,
-            //     imageLink: this.imageLink,
-            //     maxUsers: this.maxUsers
-            // }
+            const room = {
+                id: this.room._id,
+                title: this.title,
+                description: this.description,
+                imageLink: this.imageLink,
+                maxUsers: this.maxUsers
+            }
 
-            const formData = new FormData();
+            // const formData = new FormData();
 
-            formData.append('id', this.room._id);
-            formData.append('title', this.title);
-            formData.append('description', this.description);
-            formData.append('imageLink', this.selectedFile);
-            formData.append('maxUsers', this.maxUsers);
+            // formData.append('id', this.room._id);
+            // formData.append('title', this.title);
+            // formData.append('description', this.description);
+            // formData.append('imageLink', this.selectedFile);
+            // formData.append('maxUsers', this.maxUsers);
 
-            this.updateRoom(formData).then( () => {
+            this.updateRoom(room).then( () => {
                 if (this.roomStatus.update == "success") {
                     window.location.reload();
                 }
@@ -138,11 +140,17 @@ export default {
                 console.log(err)
             })
         },
-        onFileSelected(event) {
-            this.selectedFile = event.target.files[0]
-        },
-        getImgURL(pic) {
-            return require('@/../../uploads/' + pic)
+        onFileSelected() {
+            window.cloudinary.openUploadWidget({ 
+                cloud_name: 'eeelifelonglearning',
+                upload_preset: 'ml_default'
+            }, (error, result) => {
+                if (!error && result && result.event === "success") {
+                    console.log('Done uploading..: ', result.info);
+                    this.thumbnailLink = result.info.thumbnail_url
+                    this.imageLink = result.info.url
+                }
+            }).open();
         }
     }
 }

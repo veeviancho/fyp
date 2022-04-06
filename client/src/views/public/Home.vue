@@ -23,7 +23,7 @@
   <!-- <section :id="item._id" class="bgImg" :style="{  backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.7)), url(' + item.imageLink + ')' }"> -->
   <section 
     :id="item._id" class="bgImg" 
-    :style="{  backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.7)), url(' + getImgURL(item.imageLink) + ')' }"
+    :style="{  backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.7)), url(' + item.imageLink + ')' }"
   >
     <h1>{{ item.title }}</h1>
     <p>{{ item.description }}</p>
@@ -46,10 +46,7 @@ export default {
       ...mapGetters(['isLoggedIn', 'user', 'rooms', 'about'])
     },
     methods: {
-      ...mapActions(['getProfile', 'getAllRooms', 'getAbout']),
-      getImgURL(pic) {
-        return require('/uploads/' + pic)
-      }
+      ...mapActions(['getProfile', 'getAllRooms', 'getAbout'])
     },
     created() {
       this.getAbout();

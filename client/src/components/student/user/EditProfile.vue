@@ -6,10 +6,18 @@
     <form class="box" @submit.prevent="updateUser">
 
       <div class="field">
-        <label class="label">Image Link</label>
-        <div class="control">
-          <input class="input is-warning" type="text" v-model="imageLink" placeholder="Paste image address">
+        <label class="label">Image</label>
+        <div class="file mb-2">
+            <label class="file-label">
+                <div class="control">
+                    <span class="file-cta" @click="onFileSelected">
+                        <span class="file-icon"><fa icon="upload"/></span>
+                        <span class="file-label">Upload image</span>
+                    </span>
+                </div>
+            </label>
         </div>
+        <div class="my-3" v-if="thumbnailLink"><img :src="thumbnailLink"></div>
       </div>
 
       <div class="field">
@@ -71,7 +79,9 @@ export default {
       programme: this.programme,
       username: this.username,
       about: this.about,
-      imageLink: this.imageLink
+      imageLink: this.imageLink,
+
+      thumbnailLink: ''
     }
   },
   computed: {
@@ -88,6 +98,18 @@ export default {
         str[i] = str[i][0].toUpperCase() + str[i].slice(1);
       }
       this.name = str.join(" ");
+    },
+    onFileSelected() {
+      window.cloudinary.openUploadWidget({ 
+          cloud_name: 'eeelifelonglearning',
+          upload_preset: 'ml_default'
+      }, (error, result) => {
+          if (!error && result && result.event === "success") {
+              console.log('Done uploading..: ', result.info);
+              this.thumbnailLink = result.info.thumbnail_url
+              this.imageLink = result.info.url
+          }
+      }).open();
     },
     updateUser() {
       if (this.name) {

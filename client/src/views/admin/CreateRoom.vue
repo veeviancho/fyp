@@ -20,16 +20,15 @@
             <div class="control">
                 <div class="file mb-2">
                 <label class="file-label">
-                    <input class="file-input" type="file" accept=".jpg,.jpeg,.png" @change="onFileSelected">
+                    <input class="file-input" accept=".jpg,.jpeg,.png" @click="onFileSelected">
                     <span class="file-cta">
                         <span class="file-icon"><fa icon="upload"/></span>
                         <span class="file-label">Upload image</span>
                     </span>
-                    <span class="file-name" v-if="selectedFile">{{ selectedFile.name }}</span>
+                    <!-- <span class="file-name" v-if="selectedFile">{{ selectedFile.name }}</span> -->
                 </label>
                 </div>
-                <!-- ...or paste a link: -->
-                <!-- <input class="input is-warning" type="text" placeholder="Image link" v-model="imageLink"> -->
+                <div class="my-3" v-if="thumbnailLink"><img :src="thumbnailLink"></div>
             </div>
         </div>
 
@@ -62,8 +61,10 @@ export default {
         return {
             title: '',
             description: '',
-            // imageLink: '',
+            imageLink: '',
             maxUsers: '',
+
+            thumbnailLink: '',
 
             selectedFile: null,
         }
@@ -77,22 +78,13 @@ export default {
             this.$emit('close')
         },
         create() {
-            // let room = {
-            //     title: this.title,
-            //     description: this.description,
-            //     imageLink: this.imageLink,
-            //     maxUsers: this.maxUsers
-            // }
-
-            const formData = new FormData();
-            formData.append('title', this.title);
-            formData.append('description', this.description);
-            formData.append('imageLink', this.selectedFile);
-            formData.append('maxUsers', this.maxUsers);
-
-            // console.log(formData)
-
-            this.createRoom(formData)
+            let data = {
+                title: this.title,
+                description: this.description,
+                imageLink: this.imageLink,
+                maxUsers: this.maxUsers
+            }
+            this.createRoom(data)
                 .then(() => {
                     if (this.roomStatus.create == "success") {
                         window.location.reload()
@@ -103,8 +95,17 @@ export default {
                     console.log(err)
                 })
         },
-        onFileSelected(event) {
-            this.selectedFile = event.target.files[0]
+        onFileSelected() {
+            window.cloudinary.openUploadWidget({ 
+                cloud_name: 'eeelifelonglearning',
+                upload_preset: 'ml_default'
+            }, (error, result) => {
+                if (!error && result && result.event === "success") {
+                    console.log('Done uploading..: ', result.info);
+                    this.thumbnailLink = result.info.thumbnail_url
+                    this.imageLink = result.info.url
+                }
+            }).open();
         }
     }
 }
