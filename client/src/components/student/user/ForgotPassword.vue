@@ -39,6 +39,7 @@
           <input class="input" type="text" placeholder="Code" v-model="code">
         </div>
       </div>
+      <p class="has-text-danger has-text-centered mb-3" v-if="wrongCode">Invalid code entered</p>
       <button 
         type="submit" 
         v-bind:class="[resetStatus.verifyCode === 'loading' ? 'is-loading': '', 'button is-outlined is-fullwidth']"
@@ -85,7 +86,8 @@ export default {
       password2: '',
       show1: true,
       show2: false,
-      show3: false
+      show3: false,
+      wrongCode: false
     }
   },
   computed: {
@@ -122,6 +124,8 @@ export default {
           if (res.data.success) {
             this.show2 = false;
             this.show3 = true;
+          } else {
+            this.wrongCode = true
           }
         })
       }

@@ -2,3 +2,4 @@ client/node_modules/
 client/public/uploads/
 node_modules
 .DS_Store
+client/
