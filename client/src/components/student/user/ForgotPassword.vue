@@ -39,7 +39,7 @@
           <input class="input" type="text" placeholder="Code" v-model="code">
         </div>
       </div>
-      <p class="has-text-danger has-text-centered mb-3" v-if="wrongCode">Invalid code entered</p>
+      <p class="has-text-danger has-text-centered mb-3" v-if="resetError.verifyCode">{{ resetError.verifyCode }}</p>
       <button 
         type="submit" 
         v-bind:class="[resetStatus.verifyCode === 'loading' ? 'is-loading': '', 'button is-outlined is-fullwidth']"
@@ -63,6 +63,7 @@
           <input class="input" type="password" v-model="password2" placeholder="Confirm Password">
         </div>
       </div> 
+      <p class="has-text-danger has-text-centered mb-3" v-if="resetError.resetPW">{{ resetError.resetPW }}</p>
       <button type="submit" class="button is-outlined is-fullwidth">Update</button>
       </form>
     </div>
@@ -87,7 +88,6 @@ export default {
       show1: true,
       show2: false,
       show3: false,
-      wrongCode: false
     }
   },
   computed: {
@@ -124,8 +124,6 @@ export default {
           if (res.data.success) {
             this.show2 = false;
             this.show3 = true;
-          } else {
-            this.wrongCode = true
           }
         })
       }
