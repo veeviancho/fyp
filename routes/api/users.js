@@ -646,7 +646,9 @@ router.get('/verifyCode/:code/:userId', (req, res) => {
     Token.findOne({ token: req.params.code })
     .then(token => {
         if (!token) {
-            console.log('Token not found');
+            return res.status(400).json({
+                msg: "Invalid code entered."
+            })
         } else {
             if (token._userId != req.params.userId) {
                 return res.status(400).json({
