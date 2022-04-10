@@ -295,7 +295,7 @@ router.put('/update/:id', (req, res) => {
 
     // Name Input Validation
     if (req.body.name) {
-        let check = /^[a-z]+[a-z ,.'-]*$/i;
+        let check = /^[a-z]+[a-z ,.’-]*$/i;
         if (!check.test(req.body.name)) {
             return res.status(400).json ({
                 msg: "Please enter a valid name."
@@ -305,7 +305,7 @@ router.put('/update/:id', (req, res) => {
 
     // Username Input Validation
     if (req.body.username) {
-        check = /^\w{1}([\w][.-_]?){3,23}\w{1}$/i;
+        check = /^\w{1}([\w]*[.\-_]?){1,25}\w{1}$/i
         if (!check.test(req.body.username)) {
             return res.status(400).json ({
                 msg: "Please enter a valid username."
