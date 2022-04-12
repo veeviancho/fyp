@@ -308,7 +308,8 @@ router.put('/update/:id', (req, res) => {
 
     // Username Input Validation
     if (req.body.username) {
-        check = /^\w{1}([\w]*[.\-_]?){1,25}\w{1}$/i
+        // check = /^\w{1}([\w]*[.\-_]?){1,25}\w{1}$/i
+        check = /^(?![-_.])(?!.*[-_.]{2})(?!.*[-_.]$)[-\w.]{3,25}$/i;
         if (!check.test(req.body.username)) {
             return res.status(400).json ({
                 msg: "Please enter a valid username."
@@ -319,7 +320,7 @@ router.put('/update/:id', (req, res) => {
     // Admin - change email
     if (req.body.email) {
         // Email Input Validation
-        check = /^[a-z]+[\w(-.)?]*@(e.)?ntu.edu.sg$/i
+        check = /^(?![-.])(?!.*[-.]{2})(?!.*[-.]$)[a-z]+[\w(-.)?]*@(e.)?ntu.edu.sg$/i;
         if (!check.test(req.body.email)) {
             return res.status(400).json ({
                 msg: "Please enter a valid NTU email.",
