@@ -29,7 +29,7 @@ const actions = {
     async getAllRooms({ commit }) {
         try {
             commit('getAllRooms_request')
-            let res = await axios.get('/api/rooms/all')
+            let res = await axios.get('http://localhost:5000/api/rooms/all')
             if (res.data.success) {
                 commit('getAllRooms_success', res.data.rooms)
             }
@@ -48,7 +48,7 @@ const actions = {
     async createRoom({ commit }, room) {
         try {
             commit('createRoom_request')
-            let res = await axios.post("/api/rooms/create", room)
+            let res = await axios.post("http://localhost:5000/api/rooms/create", room)
             if (res.data.success) {
                 commit('createRoom_success')
             }
@@ -62,7 +62,7 @@ const actions = {
         try {
             commit('updateRoom_request')
             console.log(room._id)
-            let res = await axios.put("/api/rooms/update", room)
+            let res = await axios.put("http://localhost:5000/api/rooms/update", room)
             if (res.data.success) {
                 commit('updateRoom_success')
             }
@@ -75,7 +75,7 @@ const actions = {
     async removeRoom({ commit }, roomId) {
         try {
             commit('removeRoom_request')
-            let res = await axios.delete("/api/rooms/delete/" + roomId)
+            let res = await axios.delete("http://localhost:5000/api/rooms/delete/" + roomId)
             if (res.data.success) {
                 commit('removeRoom_success')
             }

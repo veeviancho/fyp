@@ -32,7 +32,7 @@ const actions = {
     async createBooking({ commit }, booking) {
         try {
             commit('createBooking_request')
-            let res = await axios.post('/api/bookings/create', booking)
+            let res = await axios.post('http://localhost:5000/api/bookings/create', booking)
             if (res.data.success) {
                 commit('createBooking_success')
             }
@@ -45,7 +45,7 @@ const actions = {
 
     // Get all bookings
     async getAllBookings({ commit }) {
-        let res = await axios.get('/api/bookings/all')
+        let res = await axios.get('http://localhost:5000/api/bookings/all')
         if (res.data.success) {
             commit('getAllBookings_success', res.data.bookings)
         }
@@ -53,7 +53,7 @@ const actions = {
 
     // Get bookings for a particular room
     async getBookings({ commit }, roomId) {
-        let res = await axios.get('/api/bookings/' + roomId)
+        let res = await axios.get('http://localhost:5000/api/bookings/' + roomId)
         if (res.data.success) {
             commit('getBookings_success', res.data.booking)
         }
@@ -61,7 +61,7 @@ const actions = {
 
     // Get bookings for a particular user
     async getUserBookings({ commit }, userId) {
-        let res = await axios.get('/api/bookings/user/' + userId)
+        let res = await axios.get('http://localhost:5000/api/bookings/user/' + userId)
         if (res.data.success) {
             let current = res.data.booking
             let past = res.data.booking
@@ -87,7 +87,7 @@ const actions = {
     async removeBooking({ commit }, bookingId) {
         try {
             commit('removeBooking_request')
-            let res = await axios.delete('/api/bookings/delete/' + bookingId)
+            let res = await axios.delete('http://localhost:5000/api/bookings/delete/' + bookingId)
             if (res.data.success) {
                 commit('removeBooking_success')
             }

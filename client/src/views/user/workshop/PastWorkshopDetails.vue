@@ -126,7 +126,7 @@ export default {
                         feedback: this.feedback,
                         date: new Date()
                     }
-                    let res = await axios.put("/api/workshops/feedback/" + workshopId + '/' + userId, body)
+                    let res = await axios.put("http://localhost:5000/api/workshops/feedback/" + workshopId + '/' + userId, body)
                     if (res.data.success) {
                         this.getWorkshop().then( () => {
                             this.getPastWorkshopFromId(this.id)

@@ -40,7 +40,7 @@ const actions = {
     // Get current workshops
     async getWorkshop({ commit }) {
         try {
-            let res = await axios.get('/api/workshops/all');
+            let res = await axios.get('http://localhost:5000/api/workshops/all');
             if (res.data.success) {
                 let workshops = res.data.workshop
 
@@ -104,7 +104,7 @@ const actions = {
     async registerForWorkshop({ commit }, [workshopId, userId] ) {
         try {
             commit('workshop_request');
-            let res = await axios.put('/api/workshops/register/' + workshopId + '/' + userId);
+            let res = await axios.put('http://localhost:5000/api/workshops/register/' + workshopId + '/' + userId);
             if (res.data.success) {
                 commit('workshop_success', res.data.workshop);
             }
@@ -118,7 +118,7 @@ const actions = {
     async deregisterFromWorkshop({ commit }, [workshopId, userId]) {
         try {
             commit('deregister_request');
-            let res = await axios.put('/api/workshops/deregister/' + workshopId + '/' + userId);
+            let res = await axios.put('http://localhost:5000/api/workshops/deregister/' + workshopId + '/' + userId);
             if (res.data.success) {
                 commit('deregister_success');
             }
@@ -132,7 +132,7 @@ const actions = {
     async createWorkshop({ commit }, workshop) {
         try {
             commit('create_request')
-            let res = await axios.post('/api/workshops/create', workshop)
+            let res = await axios.post('http://localhost:5000/api/workshops/create', workshop)
             if (res.data.success) {
                 commit('create_success')
             }
@@ -147,7 +147,7 @@ const actions = {
     async updateWorkshop({ commit }, workshop) {
         try {
             commit('update_request')
-            let res = await axios.put('/api/workshops/update', workshop)
+            let res = await axios.put('http://localhost:5000/api/workshops/update', workshop)
             if (res.data.success) {
                 commit('update_success')
             }
@@ -162,7 +162,7 @@ const actions = {
     async deleteWorkshop({ commit }, id) {
         try {
             commit('delete_request')
-            let res = await axios.delete("/api/workshops/delete/" + id)
+            let res = await axios.delete("http://localhost:5000/api/workshops/delete/" + id)
             if (res.data.success) {
                 commit('delete_success')
             }
@@ -176,7 +176,7 @@ const actions = {
     // Remove feedback
     async removeFeedback({ commit }, [workshopId, userId]) {
         try {
-            let res = await axios.put("/api/workshops/feedback/remove/" + workshopId + "/" + userId)
+            let res = await axios.put("http://localhost:5000/api/workshops/feedback/remove/" + workshopId + "/" + userId)
             if (res.data.success) {
                 commit('update_success')
             }
