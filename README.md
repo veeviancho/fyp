@@ -16,8 +16,7 @@ npm start
 ```
 
 ### Production
-You can also view the fully deployed website at Heroku!<br/>
-http://eee-lifelong-learning.herokuapp.com/<br/>
+You can also view the fully deployed website at Heroku: http://eee-lifelong-learning.herokuapp.com/<br/>
 
 ### Home Page Preview
 ![Home Page Preview](/preview.png)
