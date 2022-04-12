@@ -89,7 +89,7 @@ router.post('/register', (req, res) => {
             msg: "Please enter a valid NTU email.",
             info: [
                 { msg: "Must be an NTU email account." },
-                { msg: "Username accepts any letters, numbers, period (.) and hyphen (-) only." },
+                { msg: "Username accepts any letters, numbers, period (.), underscore (_) and hyphen (-) only." },
                 { msg: "Cannot begin with a number or special character." },
                 { msg: "No more than one special character in a row." }
             ]
