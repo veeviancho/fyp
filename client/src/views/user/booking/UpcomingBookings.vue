@@ -30,7 +30,7 @@
                         <span v-if="!item.bookRoom"><strong class="has-text-white" v-if="item.seatNo">Booked Seat Number:</strong> {{ item.seatNo }}</span>
                         <small>
                             <span v-if="item.bookRoom">Full Room Booking</span>
-                            <span v-else>Seat Booking</span>
+                            <span v-else><br/>Seat Booking</span>
                             | Please make sure to leave the venue <i>before</i> the end of your booked session.
                         </small>
 
