@@ -27,7 +27,7 @@
                         <strong class="has-text-white">Date:</strong> {{ item.date }} <br>
                         <strong class="has-text-white">Time:</strong> {{ item.start }} - {{ item.end }} <br>
                         <strong class="has-text-white">Purpose of Visit:</strong> {{ item.purpose ? item.purpose : "NIL" }} <br>
-                        <strong class="has-text-white" v-if="item.seatNo">Booked Seat Number:</strong> {{ item.seatNo }} <br>
+                        <span v-if="!item.bookRoom"><strong class="has-text-white" v-if="item.seatNo">Booked Seat Number:</strong> {{ item.seatNo }}</span> <br>
                         <small>
                             <span v-if="item.bookRoom">Full Room Booking</span>
                             <span v-else>Seat Booking</span>

@@ -84,10 +84,15 @@ export default {
             let users = this.usersList
             temp.forEach(item => {
                 if (item.userId) {
+                    // console.log(temp)
                     let user = users.find(element => {
                         return element._id === item.userId
                     })
-                    item.username = user.username
+                    if (user.username) {
+                        item.username = user.username
+                    } else {
+                        item.username = "user"
+                    }
                     // console.log(item)
                 }
             })
