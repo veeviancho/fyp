@@ -11,7 +11,7 @@
 
             <div v-for="item in sortedBookings" :key="item._id">
 
-                <router-link :to="'/rooms/' + item._id">
+                <router-link :to="'/rooms/' + item.roomId">
                 <article class="media">
 
                     <figure class="media-left">
