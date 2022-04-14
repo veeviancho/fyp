@@ -84,11 +84,13 @@ router.put('/update-views/:id', (req, res) => {
 router.put('/update', (req,res) => {
     Article.findOneAndUpdate({ _id: req.body.id }, { $set: req.body })
         .then(article => {
+            // console.log(req.body)
             if (!article) {
                 return res.status(404).json({
                     msg: "Article not found"
                 })
             }
+            // console.log(article)
             return res.status(200).json({
                 success: true,
                 msg: "Updated successfully!"

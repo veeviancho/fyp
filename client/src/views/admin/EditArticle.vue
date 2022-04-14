@@ -143,7 +143,7 @@ export default {
             programme: this.programme,
             category: this.category,
             tags: this.tags,
-            featured: this.featured,
+            featured: new Boolean(this.featured),
             show: [false, false, false, false, false, false, false]
         }
     },
@@ -180,10 +180,10 @@ export default {
                 tags: this.tags != undefined ? this.tags.split(" ") : this.tags,
                 featured: this.featured,
             }
-            console.log(article.featured)
+            // console.log(article.featured)
 
             // Update featured article (change all to false)
-            if (article.featured == 'true') {
+            if (article.featured === 'true') {
                 try {
                     axios.put('http://localhost:5000/api/articles/updateFeatured')
                 }
@@ -196,6 +196,7 @@ export default {
             this.updateArticle(article).then(() => {
                 if (this.articleStatus.update === "success") {
                     window.location.reload()
+                    // console.log(article.featured)
                 }
             })
         }
