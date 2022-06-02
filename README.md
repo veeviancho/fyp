@@ -1,5 +1,4 @@
-# fyp
-Web-based Platform for Effective Management of Lifelong Learning Space in EEE
+# Web-based Platform for Effective Management of Lifelong Learning Space in EEE
 
 ### Client
 To start the client in development mode (port 8080)
